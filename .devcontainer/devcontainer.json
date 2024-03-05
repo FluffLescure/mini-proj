@@ -1,0 +1,30 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.245.2/containers/ubuntu
+{
+	"name": "miniproj",
+	"image": "flufflescure/c-dev:latest",
+	"remoteUser": "root", // Do not change this
+	"features": {},
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"editor.quickSuggestions": {
+					"other": true,
+					"comments": true,
+					"strings": false
+				},
+				"editor.suggest": {
+					"showWords": false,
+					"showKeywords": true
+				},
+				"editor.formatOnSave": true,
+				"files.autoSaveDelay": 300000
+			},
+			"extensions": [
+				"GitHub.copilot",
+				"ms-vsliveshare.vsliveshare",
+                "ms-vscode.cpptools-extension-pack"
+			]
+		}
+	}
+}
