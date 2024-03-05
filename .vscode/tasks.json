@@ -2,7 +2,7 @@
     "tasks": [
         {
             "type": "cppbuild",
-            "label": "C/C++: g++ build",
+            "label": "C/C++: g++ Build",
             "command": ".devcontainer/build.sh",
             "args": [
                 "${fileDirname}",
