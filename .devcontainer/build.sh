@@ -1,2 +1,5 @@
 #!/usr/bin/bash
-/usr/bin/g++ -fdiagnostics-color=always -g $1/*.cpp -o $1/main
+
+/usr/bin/g++ -c $1/main.cpp
+
+/usr/bin/g++ $1/main.o -o $1/main -lsfml-graphics -lsfml-window -lsfml-system
