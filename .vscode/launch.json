@@ -23,7 +23,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "C/C++: g++ Build",
+            "preLaunchTask": "C/C++: g++ build",
             "miDebuggerPath": "/usr/bin/gdb",
             "miDebuggerArgs": "-q -ex quit; wait() { fg >/dev/null; echo \"\\n\"; }; /bin/gdb -q --interpreter=mi"
         }

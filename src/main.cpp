@@ -1,9 +1,5 @@
 #include <SFML/Graphics.hpp>
 
-/**
- * @brief Main code
- *
- */
 int main(int argc, char const* argv[]) {
     sf::RenderWindow window(sf::VideoMode(200, 200), "Hello From SFML");
     sf::CircleShape shape(100.f);
