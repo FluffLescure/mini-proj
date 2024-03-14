@@ -3,9 +3,15 @@
         {
             "type": "cppbuild",
             "label": "C/C++: g++ build",
-            "command": ".devcontainer/build.sh",
+            "command": "/usr/bin/g++",
             "args": [
-                "${fileDirname}",
+                "main.cpp",
+                "src/*.cpp",
+                "-o",
+                "main.o",
+                "-lsfml-graphics",
+                "-lsfml-window",
+                "-lsfml-system"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
