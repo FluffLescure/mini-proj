@@ -2,10 +2,9 @@
 #define GAME_GRID_HPP
 
 #include "LetterBlock.hpp"
+#include <SFML/Graphics.hpp>
 #include <SFML/System/NonCopyable.hpp>
-#include <SFML/Graphics/Rect.hpp>
 #include <vector>
-
 
 /**
  * @class GameGrid
@@ -28,18 +27,22 @@ public:
     void gridTick(void);
 
     /**
-     * @brief Destroys LetterBlocks that form a word horizontally
-     * @param row_start Row starting possition to delete
-     * @param row_end Row ending position to delete
+     * @brief Destroys LetterBlocks that form a word
+     * @param span Coordinates and spanning of the word staged to delete
      */
-    void gridDestroyH(sf::Rect  );
+    void gridDestroy(sf::Rect<int> span);
 
     /**
-     * @brief Destroys LetterBlocks that form a word horizontally
-     * @param col_start Row starting possition to delete
-     * @param col_end Row ending position to delete
+     * @brief Updates the visibility respective LetterBlock from grid
+     * @param block The block to be hidden
      */
-    void gridDestroyV(sf::Vector2u col_span);
+    void gridDispay(LetterBlock block, bool hide);
+
+    /**
+     * @brief Updates the visibility a zone of blocks delimited by the span entered
+     * @param span The span of blocks to be hidden
+     */
+    void gridDisplay(sf::Rect<int> span, bool hide);
 };
 
 #endif
