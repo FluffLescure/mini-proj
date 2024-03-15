@@ -75,6 +75,9 @@ public:
      */
     void display(bool visible);
 
+    /**
+     * @brief Checks if the LetterBlock is hidden (transparent) or not
+     */
     bool isHidden();
 };
 
