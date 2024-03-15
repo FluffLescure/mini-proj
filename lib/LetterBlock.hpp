@@ -47,10 +47,26 @@ public:
      */
     void setColor(sf::Color color) { block.setFillColor(color); }
 
+    /**
+     * @brief Returns a copy of the letter attribute
+     */
     char getLetter() const { return letter; }
+
+    /**
+     * @brief Returns a copy of the block attribute
+     */
     sf::RectangleShape getBlock() const { return block; }
 
+    /**
+     * @brief Returns a reference to the letter attribute
+     * @warning Allows for direct modification to the attribute outside class scope
+     */
     char& fetchLetter() { return letter; }
+
+    /**
+     * @brief Returns a reference to the block attribute
+     * @warning Allows for direct modification to the attribute outside class scope
+     */
     sf::RectangleShape& fetchBlock() { return block; }
 
     /**
