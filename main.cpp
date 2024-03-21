@@ -1,9 +1,14 @@
 #include <SFML/Graphics.hpp>
 
 #include "lib/LetterBlock.hpp"
+#include "lib/MainGame.hpp"
 
 int main(int argc, char const* argv[]) {
-    sf::RenderWindow window(sf::VideoMode(1920, 1800), "Hello From SFML");
+    sf::RenderWindow window(sf::VideoMode(1920, 1080), "Hello From SFML");
+
+    // MainGame game;
+    // game.window = sf::RenderWindow(sf::VideoMode(1920,1080),"test");
+
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Magenta);
     LetterBlock test;
