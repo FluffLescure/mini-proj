@@ -19,6 +19,7 @@ int main(int argc, char const* argv[]) {
         window.draw(shape);
         window.draw(test.getBlock());
         window.display();
+        shape.move(sf::Vector2f(10, 10));
         test.setColor(sf::Color::Red);
         test.display(true);
     }
