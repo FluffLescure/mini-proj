@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "C/C++: g++ Debug",
+            "name": "C/C++: g++ Launch",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/main.o",
@@ -28,7 +28,7 @@
             "miDebuggerArgs": "-q -ex quit; wait() { fg >/dev/null; echo \"\\n\"; }; /bin/gdb -q --interpreter=mi"
         },
         {
-            "name": "C/C++: g++ Debug Win",
+            "name": "C/C++: g++ Launch Win",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/main.exe",
