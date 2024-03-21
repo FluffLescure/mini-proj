@@ -13,13 +13,13 @@
  */
 class GameGrid : sf::NonCopyable {
 private:
-    u_int8_t cols = 10;
-    u_int8_t rows = 15;
+    uint8_t cols = 10;
+    uint8_t rows = 15;
 
     std::vector<std::vector<LetterBlock>> grid = std::vector<std::vector<LetterBlock>>(rows, std::vector<LetterBlock>(cols));
 
 public:
-    GameGrid(u_int8_t cols = 10, u_int8_t rows = 15) : cols(cols), rows(rows) {}
+    GameGrid(uint8_t cols = 10, uint8_t rows = 15) : cols(cols), rows(rows) {}
 
     /**
      * @brief Updates the grid to make corresponding LetterBlocks fall 1 block lower, when possible
@@ -42,7 +42,7 @@ public:
      * @brief Updates the visibility a zone of blocks delimited by the span entered
      * @param span The span of blocks to be hidden
      */
-    void gridDisplay(sf::Rect<u_int8_t> span, bool visible);
+    void gridDisplay(sf::Rect<uint8_t> span, bool visible);
 
 };
 
