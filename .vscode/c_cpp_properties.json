@@ -4,10 +4,10 @@
             "name": "Win32",
             "includePath": [
                 "${default}",
-                "Path to SFML\\include"
+                "C:\\Fichiers\\c++\\SFML\\SFML-2.6.1\\include"
             ],
             "intelliSenseMode": "windows-gcc-x86",
-            "compilerPath": "C:/MinGW/bin/gcc",
+            "compilerPath": "C:/MinGW/bin/g++",
             "cStandard": "c17",
             "cppStandard": "gnu++17"
         }
