@@ -33,14 +33,14 @@
                 "main.cpp",
                 "src/*.cpp",
                 "-o",
-                "main.o",
-                "-IC:\\Fichiers\\c++\\SFML\\SFML-2.6.1\\include",
-                "-LC:\\Fichiers\\c++\\SFML\\SFML-2.6.1\\lib",
+                "main.exe",
+                "-Iinclude",
+                "-Llib",
                 "-lsfml-graphics",
                 "-lsfml-window",
                 "-lsfml-system",
                 "-lmingw32",
-                "-mwindows"
+                "-mwindows",
             ],
             "options": {
                 "cwd": "${workspaceFolder}"

@@ -1,4 +1,4 @@
-#include "../lib/GameGrid.hpp"
+#include "../headers/GameGrid.hpp"
 
 void GameGrid::gridTick() {
     for (uint8_t i = 0; i < cols; i++) {

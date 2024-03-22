@@ -51,7 +51,7 @@
                 }
             ],
             "preLaunchTask": "C/C++: g++ build Win",
-            "miDebuggerPath": "c:/MinGW/bin/gdb",
+            "miDebuggerPath": "C:\\MinGW\\bin\\gdb.exe",
             "miDebuggerArgs": "-q -ex quit; wait() { fg >/dev/null; echo \"\\n\"; }; /bin/gdb -q --interpreter=mi"
         }
     ],

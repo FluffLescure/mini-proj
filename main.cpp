@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 
-#include "lib/LetterBlock.hpp"
-#include "lib/MainGame.hpp"
+#include "headers/LetterBlock.hpp"
+#include "headers/MainGame.hpp"
 
 int main(int argc, char const* argv[]) {
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Hello From SFML");

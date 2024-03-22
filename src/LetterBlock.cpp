@@ -1,4 +1,4 @@
-#include "../lib/LetterBlock.hpp"
+#include "../headers/LetterBlock.hpp"
 
 void LetterBlock::display(bool visible) {
     sf::Color block_color = block.getFillColor();
