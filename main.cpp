@@ -3,10 +3,12 @@
 #include "headers/LetterBlock.hpp"
 #include "headers/MainGame.hpp"
 
-int main(int argc, char const* argv[]) {
+int main() {
 
-    MainGame game;
+    MainGame().run();
 
+
+/*
     sf::RectangleShape backgrid(sf::Vector2f(311,486));
     backgrid.setFillColor(sf::Color::Red);
     backgrid.setOutlineColor(sf::Color::Blue);
@@ -50,6 +52,6 @@ int main(int argc, char const* argv[]) {
         game.window.display();
        
     }
-
+*/
     return 0;
 }
