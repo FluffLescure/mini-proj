@@ -7,7 +7,25 @@
 
 class MainGame : sf::NonCopyable {
 public:
-    sf::RenderWindow window = sf::RenderWindow(sf::VideoMode(960,540),"Lettris");
+    sf::RenderWindow *window;
+    GameDisplay *layout;
+    sf::Font *font;
+
+    MainGame();
+
+    void initWindow();
+    void initFont();
+    void initInterface();
+
+    void pollEvent();
+
+    bool isRunning();
+
+    void render();
+
+    void run();
+
+
 
 };
 
