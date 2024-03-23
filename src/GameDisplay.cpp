@@ -4,17 +4,19 @@
 
 void GameDisplay::initLayout() {
     
-    std::ifstream file("ressources/layout.map");
+    //Reads map file and retrieve cooridnates of the points used to draw the layout
+    std::ifstream file("ressources/layout.map"); 
 
     std::vector<sf::Vector2f> layoutPoints;
 
     float x,y;
     while(file >> x >> y) {
-        layoutPoints.push_back(sf::Vector2f(x,y));
+        layoutPoints.push_back(sf::Vector2f(x,y)); 
     }
 
     file.close();
 
+    // Layout points are assimilited into a VertexArray to create a singular custom drawwable
     layout = sf::VertexArray(sf::Quads,layoutPoints.size());
 
     for (size_t i = 0; i < layoutPoints.size(); ++i) {
@@ -23,7 +25,7 @@ void GameDisplay::initLayout() {
 }
 
 void GameDisplay::render(sf::RenderTarget *target) {
-    target->draw(layout);
+    target->draw(layout); // renders to window
 }
 
 GameDisplay::GameDisplay() {
