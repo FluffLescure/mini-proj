@@ -10,7 +10,7 @@ void GameGrid::gridTick() {
     }
 }
 
-void GameGrid::gridDestroy(sf::Rect<int> span) {
+void GameGrid::blockDestroy(sf::Rect<int> span) {
     for (uint8_t i = span.left; i < span.width + span.left; i++) {
         for (uint8_t j = span.top; j < span.height + span.top; j++) {
             grid[i][j].display(false);
@@ -19,14 +19,28 @@ void GameGrid::gridDestroy(sf::Rect<int> span) {
     }
 }
 
-void GameGrid::gridDispay(sf::Vector2u coord, bool visible) {
+void GameGrid::blockDispay(sf::Vector2u coord, bool visible) {
     grid[coord.x][coord.y].display(true);
 }
 
-void GameGrid::gridDisplay(sf::Rect<uint8_t> span, bool visible) {
+void GameGrid::blockDisplay(sf::Rect<uint8_t> span, bool visible) {
     for (uint8_t i = span.left; i < span.width + span.left; i++) {
         for (uint8_t j = span.top; j < span.height + span.top; j++) {
             grid[i][j].display(true);
         }
     }
 }
+
+void GameGrid::initGrid() {
+    gridBorder = sf::RectangleShape(sf::Vector2f(336,486));
+    gridBorder.setPosition(sf::Vector2f(312,27));
+    gridBorder.setOutlineColor(sf::Color(125,125,125));
+    gridBorder.setOutlineThickness(3);
+    gridBorder.setFillColor(sf::Color(0,0,0,0));
+    
+}
+
+GameGrid::GameGrid(uint8_t cols, uint8_t rows) : cols(cols), rows(rows) {
+    initGrid();
+}
+
