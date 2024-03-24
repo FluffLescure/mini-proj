@@ -22,6 +22,7 @@ public:
     bool isRunning();
 
     void render();
+    void update();
 
     void run();
 

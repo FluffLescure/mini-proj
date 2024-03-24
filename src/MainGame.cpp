@@ -34,7 +34,7 @@ void MainGame::initInterface() {
 void MainGame::pollEvent() {
     sf::Event event;
 
-    //Listens for any event on window (unused yet)
+    //Listens for any event on window 
 
     while(window->pollEvent(event)) {
         if(event.type == sf::Event::Closed) {
@@ -60,6 +60,7 @@ void MainGame::render() {
 void MainGame::run(){
     //main instance
     while(isRunning()){
+        update();
         render();
     }
 }
@@ -67,4 +68,8 @@ void MainGame::run(){
 MainGame::MainGame(){
     initWindow();
     initInterface();
+}
+
+void MainGame::update() {
+    pollEvent();
 }
