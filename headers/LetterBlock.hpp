@@ -48,6 +48,8 @@ public:
      */
     void setColor(sf::Color color) { block.setFillColor(color); }
 
+    void setPosition(sf::Vector2f pos) { block.setPosition(pos); }
+
     /**
      * @brief Returns a copy of the letter attribute
      */
@@ -65,12 +67,6 @@ public:
     std::string& fetchLetter() { return letter; }
 
     /**
-     * @brief Returns a reference to the block attribute
-     * @warning Allows for direct modification to the attribute outside class scope
-     */
-    sf::RectangleShape& fetchBlock() { return block; }
-
-    /**
      * @brief Decides whether to hide or display the LetterBlock
      * @param visible LetterBlock hidden if true
      */
@@ -80,6 +76,8 @@ public:
      * @brief Checks if the LetterBlock is hidden (transparent) or not
      */
     bool isHidden();
+
+    void initBlock();
 };
 
 #endif
