@@ -14,19 +14,19 @@ void GameGrid::blockDestroy(sf::Rect<int> span) {
     for (uint8_t i = span.left; i < span.width + span.left; i++) {
         for (uint8_t j = span.top; j < span.height + span.top; j++) {
             grid[i][j].display(false);
-            grid[i][j].fetchLetter() = ' ';
+            grid[i][j].fetchLetter().setString(" ");
         }
     }
 }
 
 void GameGrid::blockDispay(sf::Vector2u coord, bool visible) {
-    grid[coord.x][coord.y].display(true);
+    grid[coord.x][coord.y].display(visible);
 }
 
-void GameGrid::blockDisplay(sf::Rect<uint8_t> span, bool visible) {
-    for (uint8_t i = span.left; i < span.width + span.left; i++) {
-        for (uint8_t j = span.top; j < span.height + span.top; j++) {
-            grid[i][j].display(true);
+void GameGrid::blockDisplay(sf::Vector2u posInit, sf::Vector2u span, bool visible) {
+    for (uint8_t j = posInit.y; j < posInit.y + span.y; j++) {
+        for (uint8_t i = posInit.x; i < posInit.x + span.x; i++) {
+            grid[i][j].display(visible);
         }
     }
 }
@@ -35,7 +35,7 @@ void GameGrid::initGrid() {
     gridBorder = sf::RectangleShape(sf::Vector2f(336, 486));
     gridBorder.setPosition(sf::Vector2f(312, 27));
     gridBorder.setOutlineColor(sf::Color(125, 125, 125));
-    gridBorder.setOutlineThickness(3);
+    gridBorder.setOutlineThickness(5);
     gridBorder.setFillColor(sf::Color(0, 0, 0, 0));
 
 
@@ -44,11 +44,15 @@ void GameGrid::initGrid() {
             grid[i][j].setPosition(sf::Vector2f(312+33.6*i, 27+32.4*j));
         }
     }
+
+
+    blockDisplay(sf::Vector2u(3,5), sf::Vector2u(4,4), false);
     
 }
 
 GameGrid::GameGrid(uint8_t cols, uint8_t rows) : cols(cols), rows(rows) {
     initGrid();
+    
 }
 
 
@@ -60,5 +64,10 @@ void GameGrid::render(sf::RenderTarget *target){
             target->draw(grid[i][j].getBlock());
         }
     }
+
+    LetterBlock a("A");
+    a.setPosition(sf::Vector2f(300,300));
+
+    //a.render(target);
     
 }

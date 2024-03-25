@@ -4,6 +4,7 @@
 #include <string>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Text.hpp>
 
 /**
  * \class LetterBlock
@@ -36,11 +37,12 @@
  */
 class LetterBlock {
 private:
-    std::string letter;
+    sf::Text letter;
     sf::RectangleShape block;
 
 public:
-    LetterBlock(std::string letter = " ");
+    LetterBlock(std::string str);
+    LetterBlock();
 
     /**
      * @brief Changes the color of the LetterBlock filler
@@ -48,12 +50,12 @@ public:
      */
     void setColor(sf::Color color) { block.setFillColor(color); }
 
-    void setPosition(sf::Vector2f pos) { block.setPosition(pos); }
+    void setPosition(sf::Vector2f pos);
 
     /**
      * @brief Returns a copy of the letter attribute
      */
-    std::string getLetter() const { return letter; }
+    sf::Text getLetter() const { return letter; }
 
     /**
      * @brief Returns a copy of the block attribute
@@ -64,7 +66,7 @@ public:
      * @brief Returns a reference to the letter attribute
      * @warning Allows for direct modification to the attribute outside class scope
      */
-    std::string& fetchLetter() { return letter; }
+    sf::Text& fetchLetter() { return letter; }
 
     /**
      * @brief Decides whether to hide or display the LetterBlock
@@ -78,6 +80,11 @@ public:
     bool isHidden();
 
     void initBlock();
+
+    void initLetter(std::string str = " ");
+
+    void render(sf::RenderTarget *target);
+
 };
 
 #endif

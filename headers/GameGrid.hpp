@@ -44,7 +44,7 @@ public:
      * @brief Updates the visibility a zone of blocks delimited by the span entered
      * @param span The span of blocks to be hidden
      */
-    void blockDisplay(sf::Rect<uint8_t> span, bool visible);
+    void blockDisplay(sf::Vector2u posInit, sf::Vector2u span, bool visible);
 
     void initGrid();
 
