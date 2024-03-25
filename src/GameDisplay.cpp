@@ -33,6 +33,7 @@ void GameDisplay::initLayout() {
 
 void GameDisplay::render(sf::RenderTarget *target) {
     target->draw(layout,&backgroundTex); // renders to window
+    game->render(target);
 }   
 
 GameDisplay::GameDisplay() {

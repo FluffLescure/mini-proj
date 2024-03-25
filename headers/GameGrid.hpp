@@ -18,7 +18,7 @@ private:
 
     sf::RectangleShape gridBorder;
 
-    std::vector<std::vector<LetterBlock>> grid = std::vector<std::vector<LetterBlock>>(rows, std::vector<LetterBlock>(cols));
+    std::vector<std::vector<LetterBlock>> grid = std::vector<std::vector<LetterBlock>>(cols, std::vector<LetterBlock>(rows));
 
 public:
     GameGrid(uint8_t cols = 10, uint8_t rows = 15);
@@ -47,6 +47,8 @@ public:
     void blockDisplay(sf::Rect<uint8_t> span, bool visible);
 
     void initGrid();
+
+    void render(sf::RenderTarget *target);
 
 };
 
