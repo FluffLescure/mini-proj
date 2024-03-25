@@ -40,7 +40,7 @@ private:
     sf::RectangleShape block;
 
 public:
-    LetterBlock(std::string letter = " ", sf::RectangleShape block = sf::RectangleShape(sf::Vector2f(30, 30))) : letter(letter), block(block){};
+    LetterBlock(std::string letter = " ");
 
     /**
      * @brief Changes the color of the LetterBlock filler
