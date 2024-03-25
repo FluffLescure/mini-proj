@@ -1,6 +1,7 @@
 #ifndef LETTER_BLOCK_HPP
 #define LETTER_BLOCK_HPP
 
+#include <string>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
@@ -35,11 +36,11 @@
  */
 class LetterBlock {
 private:
-    char letter;
+    std::string letter;
     sf::RectangleShape block;
 
 public:
-    LetterBlock(char letter = ' ', sf::RectangleShape block = sf::RectangleShape(sf::Vector2f(100, 100))) : letter(letter), block(block){};
+    LetterBlock(std::string letter = " ");
 
     /**
      * @brief Changes the color of the LetterBlock filler
@@ -47,10 +48,12 @@ public:
      */
     void setColor(sf::Color color) { block.setFillColor(color); }
 
+    void setPosition(sf::Vector2f pos) { block.setPosition(pos); }
+
     /**
      * @brief Returns a copy of the letter attribute
      */
-    char getLetter() const { return letter; }
+    std::string getLetter() const { return letter; }
 
     /**
      * @brief Returns a copy of the block attribute
@@ -61,13 +64,7 @@ public:
      * @brief Returns a reference to the letter attribute
      * @warning Allows for direct modification to the attribute outside class scope
      */
-    char& fetchLetter() { return letter; }
-
-    /**
-     * @brief Returns a reference to the block attribute
-     * @warning Allows for direct modification to the attribute outside class scope
-     */
-    sf::RectangleShape& fetchBlock() { return block; }
+    std::string& fetchLetter() { return letter; }
 
     /**
      * @brief Decides whether to hide or display the LetterBlock
@@ -79,6 +76,8 @@ public:
      * @brief Checks if the LetterBlock is hidden (transparent) or not
      */
     bool isHidden();
+
+    void initBlock();
 };
 
 #endif

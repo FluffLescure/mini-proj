@@ -16,10 +16,12 @@ private:
     uint8_t cols = 10;
     uint8_t rows = 15;
 
-    std::vector<std::vector<LetterBlock>> grid = std::vector<std::vector<LetterBlock>>(rows, std::vector<LetterBlock>(cols));
+    sf::RectangleShape gridBorder;
+
+    std::vector<std::vector<LetterBlock>> grid = std::vector<std::vector<LetterBlock>>(cols, std::vector<LetterBlock>(rows));
 
 public:
-    GameGrid(uint8_t cols = 10, uint8_t rows = 15) : cols(cols), rows(rows) {}
+    GameGrid(uint8_t cols = 10, uint8_t rows = 15);
 
     /**
      * @brief Updates the grid to make corresponding LetterBlocks fall 1 block lower, when possible
@@ -30,19 +32,23 @@ public:
      * @brief Destroys LetterBlocks that form a word
      * @param span Coordinates and spanning of the word staged for destruction
      */
-    void gridDestroy(sf::Rect<int> span);
+    void blockDestroy(sf::Rect<int> span);
 
     /**
      * @brief Updates the visibility respective LetterBlock from grid
      * @param coord The coordinates of the block to be hidden
      */
-    void gridDispay(sf::Vector2u coord, bool visible);
+    void blockDispay(sf::Vector2u coord, bool visible);
 
     /**
      * @brief Updates the visibility a zone of blocks delimited by the span entered
      * @param span The span of blocks to be hidden
      */
-    void gridDisplay(sf::Rect<uint8_t> span, bool visible);
+    void blockDisplay(sf::Rect<uint8_t> span, bool visible);
+
+    void initGrid();
+
+    void render(sf::RenderTarget *target);
 
 };
 

@@ -19,3 +19,14 @@ bool LetterBlock::isHidden() {
     else
         return false;
 }
+
+LetterBlock::LetterBlock(std::string letter) : letter(letter) {
+    initBlock();
+}
+
+void LetterBlock::initBlock() {
+    block = sf::RectangleShape(sf::Vector2f(33.6,32.4));
+    block.setFillColor(sf::Color(175,175,175));
+    block.setOutlineColor(sf::Color(75,75,75));
+    block.setOutlineThickness(1);   
+}
