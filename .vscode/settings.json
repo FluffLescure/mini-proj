@@ -42,7 +42,13 @@
         "ostream": "cpp",
         "stdexcept": "cpp",
         "streambuf": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "iostream": "cpp",
+        "map": "cpp",
+        "set": "cpp",
+        "optional": "cpp",
+        "fstream": "cpp",
+        "istream": "cpp"
     },
     "cSpell.enabled": false
 }

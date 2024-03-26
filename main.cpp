@@ -2,9 +2,10 @@
 
 #include "headers/LetterBlock.hpp"
 #include "headers/MainGame.hpp"
+#include<iostream>
 
 int main() {
-
+    std::cout << "hello" << std::endl;
     MainGame().run();
 
 

@@ -61,13 +61,15 @@ void GameGrid::render(sf::RenderTarget *target){
     target->draw(grid[9][14].getBlock());
     for(int j=0; j < rows; j++ ){
         for (int i=0; i< cols; i++){
-            target->draw(grid[i][j].getBlock());
+            //target->draw(grid[i][j].getBlock());
+            //grid[i][j].render(target);
+            
         }
     }
-
     LetterBlock a("A");
     a.setPosition(sf::Vector2f(300,300));
 
-    //a.render(target);
+    a.render(target);
+
     
 }

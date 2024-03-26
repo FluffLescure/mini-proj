@@ -1,6 +1,9 @@
 #include "../headers/LetterBlock.hpp"
-
+#include <iostream>
 #include <SFML/Graphics.hpp>
+
+
+
 
 void LetterBlock::display(bool visible) {
     sf::Color block_color = block.getFillColor();
@@ -14,6 +17,7 @@ void LetterBlock::display(bool visible) {
     setColor(block_color);
 }
 
+
 bool LetterBlock::isHidden() {
     sf::Color col = block.getFillColor();
     if (col.a == 50)
@@ -23,13 +27,15 @@ bool LetterBlock::isHidden() {
 }
 
 LetterBlock::LetterBlock(std::string str) {
+    std::cout << "built" << std::endl;
     initBlock();
     initLetter(str);
 }
 
 LetterBlock::LetterBlock() {
+    std::cout << "Constructeur blanc" << std::endl;
     initBlock();
-    initLetter(" ");
+    initLetter("D");
 }
 
 void LetterBlock::initBlock() {
@@ -42,37 +48,29 @@ void LetterBlock::initBlock() {
 
 
 void LetterBlock::initLetter(std::string str) {
-    sf::Font font;
+    std::cout << "initialisation" << std::endl;
+    
+    letter.setString(str);
+    letter.setCharacterSize(24);
+    letter.setFillColor(sf::Color::Black);
     if(!font.loadFromFile("ressources/Lato-Black.ttf")){
         abort();
     }
-
     letter.setFont(font);
-    letter.setString("A");
-    letter.setCharacterSize(24);
-    letter.setFillColor(sf::Color::Black);
 
-    // this whole block isn't called for some reason, so beware with target->draw(letter);
 }
 
 void LetterBlock::setPosition(sf::Vector2f pos) {
     block.setPosition(pos);
     letter.setOrigin(sf::Vector2f(0,0));
     letter.setPosition(pos);
-}
+}   
 
 void LetterBlock::render(sf::RenderTarget *target) {
     target->draw(block);
 
-    /*sf::Font font;
-    if(!font.loadFromFile("ressources/Lato-Black.ttf")){
-        abort();
-    }
-
-    letter.setFont(font);
-    letter.setString("A");
-    letter.setCharacterSize(24);
-    letter.setFillColor(sf::Color::Black);*/
-    
-    //target->draw(letter); // doesn't work for some code fucked mangling reason
+    std::cout << "render LetterBlock" << std::endl;
+     
+    target->draw(letter); // doesn't work for some code fucked mangling reason
 }
+
