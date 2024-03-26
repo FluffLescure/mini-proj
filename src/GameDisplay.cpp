@@ -18,7 +18,7 @@ void GameDisplay::initLayout() {
 
     map.close();
 
-    // Layout points are assimilited into a VertexArray to create a singular custom drawwable
+    // Layout points are assimilited into a VertexArray to create a singular custom drawable
     layout = sf::VertexArray(sf::Quads, layoutPoints.size());
 
     for (size_t i = 0; i < layoutPoints.size(); ++i) {

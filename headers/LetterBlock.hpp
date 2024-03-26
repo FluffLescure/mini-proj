@@ -39,6 +39,7 @@ class LetterBlock {
 private:
     sf::Text letter;
     sf::RectangleShape block;
+    sf::Font font;
 
 public:
     LetterBlock(std::string str);
@@ -51,6 +52,7 @@ public:
     void setColor(sf::Color color) { block.setFillColor(color); }
 
     void setPosition(sf::Vector2f pos);
+
 
     /**
      * @brief Returns a copy of the letter attribute
