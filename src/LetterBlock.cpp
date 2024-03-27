@@ -7,14 +7,20 @@
 
 void LetterBlock::display(bool visible) {
     sf::Color block_color = block.getFillColor();
+    sf::Color letter_color = letter.getFillColor();    
 
     // If true then alpha value is 255, else alpha is 50
-    if (visible)
+    if (visible){
         block_color.a = 255;
-    else
+        letter_color.a = 255;
+    }
+    else {
         block_color.a = 50;
+        letter_color.a = 0;
+    }
 
-    setColor(block_color);
+    block.setFillColor(block_color);
+    letter.setFillColor(letter_color);
 }
 
 
@@ -33,7 +39,7 @@ LetterBlock::LetterBlock(std::string str) {
 
 LetterBlock::LetterBlock() {
     initBlock();
-    initLetter("X");
+    initLetter("A");
 }
 
 void LetterBlock::initBlock() {
@@ -66,3 +72,9 @@ void LetterBlock::render(sf::RenderTarget *target) {
     target->draw(letter);
 }
 
+void LetterBlock::operator=(LetterBlock& LB) {
+    this->block.setFillColor(LB.getBlock().getFillColor());
+    this->block.setOutlineColor(LB.getBlock().getOutlineColor());
+    this->letter.setString(LB.getLetter().getString());
+    this->letter.setFillColor(LB.getLetter().getFillColor());
+}

@@ -45,11 +45,15 @@ public:
     LetterBlock(std::string str);
     LetterBlock();
 
+    void operator=(LetterBlock& block);
+
     /**
      * @brief Changes the color of the LetterBlock filler
      * @param color The sf::Color to be set
      */
     void setColor(sf::Color color) { block.setFillColor(color); }
+    void setLetter(sf::Text letter) { this->letter = letter; }
+    void setLetter(std::string letter = "") { this->letter.setString(letter); }
 
     void setPosition(sf::Vector2f pos);
 
