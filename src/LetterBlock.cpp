@@ -47,6 +47,7 @@ void LetterBlock::initBlock() {
     block.setFillColor(sf::Color(175,175,175));
     block.setOutlineColor(sf::Color(75,75,75));
     block.setOutlineThickness(1);  
+    state = Falling;
 }
 
 
@@ -77,4 +78,12 @@ void LetterBlock::operator=(LetterBlock& LB) {
     this->block.setOutlineColor(LB.getBlock().getOutlineColor());
     this->letter.setString(LB.getLetter().getString());
     this->letter.setFillColor(LB.getLetter().getFillColor());
+}
+
+
+void LetterBlock::pollEvent() {
+    direction = Direction::None;
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) direction = Down;
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) direction = Left;
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) direction = Right;
 }

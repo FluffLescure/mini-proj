@@ -6,6 +6,19 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <string>
+
+
+typedef enum {
+    Falling,
+    Grounded
+} State;
+
+typedef enum {
+    None, Down, Left, Right
+} Direction;
+
+
+
 /**
  * \class LetterBlock
  *
@@ -40,6 +53,8 @@ private:
     sf::Text letter;
     sf::RectangleShape block;
     sf::Font font;
+    State state;
+
 
 public:
     LetterBlock(std::string str);
@@ -57,6 +72,10 @@ public:
 
     void setPosition(sf::Vector2f pos);
 
+    State getState() { return state;}
+    void setState(State state) {this->state = state;}
+
+    
 
     /**
      * @brief Returns a copy of the letter attribute
@@ -90,6 +109,11 @@ public:
     void initLetter(std::string str = " ");
 
     void render(sf::RenderTarget *target);
+
+
+    Direction direction;
+
+    void pollEvent();
 
 };
 
