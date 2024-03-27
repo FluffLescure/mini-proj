@@ -10,7 +10,7 @@ class MainGame : sf::NonCopyable {
 
 public:
     sf::RenderWindow *window;
-    GameDisplay *layout;
+    GameDisplay *display;
 
     MainGame();
     ~MainGame();

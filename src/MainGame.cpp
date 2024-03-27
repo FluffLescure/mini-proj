@@ -16,7 +16,7 @@ void MainGame::initWindow() {
 }
 
 void MainGame::initInterface() {
-    layout = new GameDisplay();
+    display = new GameDisplay();
 }
 
 //
@@ -41,7 +41,7 @@ bool MainGame::isRunning() {
 void MainGame::render() {
     window->clear(); // Clear the old frame from window
 
-    layout->render(window); // test functions
+    display->render(window); // test functions
     
     window->display(); // Displays the new fram to window
 }
@@ -49,8 +49,9 @@ void MainGame::render() {
 void MainGame::run(){
     //main instance
     while(isRunning()){
-        update();
         render();
+        update();
+       
     }
 }
 
@@ -61,9 +62,10 @@ MainGame::MainGame(){
 
 MainGame::~MainGame(){
     delete window;
-    delete layout;
+    delete display;
 }
 
 void MainGame::update() {
     pollEvent();
+    display->update();
 }
