@@ -25,6 +25,11 @@ void GameDisplay::render(sf::RenderTarget *target) {
     game->render(target);
 }   
 
+void GameDisplay::update() {
+    game->update();
+}
+
+
 GameDisplay::GameDisplay() {
     initLayout();
     game = new GameGrid();

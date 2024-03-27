@@ -15,6 +15,7 @@ public:
 
     void initLayout();
     void render(sf::RenderTarget *target);
+    void update();
 
 
 };
