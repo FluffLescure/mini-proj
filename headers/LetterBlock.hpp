@@ -1,11 +1,11 @@
 #ifndef LETTER_BLOCK_HPP
 #define LETTER_BLOCK_HPP
 
-#include <string>
+
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
-
+#include <string>
 /**
  * \class LetterBlock
  *

@@ -4,17 +4,18 @@
 
 #include <SFML/Graphics.hpp>
 #include "GameDisplay.hpp"
+#include "Config.hpp"
 
 class MainGame : sf::NonCopyable {
+
 public:
     sf::RenderWindow *window;
     GameDisplay *layout;
-    sf::Font *font;
 
     MainGame();
+    ~MainGame();
 
     void initWindow();
-    void initFont();
     void initInterface();
 
     void pollEvent();

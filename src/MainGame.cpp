@@ -4,26 +4,15 @@
 
 void MainGame::initWindow() {
 
+    Config* config = Config::getInstance();
     //Sets window (2:1 true window scale) framerate and size
-    const uint8_t framerate = 60; 
-    const sf::VideoMode windowframe = sf::VideoMode(960,540);
+    const sf::VideoMode windowframe = sf::VideoMode(config->window_size.x,config->window_size.y);
+
 
     window = new sf::RenderWindow(windowframe,"Lettris");
-    window->setFramerateLimit(framerate);
+    window->setFramerateLimit(config->window_framerate);
     window->setVerticalSyncEnabled(true); //VSync
     window->setVisible(true);
-}
-
-void MainGame::initFont() {
-
-    //initialises fonts for text implementation (untested)
-    font = new sf::Font();
-    const char* fontfile = "ressources/Lato-Black.ttf"; 
-
-    if (font->loadFromFile(fontfile) == false) {
-        std::cout << "ERROR: Failed to load " << fontfile << std::endl;
-        abort();
-    }
 }
 
 void MainGame::initInterface() {
@@ -68,6 +57,11 @@ void MainGame::run(){
 MainGame::MainGame(){
     initWindow();
     initInterface();
+}
+
+MainGame::~MainGame(){
+    delete window;
+    delete layout;
 }
 
 void MainGame::update() {
