@@ -13,12 +13,14 @@
  */
 class GameGrid : sf::NonCopyable {
 private:
-    uint8_t cols = 10;
-    uint8_t rows = 15;
+    uint8_t cols=10;
+    uint8_t rows=15;
 
     sf::RectangleShape gridBorder;
 
-    std::vector<std::vector<LetterBlock>> grid = std::vector<std::vector<LetterBlock>>(cols, std::vector<LetterBlock>(rows));
+    std::vector<std::vector<LetterBlock>> grid;
+
+    uint8_t tick = 0;
 
 public:
     GameGrid(uint8_t cols = 10, uint8_t rows = 15);
@@ -49,6 +51,9 @@ public:
     void initGrid();
 
     void render(sf::RenderTarget *target);
+
+    void update();
+
 
 };
 

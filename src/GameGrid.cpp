@@ -1,10 +1,12 @@
 #include "../headers/GameGrid.hpp"
+#include <iostream>
 
 void GameGrid::gridTick() {
-    for (uint8_t i = 0; i < cols; i++) {
-        for (uint8_t j = rows - 2; j != 0; j--) {
+    for (int8_t i = 0; i < cols; i++) {
+        for (int8_t j = rows - 2; j >= 0; j--) {
             if (!grid[i][j].isHidden() && grid[i][j + 1].isHidden()) {
                 grid[i][j + 1] = grid[i][j];
+                grid[i][j].display(false);
             }
         }
     }
@@ -14,7 +16,7 @@ void GameGrid::blockDestroy(sf::Rect<int> span) {
     for (uint8_t i = span.left; i < span.width + span.left; i++) {
         for (uint8_t j = span.top; j < span.height + span.top; j++) {
             grid[i][j].display(false);
-            grid[i][j].fetchLetter().setString(" ");
+            grid[i][j].fetchLetter().setString("");
         }
     }
 }
@@ -38,32 +40,39 @@ void GameGrid::initGrid() {
     gridBorder.setOutlineThickness(5);
     gridBorder.setFillColor(sf::Color(0, 0, 0, 0));
 
+    grid = std::vector<std::vector<LetterBlock>>(cols, std::vector<LetterBlock>(rows));
 
     for(int j=0; j < rows; j++ ){
-        for (int i=0; i< cols; i++){
+        for (int i=0; i < cols; i++){
             grid[i][j].setPosition(sf::Vector2f(312+33.6*i, 27+32.4*j));
+            grid[i][j].display(false);
         }
     }
 
+        blockDisplay({1,1}, {4,1}, true);
 
-    blockDisplay(sf::Vector2u(3,5), sf::Vector2u(4,4), false);
     
 }
 
 GameGrid::GameGrid(uint8_t cols, uint8_t rows) : cols(cols), rows(rows) {
     initGrid();
-    
 }
 
 
 void GameGrid::render(sf::RenderTarget *target){
+
     target->draw(gridBorder);
-    target->draw(grid[9][14].getBlock());
-    for(int j=0; j < rows; j++ ){
-        for (int i=0; i< cols; i++){
-            target->draw(grid[i][j].getBlock());
+    for(int j = 0; j < rows; j++ ){
+        for (int i = 0; i< cols; i++){
             grid[i][j].render(target);
-            
         }
     }
+}
+
+void GameGrid::update() {
+    if(tick == 60) {
+        gridTick();
+        tick = 0;
+    }
+    tick++;
 }
