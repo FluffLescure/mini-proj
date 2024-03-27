@@ -3,13 +3,13 @@
 
 #include <SFML/Graphics.hpp>
 #include "GameGrid.hpp"
+#include "Config.hpp"
 class GameDisplay {
 private:
 public:
 
     sf::VertexArray layout;
     GameGrid *game;
-    sf::Texture backgroundTex;
 
     GameDisplay();
 

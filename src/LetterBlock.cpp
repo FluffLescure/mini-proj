@@ -1,14 +1,14 @@
 #include "../headers/LetterBlock.hpp"
 #include <iostream>
 #include <SFML/Graphics.hpp>
-
+#include <../headers/Config.hpp>
 
 
 
 void LetterBlock::display(bool visible) {
     sf::Color block_color = block.getFillColor();
 
-    // If true then alpha value is 255, else alpha is 0
+    // If true then alpha value is 255, else alpha is 50
     if (visible)
         block_color.a = 255;
     else
@@ -27,15 +27,13 @@ bool LetterBlock::isHidden() {
 }
 
 LetterBlock::LetterBlock(std::string str) {
-    std::cout << "built" << std::endl;
     initBlock();
     initLetter(str);
 }
 
 LetterBlock::LetterBlock() {
-    std::cout << "Constructeur blanc" << std::endl;
     initBlock();
-    initLetter("D");
+    initLetter("X");
 }
 
 void LetterBlock::initBlock() {
@@ -48,29 +46,23 @@ void LetterBlock::initBlock() {
 
 
 void LetterBlock::initLetter(std::string str) {
-    std::cout << "initialisation" << std::endl;
-    
     letter.setString(str);
     letter.setCharacterSize(24);
     letter.setFillColor(sf::Color::Black);
-    if(!font.loadFromFile("ressources/Lato-Black.ttf")){
-        abort();
-    }
-    letter.setFont(font);
+    letter.setFont(*(Config::getInstance()->font));
 
 }
 
 void LetterBlock::setPosition(sf::Vector2f pos) {
     block.setPosition(pos);
-    letter.setOrigin(sf::Vector2f(0,0));
-    letter.setPosition(pos);
+
+    //Found online, allows for centering of letters inside the block
+    letter.setOrigin(letter.getGlobalBounds().getSize() / 2.f + letter.getLocalBounds().getPosition());
+    letter.setPosition(block.getPosition() + (block.getSize() / 2.f));
 }   
 
 void LetterBlock::render(sf::RenderTarget *target) {
     target->draw(block);
-
-    std::cout << "render LetterBlock" << std::endl;
-     
-    target->draw(letter); // doesn't work for some code fucked mangling reason
+    target->draw(letter);
 }
 
