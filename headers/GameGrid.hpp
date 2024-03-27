@@ -30,6 +30,8 @@ public:
      */
     void gridTick();
 
+    void blockTick();
+
     /**
      * @brief Destroys LetterBlocks that form a word
      * @param span Coordinates and spanning of the word staged for destruction
@@ -40,7 +42,7 @@ public:
      * @brief Updates the visibility respective LetterBlock from grid
      * @param coord The coordinates of the block to be hidden
      */
-    void blockDispay(sf::Vector2u coord, bool visible);
+    void blockDisplay(sf::Vector2u coord, bool visible);
 
     /**
      * @brief Updates the visibility a zone of blocks delimited by the span entered
@@ -53,7 +55,6 @@ public:
     void render(sf::RenderTarget *target);
 
     void update();
-
 
 };
 
