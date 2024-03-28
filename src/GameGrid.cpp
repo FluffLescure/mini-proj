@@ -18,15 +18,16 @@ void GameGrid::gridTick() {
 
     if(!blocks_moved && grid[5][0].isHidden()) {
         blockDisplay({5,0},true);
-        grid[5][0].setState(Falling);
+        grid[5][0].setState(State::Falling);
     }
 }
 
-void GameGrid::blockDestroy(sf::Rect<int> span) {
-    for (uint8_t i = span.left; i < span.width + span.left; i++) {
-        for (uint8_t j = span.top; j < span.height + span.top; j++) {
+void GameGrid::blockDestroy(sf::Vector2u posInit, sf::Vector2u span) {
+    for (uint8_t j = posInit.y; j < posInit.y + span.y; j++) {
+        for (uint8_t i = posInit.x; i < posInit.x + span.x; i++) {
             grid[i][j].display(false);
             grid[i][j].fetchLetter().setString("");
+            grid[i][j].setState(State::Fixed);
         }
     }
 }

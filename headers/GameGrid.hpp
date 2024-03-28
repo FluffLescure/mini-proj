@@ -41,7 +41,7 @@ public:
      * @brief Destroys LetterBlocks that form a word
      * @param span Coordinates and spanning of the word staged for destruction
      */
-    void blockDestroy(sf::Rect<int> span);
+    void blockDestroy(sf::Vector2u posInit, sf::Vector2u span);
 
     /**
      * @brief Updates the visibility respective LetterBlock from grid
