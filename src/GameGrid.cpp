@@ -85,20 +85,19 @@ void GameGrid::blockTick() {
     for (int8_t i = 0; i < cols; i++) {
         for (int8_t j = rows - 1; j >= 0; j--) {
             if(!grid[i][j].isHidden() && grid[i][j].isFalling() && !moved){
-                if(input->getDirection() == Down){
+                if(input->getDirection() == Down)
                     moved = grid[i][j].move(grid, Down);
-                }
-                if(input->getDirection() == Left){
+
+                if(input->getDirection() == Left)
                     moved = grid[i][j].move(grid, Left);
-                }
-                if(input->getDirection() == Right){
+
+                if(input->getDirection() == Right)
                     moved = grid[i][j].move(grid, Right);
-                } 
-                if(!grid[i][14].isHidden() && grid[i][14].getState() != Grounded) {
-                    grid[i][14].setState(Grounded);
-                    grid[i][14].setColor(sf::Color::Red);
-                }  
             }
+            if(!grid[i][14].isHidden() && grid[i][14].getState() != Grounded) {
+                grid[i][14].setState(Grounded);
+                grid[i][14].setColor(sf::Color::Red);
+            }  
         }
     }
 
