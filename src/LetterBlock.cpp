@@ -119,7 +119,7 @@ bool LetterBlock::move(std::vector<std::vector<LetterBlock>> &grid, Direction di
             }
             return true;
         case Right:
-            if (grid[i + 1][j].isHidden() && i < 9) {
+            if (i < 9 && grid[i + 1][j].isHidden()) {
                 grid[i + 1][j] = grid[i][j];
                 grid[i][j].display(false);
                 grid[i][j].setState(State::Fixed);
