@@ -2,11 +2,11 @@
 #include <iostream>
 
 void GameGrid::gridTick() {
-    bool moved = false;
+    bool blocks_moved = false;
     for (int8_t i = 0; i < cols; i++) {
         for (int8_t j = rows - 2; j >= 0; j--) {
             if (grid[i][j].isFalling()) {
-                moved = grid[i][j].move(grid, Down);
+                blocks_moved = grid[i][j].move(grid, Down);
             }
             
             if(!grid[i][j+1].isHidden() && !grid[i][j].isHidden()) {
@@ -16,7 +16,7 @@ void GameGrid::gridTick() {
         }
     }
 
-    if(!moved && grid[5][0].isHidden()) {
+    if(!blocks_moved && grid[5][0].isHidden()) {
         blockDisplay({5,0},true);
         grid[5][0].setState(Falling);
     }
