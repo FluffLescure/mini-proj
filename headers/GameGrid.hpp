@@ -3,6 +3,7 @@
 
 #include "LetterBlock.hpp"
 #include "Input.hpp"
+#include "GameGrid.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/System/NonCopyable.hpp>
 #include <vector>
@@ -22,6 +23,7 @@ private:
     sf::RectangleShape gridBorder;
 
     Input *input;
+    GameWordle *wordle;
 
     std::vector<std::vector<LetterBlock>> grid;
 
