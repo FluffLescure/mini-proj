@@ -2,32 +2,23 @@
 #include <iostream>
 
 void GameGrid::gridTick() {
-    int done = 0;
+    bool moved = false;
     for (int8_t i = 0; i < cols; i++) {
         for (int8_t j = rows - 2; j >= 0; j--) {
-            if (!grid[i][j].isHidden() && grid[i][j + 1].isHidden()) {
-                grid[i][j + 1] = grid[i][j];
-                grid[i][j].display(false);
-                done=1;
-                std::cout << "done" << std::endl;
+            if (grid[i][j].isFalling()) {
+                moved = grid[i][j].move(grid, Down);
             }
             
-            if(!grid[i][14].isHidden() && grid[i][14].getState() != Grounded ) {
-                grid[i][14].setState(Grounded);
-                grid[i][14].setColor(sf::Color::Red);
-                done=1;
-            }
-            if(!grid[i][j+1].isHidden() && !grid[i][j].isHidden() && grid[i][j].getState() != Grounded) {
+            if(!grid[i][j+1].isHidden() && !grid[i][j].isHidden()) {
                 grid[i][j].setState(Grounded);
                 grid[i][j].setColor(sf::Color::Red);
-                done=1;
             }
-
         }
     }
 
-    if(done==0) {
+    if(!moved && grid[5][0].isHidden()) {
         blockDisplay({5,0},true);
+        grid[5][0].setState(Falling);
     }
 }
 
@@ -68,8 +59,7 @@ void GameGrid::initGrid() {
         }
     }
 
-        blockDisplay({1,1}, true);
-
+    input = new Input();
     
 }
 
@@ -89,29 +79,24 @@ void GameGrid::render(sf::RenderTarget *target){
 }
 
 void GameGrid::blockTick() {
-    int polled = 0;
+    bool moved = false;
+
     for (int8_t i = 0; i < cols; i++) {
         for (int8_t j = rows - 1; j >= 0; j--) {
-            if(!grid[i][j].isHidden() && grid[i][j].getState() == Falling && polled !=1){
-                grid[i][j].pollEvent();
-                if(grid[i][j].direction == Down && j<14 && grid[i][j+1].isHidden()){
-                    grid[i][j+1] = grid[i][j];
-                    grid[i][j].display(false);
-                    polled =1;
-                    std::cout << "Down" << std::endl;
+            if(!grid[i][j].isHidden() && grid[i][j].isFalling() && !moved){
+                if(input->getDirection() == Down && j < 14){
+                    moved = grid[i][j].move(grid, Down);
                 }
-                if(grid[i][j].direction == Left && i>0 && grid[i-1][j].isHidden()){
-                    grid[i-1][j] = grid[i][j];
-                    grid[i][j].display(false);
-                    polled=1;
-                    std::cout << "Left" << std::endl;
+                if(input->getDirection() == Left && i > 0){
+                    moved = grid[i][j].move(grid, Left);
                 }
-                if(grid[i][j].direction == Right && i<9 && grid[i+1][j].isHidden()){
-                    grid[i+1][j] = grid[i][j];
-                    grid[i][j].display(false);
-                    polled=1;
-                    std::cout << "Right" << std::endl;
-                }   
+                if(input->getDirection() == Right && i < 9){
+                    moved = grid[i][j].move(grid, Right);
+                } 
+                if(!grid[i][14].isHidden() && grid[i][14].getState() != Grounded) {
+                    grid[i][14].setState(Grounded);
+                    grid[i][14].setColor(sf::Color::Red);
+                }  
             }
         }
     }
@@ -119,9 +104,10 @@ void GameGrid::blockTick() {
 }
 
 
-
 void GameGrid::update() {
-    if(!(tick % 10)) {
+    input->pollEvent();
+
+    if(!(tick % 5)) {
         blockTick();
     }
     if(tick == 60) {
