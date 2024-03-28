@@ -2,9 +2,12 @@
 #define GAME_GRID_HPP
 
 #include "LetterBlock.hpp"
+#include "Input.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/System/NonCopyable.hpp>
 #include <vector>
+
+
 
 /**
  * @class GameGrid
@@ -17,6 +20,8 @@ private:
     uint8_t rows=15;
 
     sf::RectangleShape gridBorder;
+
+    Input *input;
 
     std::vector<std::vector<LetterBlock>> grid;
 
