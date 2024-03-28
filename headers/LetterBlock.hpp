@@ -1,21 +1,20 @@
 #ifndef LETTER_BLOCK_HPP
 #define LETTER_BLOCK_HPP
 
-
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <string>
+#include <vector>
+
+#include "Input.hpp"
 
 
-typedef enum {
+enum State {
     Falling,
-    Grounded
-} State;
-
-typedef enum {
-    None, Down, Left, Right
-} Direction;
+    Grounded,
+    Fixed
+};
 
 
 
@@ -75,6 +74,8 @@ public:
     State getState() { return state;}
     void setState(State state) {this->state = state;}
 
+    bool move(std::vector<std::vector<LetterBlock>> &grid, Direction direction);
+
     
 
     /**
@@ -110,10 +111,9 @@ public:
 
     void render(sf::RenderTarget *target);
 
+    sf::Vector2u getPosition(const std::vector<std::vector<LetterBlock>> &grid) const;
 
-    Direction direction;
-
-    void pollEvent();
+    bool isFalling();
 
 };
 
