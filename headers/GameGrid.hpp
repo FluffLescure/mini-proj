@@ -4,6 +4,7 @@
 #include "LetterBlock.hpp"
 #include "Input.hpp"
 #include "GameGrid.hpp"
+#include "GameWordle.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/System/NonCopyable.hpp>
 #include <vector>
