@@ -46,6 +46,7 @@ private:
     /** 
      * Stores a single instance of the class to access class configs and
      * resources.
+     * The static descriptor allows it to be accessible outside the object
     */ 
     static Config *instance;
 
@@ -81,9 +82,9 @@ public:
     /**
      * @brief Allows access to configs and resources by retrieving an instance of
      * the Class.
-     * @returns  UNFINISHED
+     * @returns A Config pointer to access configs
     */
-    static Config *getInstance();
+    static Config* getInstance();
 
     // Deletion of copy constructors as per its singleton property.
     Config(const Config&) = delete;
@@ -97,6 +98,8 @@ public:
     const int window_framerate = 60;
     const sf::Vector2f block_size = {33.2, 32.6};
     const std::string window_title = "Lettris";
+    const uint8_t gamegrid_rows = 15;
+    const uint8_t gamegrid_cols = 10;
 
     // Preloaded resources of the game
     sf::Font *font;
