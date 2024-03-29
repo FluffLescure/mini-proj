@@ -1,9 +1,10 @@
 #include "../headers/LetterBlock.hpp"
-#include <iostream>
-#include <SFML/Graphics.hpp>
-#include <../headers/Config.hpp>
-#include <stdlib.h>
 
+#include <iostream>
+#include <stdlib.h>
+#include <SFML/Graphics.hpp>
+
+#include "../headers/Config.hpp"
 
 
 void LetterBlock::display(bool visible) {
@@ -112,7 +113,7 @@ bool LetterBlock::move(Blockgrid &grid, Direction direction){
             }
             return true;
         case Left:
-            if (grid[i - 1][j].isHidden() && i > 0) {
+            if ( i > 0 && grid[i - 1][j].isHidden()) {
                 grid[i - 1][j] = grid[i][j];
                 grid[i][j].display(false);
                 grid[i][j].setState(State::Fixed);
