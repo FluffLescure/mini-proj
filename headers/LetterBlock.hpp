@@ -1,15 +1,20 @@
 #ifndef LETTER_BLOCK_HPP
 #define LETTER_BLOCK_HPP
 
+#include <string>
+#include <vector>
+
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
-#include <string>
-#include <vector>
 
 #include "Input.hpp"
 
 
+/**
+* @enum State
+* @brief Possible states of the LetterBlock: Falling, Grounded, Fixed
+*/
 enum State {
     Falling,
     Grounded,
@@ -21,15 +26,15 @@ enum State {
 /**
  * \class LetterBlock
  *
- * \brief Blocks containing letters which will be used to build the tetris program
- * inside the grid.
+ * \brief Blocks containing letters which will be used by the grid to create
+ * chunks
  *
- * \note The default set size is 100x100px as specified in constructor.
+ * \note The default set size is 33.2x32.6px as specified in Config.
  *
  * \remark AlLows for simple display operations such as hiding the block or changing
  * it's fill color.
  * \code
- * LetterBlock block();            // defaults to a 100x100px block whith a ' '
+ * LetterBlock block();            // defaults to a 33.2x32.6px block whith a ' '
  *                                    character
  * block.setColor(sf::Color::Red); // fills the block in red
  * block.display(false);           // hides the block (alpha = 0)
@@ -49,13 +54,13 @@ enum State {
  */
 class LetterBlock {
 
+    // Macro of a 2D grid of LetterBlock used for legibility reasons
     typedef std::vector<std::vector<LetterBlock>> Blockgrid;
 
 
 private:
     sf::Text letter;
     sf::RectangleShape block;
-    sf::Font font;
     State state;
 
 
