@@ -1,4 +1,5 @@
 #include "../headers/GameGrid.hpp"
+#include "../headers/Config.hpp"
 #include <iostream>
 
 void GameGrid::gridTick() {
@@ -44,11 +45,17 @@ void GameGrid::blockDisplay(sf::Vector2u posInit, sf::Vector2u span, bool visibl
 }
 
 void GameGrid::initGrid() {
+    Config *config = Config::getInstance(); 
+    rows = config->gamegrid_rows;
+    cols = config->gamegrid_cols;
+
+
     gridBorder = sf::RectangleShape(sf::Vector2f(336, 486));
     gridBorder.setPosition(sf::Vector2f(312, 27));
     gridBorder.setOutlineColor(sf::Color(125, 125, 125));
     gridBorder.setOutlineThickness(5);
     gridBorder.setFillColor(sf::Color(0, 0, 0, 0));
+    
 
     grid = Blockgrid(cols, std::vector<LetterBlock>(rows));
 
@@ -63,14 +70,14 @@ void GameGrid::initGrid() {
     
 }
 
-GameGrid::GameGrid(uint8_t cols, uint8_t rows) : cols(cols), rows(rows) {
+GameGrid::GameGrid() {
     initGrid();
 }
 
 
 void GameGrid::render(sf::RenderTarget *target){
-
     target->draw(gridBorder);
+
     for(int j = 0; j < rows; j++ ){
         for (int i = 0; i< cols; i++){
             grid[i][j].render(target);
@@ -94,7 +101,7 @@ void GameGrid::blockTick() {
                     moved = grid[i][j].move(grid, Right);
             }
             if(!grid[i][14].isHidden() && grid[i][14].getState() != Grounded) {
-                grid[i][14].setState(Grounded);
+                grid[i][14].setState(State::Grounded);
                 grid[i][14].setColor(sf::Color::Red);
             }  
         }

@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 
+// First instance of Config is set null before getInstance() is called
 Config* Config::instance = nullptr;
 
 
@@ -19,6 +20,7 @@ Config::~Config() {
 
 
 Config* Config::getInstance() {
+    // if there isn't yet any instance, create one, else return the current instance
     if (instance == nullptr)
         instance = new Config();
     return instance;
@@ -36,6 +38,7 @@ void Config::loadLayout() {
     float x,y;
     std::ifstream file(layout_file);
 
+    // Loads x and y coords to a map
     while (file >> x >> y) {
         layoutPoints.push_back(sf::Vector2f(x, y));
     }
