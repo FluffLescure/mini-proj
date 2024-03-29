@@ -1,4 +1,5 @@
 #include "../headers/GameGrid.hpp"
+#include "../headers/Config.hpp"
 #include <iostream>
 
 void GameGrid::gridTick() {
