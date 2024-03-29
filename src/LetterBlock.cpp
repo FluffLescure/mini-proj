@@ -82,7 +82,7 @@ void LetterBlock::operator=(LetterBlock& LB) {
     state = LB.getState();
 }
 
-sf::Vector2u LetterBlock::getPosition(const std::vector<std::vector<LetterBlock>>& grid) const {
+sf::Vector2u LetterBlock::getPosition(const Blockgrid& grid) const {
     for (size_t i = 0; i < grid.size(); ++i) {
         for (size_t j = 0; j < grid[i].size(); ++j) {
             if (&grid[i][j] == this) {
@@ -99,7 +99,7 @@ bool LetterBlock::isFalling() {
     return false;
 }
 
-bool LetterBlock::move(std::vector<std::vector<LetterBlock>> &grid, Direction direction){
+bool LetterBlock::move(Blockgrid &grid, Direction direction){
     sf::Vector2u pos = getPosition(grid);
     int8_t i = pos.x, j = pos.y;
 

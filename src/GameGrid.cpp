@@ -50,7 +50,7 @@ void GameGrid::initGrid() {
     gridBorder.setOutlineThickness(5);
     gridBorder.setFillColor(sf::Color(0, 0, 0, 0));
 
-    grid = std::vector<std::vector<LetterBlock>>(cols, std::vector<LetterBlock>(rows));
+    grid = Blockgrid(cols, std::vector<LetterBlock>(rows));
 
     for(int j=0; j < rows; j++ ){
         for (int i=0; i < cols; i++){

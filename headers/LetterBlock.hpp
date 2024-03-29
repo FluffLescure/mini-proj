@@ -48,6 +48,10 @@ enum State {
  *
  */
 class LetterBlock {
+
+    typedef std::vector<std::vector<LetterBlock>> Blockgrid;
+
+
 private:
     sf::Text letter;
     sf::RectangleShape block;
@@ -56,6 +60,7 @@ private:
 
 
 public:
+
     LetterBlock(std::string str);
     LetterBlock();
 
@@ -74,7 +79,7 @@ public:
     State getState() { return state;}
     void setState(State state) {this->state = state;}
 
-    bool move(std::vector<std::vector<LetterBlock>> &grid, Direction direction);
+    bool move(Blockgrid &grid, Direction direction);
 
     
 
@@ -111,10 +116,12 @@ public:
 
     void render(sf::RenderTarget *target);
 
-    sf::Vector2u getPosition(const std::vector<std::vector<LetterBlock>> &grid) const;
+    sf::Vector2u getPosition(const Blockgrid &grid) const;
 
     bool isFalling();
 
 };
+
+
 
 #endif
