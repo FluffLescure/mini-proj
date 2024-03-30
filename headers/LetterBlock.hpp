@@ -76,12 +76,12 @@ public:
      * @param color The sf::Color to be set
      */
     void setColor(sf::Color color) { block.setFillColor(color); }
-    void setLetter(sf::Text letter) { this->letter = letter; }
     void setLetter(std::string letter = "") { this->letter.setString(letter); }
 
     void setPosition(sf::Vector2f pos);
 
     State getState() { return state;}
+
     void setState(State state) {this->state = state;}
 
     bool move(Blockgrid &grid, Direction direction);
@@ -103,12 +103,6 @@ public:
      * @brief Returns a copy of the block attribute
      */
     sf::RectangleShape getBlock() const { return block; }
-
-    /**
-     * @brief Returns a reference to the letter attribute
-     * @warning Allows for direct modification to the attribute outside class scope
-     */
-    sf::Text& fetchLetter() { return letter; }
 
     /**
      * @brief Decides whether to hide or display the LetterBlock
