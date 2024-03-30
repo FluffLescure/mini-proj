@@ -101,11 +101,13 @@ bool LetterBlock::isState(State state) {
 
 bool LetterBlock::move(Blockgrid &grid, Direction direction){
     sf::Vector2u pos = getPosition(grid);
-    int8_t i = pos.x, j = pos.y;
+    uint8_t rows = Config::getInstance()->gamegrid_rows;
+    uint8_t cols = Config::getInstance()->gamegrid_cols;
+    uint8_t i = pos.x, j = pos.y;
 
     switch(direction) {
         case Down:
-            if (j < 14 && grid[i][j + 1].isHidden() ) {
+            if (j < rows - 1 && grid[i][j + 1].isHidden() ) {
                 grid[i][j + 1] = grid[i][j];
                 grid[i][j].display(false);
                 grid[i][j].setState(State::Fixed);
@@ -119,7 +121,7 @@ bool LetterBlock::move(Blockgrid &grid, Direction direction){
             }
             return true;
         case Right:
-            if (i < 9 && grid[i + 1][j].isHidden()) {
+            if (i < cols - 1 && grid[i + 1][j].isHidden()) {
                 grid[i + 1][j] = grid[i][j];
                 grid[i][j].display(false);
                 grid[i][j].setState(State::Fixed);
