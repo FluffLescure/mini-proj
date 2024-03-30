@@ -86,7 +86,11 @@ public:
 
     bool move(Blockgrid &grid, Direction direction);
 
-    
+    /**
+     * @brief Sets the letter attribute to a capitalized letter between A-Z
+     */
+    void randomizeLetter();
+
 
     /**
      * @brief Returns a copy of the letter attribute
