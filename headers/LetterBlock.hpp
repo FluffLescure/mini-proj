@@ -89,7 +89,7 @@ public:
     /**
      * @brief Sets the letter attribute to a capitalized letter between A-Z
      */
-    void randomizeLetter();
+    void randLetter();
 
 
     /**
