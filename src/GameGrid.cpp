@@ -19,6 +19,7 @@ void GameGrid::gridTick() {
     if(!blocks_moved && grid[5][0].isHidden()) {
         blockDisplay({5,0},true);
         grid[5][0].setState(State::Falling);
+        grid[5][0].randLetter();
     }
 }
 

@@ -16,7 +16,6 @@ void LetterBlock::display(bool visible) {
     if (visible){
         block_color.a = 255;
         letter_color.a = 255;
-        randomizeLetter();
     }
     else {
         block_color.a = 50;
@@ -57,7 +56,6 @@ void LetterBlock::initBlock() {
 
 
 void LetterBlock::initLetter(std::string str) {
-    randomizeLetter();
     letter.setCharacterSize(24);
     letter.setFillColor(sf::Color::Black);
     letter.setFont(*(Config::getInstance()->font));
@@ -135,7 +133,7 @@ bool LetterBlock::move(Blockgrid &grid, Direction direction){
 
 
 
-void LetterBlock::randomizeLetter()
+void LetterBlock::randLetter()
 {
 	static unsigned seed = time(0);
     static int k = 0;
