@@ -12,8 +12,9 @@
 *
 * @remark The class' main function is to display and update each 
 * layout block with an aggregation link and through methods render() 
-* and update()
-*
+* and update(). The update() method is used for back-end changes
+* while render() will exclusively be used to render drawables to 
+* window.
 */
 class GameDisplay {
 private:
@@ -40,7 +41,7 @@ public:
 
     /**
     * @brief Renders blocks and layout of the game 
-    * @param *target the renderer shared with other classes
+    * @param *target the renderer shared to other classes
     */
     void render(sf::RenderTarget *target);
 
