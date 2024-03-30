@@ -117,7 +117,7 @@ public:
 
     void initBlock();
 
-    void initLetter(std::string str = "M");
+    void initLetter(std::string str = "");
 
     void render(sf::RenderTarget *target);
 
