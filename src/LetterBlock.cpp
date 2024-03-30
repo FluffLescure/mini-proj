@@ -16,7 +16,6 @@ void LetterBlock::display(bool visible) {
     if (visible){
         block_color.a = 255;
         letter_color.a = 255;
-        randomizeLetter();
     }
     else {
         block_color.a = 50;
@@ -43,7 +42,7 @@ LetterBlock::LetterBlock(std::string str) {
 
 LetterBlock::LetterBlock() {
     initBlock();
-    initLetter("A");
+    initLetter();
 }
 
 void LetterBlock::initBlock() {
@@ -57,19 +56,16 @@ void LetterBlock::initBlock() {
 
 
 void LetterBlock::initLetter(std::string str) {
-    randomizeLetter();
+    //Do not remove
+    letter.setString(str); // Can not be an empty char or string becasue the string bounds are needed to set the position of the letter centered
     letter.setCharacterSize(24);
     letter.setFillColor(sf::Color::Black);
     letter.setFont(*(Config::getInstance()->font));
-
 }
 
 void LetterBlock::setPosition(sf::Vector2f pos) {
     block.setPosition(pos);
-
-    //Found online, allows for centering of letters inside the block
-    letter.setOrigin(letter.getGlobalBounds().getSize() / 2.f + letter.getLocalBounds().getPosition());
-    letter.setPosition(block.getPosition() + (block.getSize() / 2.f));
+    centerLetter();
 }   
 
 void LetterBlock::render(sf::RenderTarget *target) {
@@ -82,6 +78,7 @@ void LetterBlock::operator=(LetterBlock& LB) {
     this->block.setOutlineColor(LB.getBlock().getOutlineColor());
     this->letter.setString(LB.getLetter().getString());
     this->letter.setFillColor(LB.getLetter().getFillColor());
+    centerLetter();
     state = LB.getState();
 }
 
@@ -96,8 +93,8 @@ sf::Vector2u LetterBlock::getPosition(const Blockgrid& grid) const {
     return sf::Vector2u(-1, -1);
 }
 
-bool LetterBlock::isFalling() {
-    if(state == Falling)
+bool LetterBlock::isState(State state) {
+    if(this->state == state)
         return true;
     return false;
 }
@@ -108,7 +105,7 @@ bool LetterBlock::move(Blockgrid &grid, Direction direction){
 
     switch(direction) {
         case Down:
-            if (grid[i][j + 1].isHidden() && j < 14) {
+            if (j < 14 && grid[i][j + 1].isHidden() ) {
                 grid[i][j + 1] = grid[i][j];
                 grid[i][j].display(false);
                 grid[i][j].setState(State::Fixed);
@@ -135,7 +132,7 @@ bool LetterBlock::move(Blockgrid &grid, Direction direction){
 
 
 
-void LetterBlock::randomizeLetter()
+void LetterBlock::randLetter()
 {
 	static unsigned seed = time(0);
     static int k = 0;
@@ -143,4 +140,13 @@ void LetterBlock::randomizeLetter()
     std::cout << k << std::endl;
 	srand(seed+k);
 	letter.setString((char)('A' + rand() % 26));
+    centerLetter();
+}
+
+void LetterBlock::centerLetter() {
+    
+    //Found online, allows for centering of letters inside the block
+    
+    letter.setOrigin(letter.getGlobalBounds().getSize() / 2.f + letter.getLocalBounds().getPosition());
+    letter.setPosition(block.getPosition() + (block.getSize() / 2.f));
 }

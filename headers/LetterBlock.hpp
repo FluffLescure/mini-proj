@@ -91,6 +91,8 @@ public:
      */
     void randLetter();
 
+    void centerLetter();
+
 
     /**
      * @brief Returns a copy of the letter attribute
@@ -121,13 +123,13 @@ public:
 
     void initBlock();
 
-    void initLetter(std::string str = " ");
+    void initLetter(std::string str = "M");
 
     void render(sf::RenderTarget *target);
 
     sf::Vector2u getPosition(const Blockgrid &grid) const;
 
-    bool isFalling();
+    bool isState(State state);
 
 };
 

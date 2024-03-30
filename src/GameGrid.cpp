@@ -5,20 +5,16 @@
 void GameGrid::gridTick() {
     bool blocks_moved = false;
     for (int8_t i = 0; i < cols; i++) {
-        for (int8_t j = rows - 2; j >= 0; j--) {
-            if (grid[i][j].isFalling())
+        for (int8_t j = rows - 1; j >= 0; j--) {
+            if (grid[i][j].isState(Falling))
                 blocks_moved = grid[i][j].move(grid, Down);
-            
-            if(!grid[i][j+1].isHidden() && !grid[i][j].isHidden()) {
-                grid[i][j].setState(Grounded);
-                grid[i][j].setColor(sf::Color::Red);
-            }
         }
     }
 
     if(!blocks_moved && grid[5][0].isHidden()) {
         blockDisplay({5,0},true);
         grid[5][0].setState(State::Falling);
+        grid[5][0].randLetter();
     }
 }
 
@@ -90,7 +86,7 @@ void GameGrid::blockTick() {
 
     for (int8_t i = 0; i < cols; i++) {
         for (int8_t j = rows - 1; j >= 0; j--) {
-            if(!grid[i][j].isHidden() && grid[i][j].isFalling() && !moved){
+            if(!grid[i][j].isHidden() && grid[i][j].isState(Falling) && !moved){
                 if(input->getDirection() == Down)
                     moved = grid[i][j].move(grid, Down);
 
@@ -100,10 +96,7 @@ void GameGrid::blockTick() {
                 if(input->getDirection() == Right)
                     moved = grid[i][j].move(grid, Right);
             }
-            if(!grid[i][14].isHidden() && grid[i][14].getState() != Grounded) {
-                grid[i][14].setState(State::Grounded);
-                grid[i][14].setColor(sf::Color::Red);
-            }  
+            groundBlock(i,j);
         }
     }
 
@@ -121,4 +114,19 @@ void GameGrid::update() {
         tick = 0;
     }
     tick++;
+}
+
+void GameGrid::groundBlock(uint8_t i, uint8_t j) {
+    if(!grid[i][j].isState(Falling))
+        return;
+
+    if(j < 14 && grid[i][j+1].isState(Grounded)) {
+        grid[i][j].setState(Grounded);
+        grid[i][j].setColor(sf::Color::Red);
+    }
+
+    if(j == 14) {
+        grid[i][14].setState(State::Grounded);
+        grid[i][14].setColor(sf::Color::Red);
+    }
 }
