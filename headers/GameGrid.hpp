@@ -64,6 +64,8 @@ public:
 
     void update();
 
+    void groundBlock(uint8_t i, uint8_t j);
+
 };
 
 #endif
