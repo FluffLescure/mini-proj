@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <SFML/Graphics.hpp>
+#include <ctime>
 
 #include "../headers/Config.hpp"
 
@@ -15,6 +16,7 @@ void LetterBlock::display(bool visible) {
     if (visible){
         block_color.a = 255;
         letter_color.a = 255;
+        randomizeLetter();
     }
     else {
         block_color.a = 50;
@@ -55,7 +57,7 @@ void LetterBlock::initBlock() {
 
 
 void LetterBlock::initLetter(std::string str) {
-    letter.setString(str);
+    randomizeLetter();
     letter.setCharacterSize(24);
     letter.setFillColor(sf::Color::Black);
     letter.setFont(*(Config::getInstance()->font));
@@ -129,4 +131,16 @@ bool LetterBlock::move(Blockgrid &grid, Direction direction){
         default:
             return false;
     }
+}
+
+
+
+void LetterBlock::randomizeLetter()
+{
+	static unsigned seed = time(0);
+    static int k = 0;
+	k++;
+    std::cout << k << std::endl;
+	srand(seed+k);
+	letter.setString((char)('A' + rand() % 26));
 }
