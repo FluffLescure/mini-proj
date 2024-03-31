@@ -86,7 +86,7 @@ public:
     /**
      * @brief Default class constructor that can accept a letter to display
     */
-    LetterBlock(std::string str = "");
+    LetterBlock(char str = ' ');
 
     /**
      * @brief Operator used for the sole purpose of transfering the LetterBlock
@@ -104,7 +104,7 @@ public:
     /**
      * @brief Initialises the letter with a set of given properties
     */
-    void initLetter(std::string str = "");
+    void initLetter(char str = ' ');
 
     /**
      * @brief Changes the color of the LetterBlock filler
@@ -115,7 +115,7 @@ public:
      * @brief Changes the letter of the LetterBlock 
      * @param letter the letter to be set
      */
-    void setLetter(std::string letter = "") { this->letter.setString(letter); }
+    void setLetter(char letter = ' ') { this->letter.setString(letter); }
     /**
      * @brief Changes the state of the LetterBlock 
      * @param state the state to be set

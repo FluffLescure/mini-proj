@@ -36,7 +36,7 @@ bool LetterBlock::isHidden() {
         return false;
 }
 
-LetterBlock::LetterBlock(std::string str) {
+LetterBlock::LetterBlock(char str) {
     initBlock();
     initLetter(str);
 }
@@ -51,7 +51,7 @@ void LetterBlock::initBlock() {
 
 
 
-void LetterBlock::initLetter(std::string str) {
+void LetterBlock::initLetter(char str) {
     letter.setString(str);
     letter.setCharacterSize(24);
     letter.setFillColor(sf::Color::Black);

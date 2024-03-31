@@ -26,7 +26,7 @@ void GameGrid::blockDestroy(sf::Vector2u posInit, sf::Vector2u span) {
     for (uint8_t j = posInit.y; j < posInit.y + span.y; j++) {
         for (uint8_t i = posInit.x; i < posInit.x + span.x; i++) {
             grid[i][j].display(false);
-            grid[i][j].setLetter("");
+            grid[i][j].setLetter(' ');
             grid[i][j].setState(State::Fixed);
         }
     }
