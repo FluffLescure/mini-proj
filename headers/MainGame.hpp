@@ -3,6 +3,7 @@
 #define MAIN_GAME_HPP
 
 #include <SFML/Graphics.hpp>
+
 #include "GameDisplay.hpp"
 #include "Config.hpp"
 

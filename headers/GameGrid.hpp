@@ -1,12 +1,14 @@
 #ifndef GAME_GRID_HPP
 #define GAME_GRID_HPP
 
-#include "LetterBlock.hpp"
-#include "Input.hpp"
-#include "GameWordle.hpp"
+
 #include <SFML/Graphics.hpp>
 #include <SFML/System/NonCopyable.hpp>
 #include <vector>
+
+#include "LetterBlock.hpp"
+#include "Input.hpp"
+#include "GameWordle.hpp"
 
 // Macro of a 2D grid of LetterBlock used for legibility reasons
 typedef std::vector<std::vector<LetterBlock>> Blockgrid;
