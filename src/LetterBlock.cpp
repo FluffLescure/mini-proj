@@ -9,6 +9,7 @@
 
 
 void LetterBlock::display(bool visible) {
+    //retrieves the current block colors
     sf::Color block_color = block.getFillColor();
     sf::Color letter_color = letter.getFillColor();    
 
@@ -40,13 +41,8 @@ LetterBlock::LetterBlock(std::string str) {
     initLetter(str);
 }
 
-LetterBlock::LetterBlock() {
-    initBlock();
-    initLetter();
-}
-
 void LetterBlock::initBlock() {
-    block = sf::RectangleShape(sf::Vector2f(33.6,32.4));
+    block = sf::RectangleShape(Config::getInstance()->block_size);
     block.setFillColor(sf::Color(175,175,175));
     block.setOutlineColor(sf::Color(75,75,75));
     block.setOutlineThickness(1);  
@@ -56,8 +52,7 @@ void LetterBlock::initBlock() {
 
 
 void LetterBlock::initLetter(std::string str) {
-    //Do not remove
-    letter.setString(str); // Can not be an empty char or string becasue the string bounds are needed to set the position of the letter centered
+    letter.setString(str);
     letter.setCharacterSize(24);
     letter.setFillColor(sf::Color::Black);
     letter.setFont(*(Config::getInstance()->font));
@@ -74,15 +69,18 @@ void LetterBlock::render(sf::RenderTarget *target) {
 }
 
 void LetterBlock::operator=(LetterBlock& LB) {
+    // Block colors, letter and state are transfered
     this->block.setFillColor(LB.getBlock().getFillColor());
     this->block.setOutlineColor(LB.getBlock().getOutlineColor());
     this->letter.setString(LB.getLetter().getString());
     this->letter.setFillColor(LB.getLetter().getFillColor());
-    centerLetter();
+    centerLetter(); // guarantees that the new letter is centered
     state = LB.getState();
 }
 
 sf::Vector2u LetterBlock::getPosition(const Blockgrid& grid) const {
+    // Runs throught the entire the grid comparing the memory address of each block 
+    // with the current one to find its coordinates
     for (size_t i = 0; i < grid.size(); ++i) {
         for (size_t j = 0; j < grid[i].size(); ++j) {
             if (&grid[i][j] == this) {
@@ -90,7 +88,7 @@ sf::Vector2u LetterBlock::getPosition(const Blockgrid& grid) const {
             }
         }
     }
-    return sf::Vector2u(-1, -1);
+    return sf::Vector2u(-1, -1); // if not found throws the following coords
 }
 
 bool LetterBlock::isState(State state) {
@@ -136,6 +134,7 @@ bool LetterBlock::move(Blockgrid &grid, Direction direction){
 
 void LetterBlock::randLetter()
 {
+    // static descriptor are used to keep the variable in memory between calls
 	static unsigned seed = time(0);
     static int k = 0;
 	k++;
