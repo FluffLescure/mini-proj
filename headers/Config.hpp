@@ -96,7 +96,7 @@ public:
     // Global configs of the game
     const sf::Vector2i window_size = {960, 540};
     const int window_framerate = 60;
-    const sf::Vector2f block_size = {33.2, 32.6};
+    const sf::Vector2f block_size = {33.6, 32.4};
     const std::string window_title = "Lettris";
     const uint8_t gamegrid_rows = 15;
     const uint8_t gamegrid_cols = 10;
