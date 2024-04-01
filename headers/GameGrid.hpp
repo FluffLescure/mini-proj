@@ -45,7 +45,7 @@ private:
 
     // Agregated classes
     Input *input;
-    GameWordle *wordle;
+    Dictionnary *dico;
 
     // The 2D grid where the game takes place
     Blockgrid grid;
