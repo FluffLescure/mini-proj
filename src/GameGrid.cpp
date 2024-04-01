@@ -74,6 +74,7 @@ void GameGrid::initGrid() {
 GameGrid::GameGrid() {
     initGrid();
     input = new Input();
+    dico = new Dictionnary();
 }
 
 
