@@ -8,7 +8,7 @@
 
 #include "LetterBlock.hpp"
 #include "Input.hpp"
-#include "GameWordle.hpp"
+#include "GameDictionnary.hpp"
 
 // Macro of a 2D grid of LetterBlock used for legibility reasons
 typedef std::vector<std::vector<LetterBlock>> Blockgrid;
