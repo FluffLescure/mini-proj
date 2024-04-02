@@ -1,4 +1,4 @@
-#include "../headers/GameWordle.hpp"
+#include "../headers/GameDictionnary.hpp"
 
 
 #include<iostream>
