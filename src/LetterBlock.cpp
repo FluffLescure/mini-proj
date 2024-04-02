@@ -5,7 +5,11 @@
 #include <SFML/Graphics.hpp>
 #include <ctime>
 
+#include <random>
+
+
 #include "../headers/Config.hpp"
+
 
 
 void LetterBlock::display(bool visible) {
@@ -134,14 +138,13 @@ bool LetterBlock::move(Blockgrid &grid, Direction direction){
 
 void LetterBlock::randLetter()
 {
+    int max = 25,min=0;
+
+    setLetter((char) 'A'+ ((double) rand() / (RAND_MAX+1)) * (max-min+1) + min);
+    centerLetter();     
+
     // static descriptor are used to keep the variable in memory between calls
-	static unsigned seed = time(0);
-    static int k = 0;
-	k++;
-    std::cout << k << std::endl;
-	srand(seed+k);
-	letter.setString((char)('A' + rand() % 26));
-    centerLetter();
+	
 }
 
 void LetterBlock::centerLetter() {
