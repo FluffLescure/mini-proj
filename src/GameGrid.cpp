@@ -6,6 +6,28 @@ void GameGrid::gridTick() {
     // This is variable used to determine if the grid has changed or not
     bool blocks_moved = false;
 
+    std::string mot;
+
+    for (int l = 2; l < cols;l++){
+        for (int x=0;x<cols-l;x++){
+            for (int y=0;y<rows;y++){
+                mot = "";
+                for(int i=0;i<l;i++){
+                    if(!grid[x+i][y].isHidden()){
+                        mot += grid[x+i][y].getLetter().getString();
+                    }
+                }
+                std::cout << mot << std::endl;
+                if (dico->IsInside(mot)){
+                    std::cout << "-------------------------------------------------------------------" << std::endl;
+                    std::cout << mot << std::endl;
+                    blockDestroy({x,y},{1,1});
+                }
+            }
+        }
+    }
+
+
     // Moves the LetterBlocks that are falling 
     for (int8_t i = 0; i < cols; i++) {
         for (int8_t j = rows - 1; j >= 0; j--) {
