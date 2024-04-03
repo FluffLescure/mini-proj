@@ -1,6 +1,8 @@
-#include "../headers/Input.hpp"
 
 #include <SFML/Window/Keyboard.hpp>
+
+#include "../headers/Input.hpp"
+
 
 void Input::pollEvent() {
     direction = Direction::Unchanged;
