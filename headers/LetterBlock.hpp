@@ -1,8 +1,8 @@
 #ifndef LETTER_BLOCK_HPP
 #define LETTER_BLOCK_HPP
 
-#include <string>
-#include <vector>
+#include<string>
+#include<vector>
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -95,8 +95,12 @@ public:
      * blocks by transfering letter and fill color to the next.
      * @param &block the block that will be transfered.
     */
-    void operator=(LetterBlock& block);
+    void operator =(LetterBlock& block);
 
+    /**
+     * @brief conversion operator to string which will allow to extract the block's
+     * letter more intuitively
+    */
     operator std::string() const { return letter.getString().toAnsiString(); }
 
     /**
