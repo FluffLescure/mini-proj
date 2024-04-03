@@ -97,6 +97,8 @@ public:
     */
     void operator=(LetterBlock& block);
 
+    operator std::string() const { return letter.getString().toAnsiString(); }
+
     /**
      * @brief Initialises the block with a set of given properties
     */

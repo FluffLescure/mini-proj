@@ -112,6 +112,7 @@ bool LetterBlock::move(Blockgrid &grid, Direction direction){
             if (j < rows - 1 && grid[i][j + 1].isHidden() ) {
                 grid[i][j + 1] = grid[i][j];
                 grid[i][j].display(false);
+                grid[i][j].setLetter(' ');
                 grid[i][j].setState(State::Fixed);
             }
             return true;
@@ -119,6 +120,7 @@ bool LetterBlock::move(Blockgrid &grid, Direction direction){
             if ( i > 0 && grid[i - 1][j].isHidden()) {
                 grid[i - 1][j] = grid[i][j];
                 grid[i][j].display(false);
+                grid[i][j].setLetter(' ');
                 grid[i][j].setState(State::Fixed);
             }
             return true;
@@ -126,6 +128,7 @@ bool LetterBlock::move(Blockgrid &grid, Direction direction){
             if (i < cols - 1 && grid[i + 1][j].isHidden()) {
                 grid[i + 1][j] = grid[i][j];
                 grid[i][j].display(false);
+                grid[i][j].setLetter(' ');
                 grid[i][j].setState(State::Fixed);
             }
             return true;
@@ -139,12 +142,9 @@ bool LetterBlock::move(Blockgrid &grid, Direction direction){
 void LetterBlock::randLetter()
 {
     int max = 25,min=0;
-
-    setLetter((char) 'A'+ ((double) rand() / (RAND_MAX+1)) * (max-min+1) + min);
-    centerLetter();     
-
-    // static descriptor are used to keep the variable in memory between calls
-	
+    int r = ((double) rand() / (RAND_MAX+1)) * (max-min+1) + min;
+    setLetter((char) 'A'+ r);
+    centerLetter();     	
 }
 
 void LetterBlock::centerLetter() {
