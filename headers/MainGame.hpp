@@ -2,10 +2,10 @@
 #ifndef MAIN_GAME_HPP
 #define MAIN_GAME_HPP
 
-#include <SFML/Graphics.hpp>
+#include <SFML/System/NonCopyable.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 #include "GameDisplay.hpp"
-#include "Config.hpp"
 
 class MainGame : sf::NonCopyable {
 

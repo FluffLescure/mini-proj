@@ -1,10 +1,10 @@
 #ifndef GAME_DISPLAY_HPP
 #define GAME_DISPLAY_HPP
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 #include "GameGrid.hpp"
-#include "Config.hpp"
 
 /**
 * @class GameDisplay

@@ -1,6 +1,7 @@
-#include "../headers/GameDisplay.hpp"
 
-#include <fstream>
+#include "../headers/GameDisplay.hpp"
+#include "../headers/Config.hpp"
+
 
 void GameDisplay::initLayout() {
     Config* config = Config::getInstance();

@@ -1,6 +1,11 @@
-#include "../headers/MainGame.hpp"
 
-#include <iostream>
+#include<iostream>
+
+#include <SFML/Window/Event.hpp>
+
+#include "../headers/MainGame.hpp"
+#include "../headers/Config.hpp"
+
 
 void MainGame::initWindow() {
 
