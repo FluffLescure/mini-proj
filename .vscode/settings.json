@@ -48,7 +48,8 @@
         "set": "cpp",
         "optional": "cpp",
         "fstream": "cpp",
-        "istream": "cpp"
+        "istream": "cpp",
+        "list": "cpp"
     },
     "cSpell.enabled": false
 }
