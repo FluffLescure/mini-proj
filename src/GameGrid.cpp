@@ -1,23 +1,25 @@
+
+#include<iostream>
+
 #include "../headers/GameGrid.hpp"
 #include "../headers/Config.hpp"
-#include <iostream>
 
 void GameGrid::gridTick() {
     // This is variable used to determine if the grid has changed or not
-    bool blocks_moved = false;
+    bool blocks_falling = false;
 
     gridDestroy();
 
-    // Moves the LetterBlocks that are falling 
+    // Moves the LetterBlocks that are displayed 
     for (int8_t i = 0; i < cols; i++) {
         for (int8_t j = rows - 1; j >= 0; j--) {
-            if (grid[i][j].isState(Falling))
-                blocks_moved = grid[i][j].move(grid, Down);
+            if (!grid[i][j].isHidden() && grid[i][j].move(grid,Down))
+                blocks_falling = true;
         }
     }
 
-    // if the grid hasn't changed then add a new falling LetterBlock
-    if(!blocks_moved && grid[5][0].isHidden()) {
+    // if no blocks are falling then add a new falling LetterBlock
+    if(!blocks_falling && grid[5][0].isHidden()) {
         blockDisplay({5,0},true);
         grid[5][0].setState(State::Falling);
         grid[5][0].randLetter();
@@ -60,7 +62,7 @@ void GameGrid::initGrid() {
     gridBorder.setFillColor(sf::Color(0, 0, 0, 0));
     
     // Creates the 2D grid and fills it with empty LetterBlocks
-    grid = Blockgrid(cols, std::vector<LetterBlock>(rows));
+    grid = Grid(cols, std::vector<LetterBlock>(rows));
 
     for(int j=0; j < rows; j++ ){
         for (int i=0; i < cols; i++){
@@ -76,7 +78,7 @@ void GameGrid::initGrid() {
 GameGrid::GameGrid() {
     initGrid();
     input = new Input();
-    dictionary = new Dictionary();
+    wordle = new Wordle();
 }
 
 
@@ -154,7 +156,6 @@ std::string GameGrid::crunchCol(int8_t col) {
     std::string crunched_col;
     for(int j = 0; j < rows; j++)
         crunched_col.append(grid[col][j]);
-        printf("here : '%s'\n",crunched_col.c_str());
     return crunched_col;
 }
 
@@ -165,13 +166,13 @@ void GameGrid::gridDestroy(){
 
     for (int row = rows - 1; row >= 0; row--) {
         word = crunchRow(row);
-        sf::Vector2u pos = dictionary->foundHash(word);
+        sf::Vector2u pos = wordle->findWord(word);
         blockDestroy({pos.x, (unsigned)row}, {pos.y, 1});
     }
 
     for (int col = cols - 1; col >= 0; col--) {
         word = crunchCol(col);
-        sf::Vector2u pos = dictionary->foundHash(word);
+        sf::Vector2u pos = wordle->findWord(word);
         blockDestroy({(unsigned)col, pos.x}, {1,pos.y});
     }
 }
