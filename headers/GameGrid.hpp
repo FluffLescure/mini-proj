@@ -1,17 +1,22 @@
 #ifndef GAME_GRID_HPP
 #define GAME_GRID_HPP
 
+#include<stdint.h>
+#include<vector>
 
-#include <SFML/Graphics.hpp>
+
 #include <SFML/System/NonCopyable.hpp>
-#include <vector>
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+
 
 #include "LetterBlock.hpp"
 #include "Input.hpp"
-#include "Dictionary.hpp"
+#include "Wordle.hpp"
 
 // Macro of a 2D grid of LetterBlock used for legibility reasons
-typedef std::vector<std::vector<LetterBlock>> Blockgrid;
+typedef std::vector<std::vector<LetterBlock>> Grid;
 
 
 /**
@@ -45,10 +50,10 @@ private:
 
     // Agregated classes
     Input *input;
-    Dictionary *dictionary;
+    Wordle *wordle;
 
     // The 2D grid where the game takes place
-    Blockgrid grid;
+    Grid grid;
 
     // Game tick counter
     uint8_t tick = 0;
@@ -65,6 +70,9 @@ public:
      */
     void gridTick();
 
+    /**
+     * @brief Destroys all block that form a word from the wordlist
+    */
     void gridDestroy();
 
     /**
@@ -122,8 +130,19 @@ public:
     */
     void groundBlock(uint8_t i, uint8_t j);
 
+    /**
+     * @brief Retreives all the letters from a row and assembles them together into a string
+     * @param row the row that will be crunched
+     * @returns a string of all the letter in the row
+    */
     std::string crunchRow(int8_t row);
 
+
+    /**
+     * @brief Retreives all the letters from a column and assembles them together into a string
+     * @param col the column that will be crunched
+     * @returns a string of all the letter in the column
+    */
     std::string crunchCol(int8_t col);
 
 
