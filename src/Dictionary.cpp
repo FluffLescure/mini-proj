@@ -3,7 +3,6 @@
 
 #include<iostream>
 #include<fstream>
-#include<numeric>
 #include<vector>
 
 

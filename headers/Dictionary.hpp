@@ -19,7 +19,7 @@ class Dictionary {
 
 private:
     std::vector<std::string> dictionary;
-    std::unordered_map<std::string, int> hashmap;
+    std::map<std::string, int> hashmap;
 public:
     Dictionary();
 
