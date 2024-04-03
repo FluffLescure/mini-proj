@@ -1,11 +1,12 @@
 #ifndef CONFIG_HPP
 #define CONFIG_HPP
 
-#include <SFML/Graphics.hpp>
+#include <stdint.h>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/System/Vector2.hpp>
 
 
-//Macro of a map of Vector2f which has been named vec2 for legibility reasons
-typedef std::vector<sf::Vector2f> vec2;
 
 
 /**
@@ -72,10 +73,16 @@ private:
     */
     void loadLayout();
 
+    /**
+     * @brief Loads the wordlist for the wordle in order to identify words contained in the grid.
+    */
+    void loadWordlist();
+
     // Ressources file path 
     const std::string font_file = "resources/Lato-Black.ttf";
     const std::string texture_file = "resources/background_texture.jpg";
     const std::string layout_file = "resources/layout.map";
+    const std::string wordlist_file = "resources/wordlist.txt";
     
 public:
 
@@ -104,7 +111,8 @@ public:
     // Preloaded resources of the game
     sf::Font *font;
     sf::Texture *layoutTex;
-    vec2 layoutPoints;
+    std::vector<sf::Vector2f> layoutPoints;
+    std::vector<std::string> wordlist;
 };
 
 

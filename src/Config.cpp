@@ -1,7 +1,9 @@
+
+#include<fstream>
+#include<iostream>
+
 #include "../headers/Config.hpp"
 
-#include <fstream>
-#include <iostream>
 
 // First instance of Config is set null before getInstance() is called
 Config* Config::instance = nullptr;
@@ -11,6 +13,7 @@ Config::Config() {
     loadFonts();
     loadTextures();
     loadLayout();
+    loadWordlist();
 }
 
 Config::~Config() {
@@ -53,6 +56,21 @@ void Config::loadFonts() {
         std::cout << "ERROR: Failed to load " << font_file << std::endl;
         abort();
     }
+}
+
+void Config::loadWordlist() {
+    std::string word;
+    std::ifstream file(wordlist_file);
+
+    while(file >> word) {
+
+        for(char &c : word)
+            c = std::toupper(c);
+
+        wordlist.push_back(word);
+    }
+
+    file.close();
 }
 
 
