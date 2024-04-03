@@ -1,13 +1,14 @@
+
+
+#include<stdlib.h>
+#include<iostream>
+#include<ctime>
+#include<random>
+
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+
 #include "../headers/LetterBlock.hpp"
-
-#include <iostream>
-#include <stdlib.h>
-#include <SFML/Graphics.hpp>
-#include <ctime>
-
-#include <random>
-
-
 #include "../headers/Config.hpp"
 
 
@@ -114,24 +115,28 @@ bool LetterBlock::move(Blockgrid &grid, Direction direction){
                 grid[i][j].display(false);
                 grid[i][j].setLetter(' ');
                 grid[i][j].setState(State::Fixed);
+                return true;
+
             }
-            return true;
+            return false;
         case Left:
             if ( i > 0 && grid[i - 1][j].isHidden()) {
                 grid[i - 1][j] = grid[i][j];
                 grid[i][j].display(false);
                 grid[i][j].setLetter(' ');
                 grid[i][j].setState(State::Fixed);
+                return true;
             }
-            return true;
+            return false;
         case Right:
             if (i < cols - 1 && grid[i + 1][j].isHidden()) {
                 grid[i + 1][j] = grid[i][j];
                 grid[i][j].display(false);
                 grid[i][j].setLetter(' ');
                 grid[i][j].setState(State::Fixed);
+                return true;
             }
-            return true;
+            return false;
         default:
             return false;
     }
