@@ -6,27 +6,7 @@ void GameGrid::gridTick() {
     // This is variable used to determine if the grid has changed or not
     bool blocks_moved = false;
 
-    std::string mot;
-
-    for (int l = 2; l < cols;l++){
-        for (int x=0;x<cols-l;x++){
-            for (int y=0;y<rows;y++){
-                mot = "";
-                for(int i=0;i<l;i++){
-                    if(!grid[x+i][y].isHidden()){
-                        mot += grid[x+i][y].getLetter().getString();
-                    }
-                }
-                std::cout << mot << std::endl;
-                if (dico->IsInside(mot)){
-                    std::cout << "-------------------------------------------------------------------" << std::endl;
-                    std::cout << mot << std::endl;
-                    blockDestroy({x,y},{1,1});
-                }
-            }
-        }
-    }
-
+    gridDestroy();
 
     // Moves the LetterBlocks that are falling 
     for (int8_t i = 0; i < cols; i++) {
@@ -96,7 +76,7 @@ void GameGrid::initGrid() {
 GameGrid::GameGrid() {
     initGrid();
     input = new Input();
-    dico = new Dictionnary();
+    dictionary = new Dictionary();
 }
 
 
@@ -160,5 +140,38 @@ void GameGrid::groundBlock(uint8_t i, uint8_t j) {
     if(j == rows - 1 || (j < rows - 1 && grid[i][j+1].isState(Grounded))) {
         grid[i][j].setState(Grounded);
         grid[i][j].setColor(sf::Color::Red);
+    }
+}
+
+std::string GameGrid::crunchRow(int8_t row) {
+    std::string crunched_row;
+    for(int i = 0; i < cols; i++)
+        crunched_row.append(grid[i][row]);
+    return crunched_row;
+}
+
+std::string GameGrid::crunchCol(int8_t col) {
+    std::string crunched_col;
+    for(int j = 0; j < rows; j++)
+        crunched_col.append(grid[col][j]);
+        printf("here : '%s'\n",crunched_col.c_str());
+    return crunched_col;
+}
+
+
+void GameGrid::gridDestroy(){
+    std::string word;
+
+
+    for (int row = rows - 1; row >= 0; row--) {
+        word = crunchRow(row);
+        sf::Vector2u pos = dictionary->foundHash(word);
+        blockDestroy({pos.x, (unsigned)row}, {pos.y, 1});
+    }
+
+    for (int col = cols - 1; col >= 0; col--) {
+        word = crunchCol(col);
+        sf::Vector2u pos = dictionary->foundHash(word);
+        blockDestroy({(unsigned)col, pos.x}, {1,pos.y});
     }
 }

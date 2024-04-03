@@ -8,7 +8,7 @@
 
 #include "LetterBlock.hpp"
 #include "Input.hpp"
-#include "GameDictionnary.hpp"
+#include "Dictionary.hpp"
 
 // Macro of a 2D grid of LetterBlock used for legibility reasons
 typedef std::vector<std::vector<LetterBlock>> Blockgrid;
@@ -45,7 +45,7 @@ private:
 
     // Agregated classes
     Input *input;
-    Dictionnary *dico;
+    Dictionary *dictionary;
 
     // The 2D grid where the game takes place
     Blockgrid grid;
@@ -64,6 +64,8 @@ public:
      * @brief Updates the grid to make necessary LetterBlocks fall 1 block lower.
      */
     void gridTick();
+
+    void gridDestroy();
 
     /**
      * @brief Updates the falling blocks based on user input
@@ -119,6 +121,12 @@ public:
      * @param j the row of the block
     */
     void groundBlock(uint8_t i, uint8_t j);
+
+    std::string crunchRow(int8_t row);
+
+    std::string crunchCol(int8_t col);
+
+
 
 };
 
