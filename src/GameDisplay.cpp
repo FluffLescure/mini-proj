@@ -20,6 +20,7 @@ void GameDisplay::initLayout() {
 void GameDisplay::render(sf::RenderTarget *target) {
     target->draw(layout,Config::getInstance()->layoutTex); // renders layout
     game->render(target);
+    logs->render(target);
 }   
 
 void GameDisplay::update() {
@@ -30,8 +31,10 @@ void GameDisplay::update() {
 GameDisplay::GameDisplay() {
     initLayout();
     game = new GameGrid();
+    logs = new GameLogs();
 }
 
 GameDisplay::~GameDisplay() {
     delete game;
+    delete logs;
 }
