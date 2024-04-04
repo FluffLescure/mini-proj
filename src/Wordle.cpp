@@ -19,11 +19,12 @@ void Wordle::initHashmap() {
 
 sf::Vector2u Wordle::findWord(const std::string& word) {
     for (unsigned int i = 0; i < word.length(); i++){
-        for (unsigned int j = 1; i + j <= word.length(); j++){
+        for (unsigned int j = word.length()-i; j >= 1; j--){
 
-             std::string substring = word.substr(i, j);
+            std::string substring = word.substr(i, j);
 
             if (hashmap.find(substring) != hashmap.end() && substring.size() >1) {
+                std::cout << word.substr(i, j) << std::endl;
                 return {i,j};
             }
         }
