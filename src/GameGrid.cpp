@@ -147,15 +147,25 @@ void GameGrid::groundBlock(uint8_t i, uint8_t j) {
 
 std::string GameGrid::crunchRow(int8_t row) {
     std::string crunched_row;
-    for(int i = 0; i < cols; i++)
-        crunched_row.append(grid[i][row]);
+    for(int i = 0; i < cols; i++){
+        if(!grid[i][row].isState(Grounded)){//Replaces the current falling block with a blank
+            crunched_row.append(" ");
+        }else{
+            crunched_row.append(grid[i][row]);
+        }
+    }
     return crunched_row;
 }
 
 std::string GameGrid::crunchCol(int8_t col) {
     std::string crunched_col;
-    for(int j = 0; j < rows; j++)
-        crunched_col.append(grid[col][j]);
+    for(int j = 0; j < rows; j++){
+        if (!grid[col][j].isState(Grounded)){
+            crunched_col.append(" ");
+        }else{
+            crunched_col.append(grid[col][j]);
+        }
+    }
     return crunched_col;
 }
 
