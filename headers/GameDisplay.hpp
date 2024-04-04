@@ -5,6 +5,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 
 #include "GameGrid.hpp"
+#include "GameLogs.hpp"
 
 /**
 * @class GameDisplay
@@ -22,6 +23,7 @@ private:
     sf::VertexArray layout;
     // aggregation link to GameGrid
     GameGrid *game;
+    GameLogs *logs;
 
 public:
     /**
