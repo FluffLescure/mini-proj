@@ -1,14 +1,14 @@
 
 #include<iostream>
 
+#include <SFML/System/Vector3.hpp>
+
 #include "../headers/GameGrid.hpp"
 #include "../headers/Config.hpp"
 
 void GameGrid::gridTick() {
     // This is variable used to determine if the grid has changed or not
     bool blocks_falling = false;
-
-    gridDestroy();
 
     // Moves the LetterBlocks that are displayed 
     for (int8_t i = 0; i < cols; i++) {
@@ -26,7 +26,7 @@ void GameGrid::gridTick() {
     }
 }
 
-void GameGrid::blockDestroy(sf::Vector2u posInit, sf::Vector2u span) {
+void GameGrid::blockDestroy(sf::Vector2i posInit, sf::Vector2i span) {
     for (uint8_t j = posInit.y; j < posInit.y + span.y; j++) {
         for (uint8_t i = posInit.x; i < posInit.x + span.x; i++) {
             grid[i][j].display(false);
@@ -122,13 +122,17 @@ void GameGrid::update() {
     // Retrieves user input
     input->pollEvent();
 
-    if(!(tick % 5)) {
+    if(!(tick % 5))
         blockTick();
-    }
-    if(tick == 30) {
+
+    if(tick % 30 == 15)
+        wordDestroy();
+
+    if(!(tick % 30)) 
         gridTick();
+    
+    if(tick == 60)
         tick = 0;
-    }
     tick++;
 }
 
@@ -170,19 +174,33 @@ std::string GameGrid::crunchCol(int8_t col) {
 }
 
 
-void GameGrid::gridDestroy(){
+void GameGrid::wordDestroy(){
     std::string word;
+    std::vector<sf::Vector2<sf::Vector2i>> stagedwords;
+    std::vector<sf::Vector2<sf::Vector2i>>::iterator it;
+
 
 
     for (int row = rows - 1; row >= 0; row--) {
         word = crunchRow(row);
-        sf::Vector2u pos = wordle->findWord(word);
-        blockDestroy({pos.x, (unsigned)row}, {pos.y, 1});
+        sf::Vector2i pos = wordle->findWord(word);
+        if (pos.x != -1 && pos.y != -1)
+            stagedwords.push_back({{pos.x, pos.y}, {-1, row}});
+        
     }
 
     for (int col = cols - 1; col >= 0; col--) {
         word = crunchCol(col);
-        sf::Vector2u pos = wordle->findWord(word);
-        blockDestroy({(unsigned)col, pos.x}, {1,pos.y});
+        sf::Vector2i pos = wordle->findWord(word);
+         if (pos.x != -1 && pos.y != -1)
+            stagedwords.push_back({{pos.x, pos.y}, {col, -1}});
+
+    }
+
+    for(it = stagedwords.begin(); it != stagedwords.end(); it++){
+        if(it->y.x == -1)
+            blockDestroy({it->x.x, it->y.y}, {it->x.y, 1});
+        else 
+            blockDestroy({it->y.x, it->x.x}, {1, it->x.y});
     }
 }
