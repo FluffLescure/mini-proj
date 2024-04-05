@@ -109,7 +109,7 @@ public:
     const std::string window_title = "Lettris";
     const uint8_t gamegrid_rows = 15;
     const uint8_t gamegrid_cols = 10;
-    const int weights[26] = {711, 114, 318, 367, 1210, 111, 123, 111, 659, 34, 29, 496, 262, 639, 502, 249, 65, 607, 651, 592, 449, 111, 17, 38, 46, 15};
+    const std::vector<int>weights = {711, 114, 318, 367, 1210, 111, 123, 111, 659, 34, 29, 496, 262, 639, 502, 249, 65, 607, 651, 592, 449, 111, 17, 38, 46, 15};
 
     // Preloaded resources of the game
     sf::Font *font;
