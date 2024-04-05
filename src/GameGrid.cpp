@@ -32,6 +32,7 @@ void GameGrid::blockDestroy(sf::Vector2i posInit, sf::Vector2i span) {
             grid[i][j].display(false);
             grid[i][j].setLetter(' ');
             grid[i][j].setState(State::Fixed);
+            grid[i][j].setColor(sf::Color(175,175,175,50));
         }
     }
 }
@@ -122,13 +123,13 @@ void GameGrid::update() {
     // Retrieves user input
     input->pollEvent();
 
+    wordDestroy();
+
+
     if(!(tick % 5))
         blockTick();
 
-    if(tick % 30 == 15)
-        wordDestroy();
-
-    if(!(tick % 30)) 
+    if(!(tick % 30) ) 
         gridTick();
     
     if(tick == 60)
@@ -143,10 +144,8 @@ void GameGrid::groundBlock(uint8_t i, uint8_t j) {
 
     // if its on the last row or if the block under it is grounded, then
     // set the block to grounded
-    if(j == rows - 1 || (j < rows - 1 && grid[i][j+1].isState(Grounded))) {
+    if(j == rows - 1 || (j < rows - 1 && grid[i][j+1].isState(Grounded)))
         grid[i][j].setState(Grounded);
-        grid[i][j].setColor(sf::Color::Red);
-    }
 }
 
 std::string GameGrid::crunchRow(int8_t row) {
@@ -179,7 +178,7 @@ void GameGrid::wordDestroy(){
     std::vector<sf::Vector2<sf::Vector2i>> stagedwords;
     std::vector<sf::Vector2<sf::Vector2i>>::iterator it;
 
-
+    static uint8_t destroy_tick = 0;
 
     for (int row = rows - 1; row >= 0; row--) {
         word = crunchRow(row);
@@ -199,8 +198,32 @@ void GameGrid::wordDestroy(){
 
     for(it = stagedwords.begin(); it != stagedwords.end(); it++){
         if(it->y.x == -1)
+            setColor({it->x.x, it->y.y}, {it->x.y, 1});
+        else 
+            setColor({it->y.x, it->x.x}, {1, it->x.y});
+    }
+
+
+    if(!stagedwords.empty() && destroy_tick != 30 ){
+        destroy_tick++;
+        return; 
+    }
+
+    destroy_tick = 0;
+
+    for(it = stagedwords.begin(); it != stagedwords.end(); it++){
+        if(it->y.x == -1)
             blockDestroy({it->x.x, it->y.y}, {it->x.y, 1});
         else 
             blockDestroy({it->y.x, it->x.x}, {1, it->x.y});
+    }
+}
+
+
+void GameGrid::setColor(sf::Vector2i posInit, sf::Vector2i span){
+    for (uint8_t j = posInit.y; j < posInit.y + span.y; j++) {
+        for (uint8_t i = posInit.x; i < posInit.x + span.x; i++) {
+            grid[i][j].setColor(sf::Color(122,220,220));
+        }
     }
 }

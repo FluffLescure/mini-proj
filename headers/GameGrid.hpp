@@ -145,6 +145,8 @@ public:
     */
     std::string crunchCol(int8_t col);
 
+    void setColor(sf::Vector2i posInit, sf::Vector2i span);
+
 
 
 };
