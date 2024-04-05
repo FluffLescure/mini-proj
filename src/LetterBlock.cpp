@@ -146,21 +146,17 @@ bool LetterBlock::move(Blockgrid &grid, Direction direction){
 
 void LetterBlock::randLetter()
 {
-    int max = 0;
-    for (int i=0; i < 26; i++){
-        max += Config::getInstance()->weights[i];
-    }
-    int min=0;
-    int r = ((double) rand() / (RAND_MAX+1)) * (max-min+1) + min;
-    int sum = 0;
-    int letter = 0;
-    //std::cout << r << std::endl;
-    while (r>sum){
+    int totalWeight = 0;
+    for (int weight : Config::getInstance()->weights)
+        totalWeight += weight;
+
+    int random_number = rand() % totalWeight;
+    int sum = 0, letter = 0;
+    while (random_number > sum){
         sum += Config::getInstance()->weights[letter];
         letter++;
     }
-    letter--;
-    setLetter((char) 'A'+ letter);
+    setLetter((char) 'A'+ letter--);
     centerLetter();     	
 }
 
