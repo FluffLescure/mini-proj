@@ -73,7 +73,7 @@ public:
     /**
      * @brief Destroys all block that form a word from the wordlist
     */
-    void gridDestroy();
+    void wordDestroy();
 
     /**
      * @brief Updates the falling blocks based on user input
@@ -85,7 +85,7 @@ public:
      * @param posInit the starting position of the span
      * @param span span of blocks to be destroyed
      */
-    void blockDestroy(sf::Vector2u posInit, sf::Vector2u span);
+    void blockDestroy(sf::Vector2i posInit, sf::Vector2i span);
 
     /**
      * @brief Updates the visibility respective LetterBlock from grid
