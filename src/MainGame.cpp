@@ -46,7 +46,7 @@ bool MainGame::isRunning() {
 void MainGame::render() {
     window->clear(); // Clear the old frame from window
 
-    display->render(window); // test functions
+    display->render(window);
     
     window->display(); // Displays the new fram to window
 }
