@@ -8,7 +8,6 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
-
 #include "LetterBlock.hpp"
 
 
@@ -26,6 +25,8 @@ private:
 
     // Border used to draw the grid frame
     sf::RectangleShape gridBorder;
+    sf::Text title;
+    sf::Text historique[10];
 
 
 public:
