@@ -11,16 +11,14 @@ void GameGrid::gridTick() {
     bool blocks_falling = false;
 
     // Moves the LetterBlocks that are displayed 
-    for (int8_t i = 0; i < cols; i++) {
-        for (int8_t j = rows - 1; j >= 0; j--) {
+    for (int8_t i = 0; i < cols; i++)
+        for (int8_t j = rows - 1; j >= 0; j--) 
             if (!grid[i][j].isHidden() && grid[i][j].move(grid,Down))
                 blocks_falling = true;
-        }
-    }
 
     // if no blocks are falling then add a new falling LetterBlock
     if(!blocks_falling && grid[5][0].isHidden()) {
-        blockDisplay({5,0},true);
+        blockDisplay({5,0}, {1,1}, true);
         grid[5][0].setState(State::Falling);
         grid[5][0].randLetter();
     }
@@ -37,16 +35,10 @@ void GameGrid::blockDestroy(sf::Vector2i posInit, sf::Vector2i span) {
     }
 }
 
-void GameGrid::blockDisplay(sf::Vector2u coord, bool visible) {
-    grid[coord.x][coord.y].display(visible);
-}
-
 void GameGrid::blockDisplay(sf::Vector2u posInit, sf::Vector2u span, bool visible) {
-    for (uint8_t j = posInit.y; j < posInit.y + span.y; j++) {
-        for (uint8_t i = posInit.x; i < posInit.x + span.x; i++) {
+    for (uint8_t j = posInit.y; j < posInit.y + span.y; j++)
+        for (uint8_t i = posInit.x; i < posInit.x + span.x; i++) 
             grid[i][j].display(visible);
-        }
-    }
 }
 
 void GameGrid::initGrid() {
@@ -78,20 +70,25 @@ void GameGrid::initGrid() {
 
 GameGrid::GameGrid() {
     initGrid();
-    input = new Input();
-    wordle = new Wordle();
+    initInput();
+    initWordle();
 }
 
+ void GameGrid::initInput(){
+    input = new Input();
+ }
+
+void GameGrid::initWordle() {
+    wordle = new Wordle();
+}
 
 void GameGrid::render(sf::RenderTarget *target){
     target->draw(gridBorder); // renders the frame
 
     // Renders each LetterBlock of the grid
-    for(int j = 0; j < rows; j++ ){
-        for (int i = 0; i< cols; i++){
-            grid[i][j].render(target);
-        }
-    }
+    for(int j = 0; j < rows; j++ )
+        for (int i = 0; i< cols; i++)
+            grid[i][j].render(target);   
 }
 
 void GameGrid::blockTick() {
@@ -99,23 +96,13 @@ void GameGrid::blockTick() {
     // This avoid moving a same block too many times within the loop
     bool moved = false;
 
-    // maybe find a way to clean this up in the future, its too nested
     for (int8_t i = 0; i < cols; i++) {
         for (int8_t j = rows - 1; j >= 0; j--) {
-            if(grid[i][j].isState(Falling) && !moved){
-                if(input->getDirection() == Down)
-                    moved = grid[i][j].move(grid, Down);
-
-                if(input->getDirection() == Left)
-                    moved = grid[i][j].move(grid, Left);
-
-                if(input->getDirection() == Right)
-                    moved = grid[i][j].move(grid, Right);
-            }
+            if(grid[i][j].isState(Falling) && !moved)
+                moved = grid[i][j].move(grid, input->getDirection());
             groundBlock(i,j); // checks if every block should be grounded
         }
     }
-
 }
 
 
@@ -125,7 +112,6 @@ void GameGrid::update() {
 
     wordDestroy();
 
-
     if(!(tick % 5))
         blockTick();
 
@@ -134,6 +120,7 @@ void GameGrid::update() {
     
     if(tick == 60)
         tick = 0;
+
     tick++;
 }
 
@@ -150,25 +137,21 @@ void GameGrid::groundBlock(uint8_t i, uint8_t j) {
 
 std::string GameGrid::crunchRow(int8_t row) {
     std::string crunched_row;
-    for(int i = 0; i < cols; i++){
-        if(!grid[i][row].isState(Grounded)){//Replaces the current falling block with a blank
+    for(int i = 0; i < cols; i++)
+        if(!grid[i][row].isState(Grounded))
             crunched_row.append(" ");
-        }else{
+        else
             crunched_row.append(grid[i][row]);
-        }
-    }
     return crunched_row;
 }
 
 std::string GameGrid::crunchCol(int8_t col) {
     std::string crunched_col;
-    for(int j = 0; j < rows; j++){
-        if (!grid[col][j].isState(Grounded)){
+    for(int j = 0; j < rows; j++)
+        if (!grid[col][j].isState(Grounded))
             crunched_col.append(" ");
-        }else{
+        else
             crunched_col.append(grid[col][j]);
-        }
-    }
     return crunched_col;
 }
 
@@ -221,9 +204,7 @@ void GameGrid::wordDestroy(){
 
 
 void GameGrid::setColor(sf::Vector2i posInit, sf::Vector2i span){
-    for (uint8_t j = posInit.y; j < posInit.y + span.y; j++) {
-        for (uint8_t i = posInit.x; i < posInit.x + span.x; i++) {
+    for (uint8_t j = posInit.y; j < posInit.y + span.y; j++)
+        for (uint8_t i = posInit.x; i < posInit.x + span.x; i++) 
             grid[i][j].setColor(sf::Color(122,220,220));
-        }
-    }
 }
