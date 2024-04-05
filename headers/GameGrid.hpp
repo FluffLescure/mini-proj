@@ -88,13 +88,6 @@ public:
     void blockDestroy(sf::Vector2i posInit, sf::Vector2i span);
 
     /**
-     * @brief Updates the visibility respective LetterBlock from grid
-     * @param coord The coordinates of the block to be hidden
-     * @param visible sets the the visibility of the block
-     */
-    void blockDisplay(sf::Vector2u coord, bool visible);
-
-    /**
      * @brief Updates the visibility a zone of blocks delimited by the span entered
      * @param posInit the starting position of the span
      * @param span span of blocks to be updated
@@ -146,6 +139,10 @@ public:
     std::string crunchCol(int8_t col);
 
     void setColor(sf::Vector2i posInit, sf::Vector2i span);
+
+    void initInput();
+
+    void initWordle();
 
 
 
