@@ -22,7 +22,7 @@ private:
 public:
     Wordle();
     void initHashmap();
-    sf::Vector2u findWord(const std::string& word);
+    sf::Vector2i findWord(const std::string& word);
 
 
 
