@@ -17,9 +17,9 @@ void Wordle::initHashmap() {
     }
 }
 
-sf::Vector2u Wordle::findWord(const std::string& word) {
-    for (unsigned int i = 0; i < word.length(); i++){
-        for (unsigned int j = word.length()-i; j >= 1; j--){
+sf::Vector2i Wordle::findWord(const std::string& word) {
+    for (int i = 0; i < word.length(); i++){
+        for (int j = word.length()-i; j >= 1; j--){
 
             std::string substring = word.substr(i, j);
 
@@ -29,7 +29,7 @@ sf::Vector2u Wordle::findWord(const std::string& word) {
             }
         }
     }
-    return {0,0};
+    return {-1,-1};
 }
 
 
