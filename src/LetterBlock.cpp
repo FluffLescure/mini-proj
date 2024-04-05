@@ -154,7 +154,7 @@ void LetterBlock::randLetter()
     int r = ((double) rand() / (RAND_MAX+1)) * (max-min+1) + min;
     int sum = 0;
     int letter = 0;
-    std::cout << r << std::endl;
+    //std::cout << r << std::endl;
     while (r>sum){
         sum += Config::getInstance()->weights[letter];
         letter++;
