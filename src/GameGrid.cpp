@@ -24,9 +24,9 @@ void GameGrid::gridTick() {
     }
 }
 
-void GameGrid::blockDestroy(sf::Vector2i posInit, sf::Vector2i span) {
-    for (uint8_t j = posInit.y; j < posInit.y + span.y; j++) {
-        for (uint8_t i = posInit.x; i < posInit.x + span.x; i++) {
+void GameGrid::blockDestroy(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSpan) {
+    for (uint8_t j = row; j < row + rowSpan; j++) {
+        for (uint8_t i = col; i < col + colSpan; i++) {
             grid[i][j].display(false);
             grid[i][j].setLetter(' ');
             grid[i][j].setState(State::Fixed);
@@ -156,55 +156,70 @@ std::string GameGrid::crunchCol(int8_t col) {
 }
 
 
-void GameGrid::wordDestroy(){
-    std::string word;
-    std::vector<sf::Vector2<sf::Vector2i>> stagedwords;
-    std::vector<sf::Vector2<sf::Vector2i>>::iterator it;
 
-    static uint8_t destroy_tick = 0;
+
+
+//Needs to be cleaned and segmented properly
+
+std::vector<std::vector<int>> GameGrid::stageWords() {
+    std::string word;
+    std::vector<std::vector<int>> stagedwords;
+
+    for (int col = cols - 1; col >= 0; col--) {
+        word = crunchCol(col);
+        sf::Vector2i pos = wordle->findWord(word);
+        if (pos.x != -1 && pos.y != -1)
+            stagedwords.push_back({pos.x, pos.y, col, -1});
+    }
+
 
     for (int row = rows - 1; row >= 0; row--) {
         word = crunchRow(row);
         sf::Vector2i pos = wordle->findWord(word);
         if (pos.x != -1 && pos.y != -1)
-            stagedwords.push_back({{pos.x, pos.y}, {-1, row}});
-        
+            stagedwords.push_back({pos.x, pos.y, -1, row});
     }
 
-    for (int col = cols - 1; col >= 0; col--) {
-        word = crunchCol(col);
-        sf::Vector2i pos = wordle->findWord(word);
-         if (pos.x != -1 && pos.y != -1)
-            stagedwords.push_back({{pos.x, pos.y}, {col, -1}});
-
-    }
-
-    for(it = stagedwords.begin(); it != stagedwords.end(); it++){
-        if(it->y.x == -1)
-            setColor({it->x.x, it->y.y}, {it->x.y, 1});
-        else 
-            setColor({it->y.x, it->x.x}, {1, it->x.y});
-    }
+    return stagedwords;
+}
 
 
+bool GameGrid::destroyTick(std::vector<std::vector<int>> stagedwords){
+    static uint8_t destroy_tick = 0;
+    
     if(!stagedwords.empty() && destroy_tick != 30 ){
         destroy_tick++;
-        return; 
+        return false;     
+    }
+    destroy_tick=0;
+    return true;
+}
+
+void GameGrid::wordDestroy(){
+
+    std::vector<std::vector<int>> stagedwords = stageWords();
+
+    for(std::vector<int> word : stagedwords){
+        if(word[2] == -1)
+            setColor(word[0], word[3], word[1], 1);
+        else 
+            setColor(word[2], word[0], 1, word[1]);
     }
 
-    destroy_tick = 0;
+    if(!destroyTick(stagedwords))
+        return;
 
-    for(it = stagedwords.begin(); it != stagedwords.end(); it++){
-        if(it->y.x == -1)
-            blockDestroy({it->x.x, it->y.y}, {it->x.y, 1});
+    for(std::vector<int> word : stagedwords){
+        if(word[2] == -1)
+            blockDestroy(word[0], word[3], word[1], 1);
         else 
-            blockDestroy({it->y.x, it->x.x}, {1, it->x.y});
+            blockDestroy(word[2], word[0], 1, word[1]);
     }
 }
 
 
-void GameGrid::setColor(sf::Vector2i posInit, sf::Vector2i span){
-    for (uint8_t j = posInit.y; j < posInit.y + span.y; j++)
-        for (uint8_t i = posInit.x; i < posInit.x + span.x; i++) 
+void GameGrid::setColor(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSpan){
+    for (uint8_t j = row; j < row + rowSpan; j++)
+        for (uint8_t i = col; i < col + colSpan; i++) 
             grid[i][j].setColor(sf::Color(122,220,220));
 }

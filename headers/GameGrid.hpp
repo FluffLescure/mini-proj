@@ -85,7 +85,7 @@ public:
      * @param posInit the starting position of the span
      * @param span span of blocks to be destroyed
      */
-    void blockDestroy(sf::Vector2i posInit, sf::Vector2i span);
+    void blockDestroy(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSpan);
 
     /**
      * @brief Updates the visibility a zone of blocks delimited by the span entered
@@ -130,6 +130,9 @@ public:
     */
     std::string crunchRow(int8_t row);
 
+    std::vector<std::vector<int>> stageWords();
+
+    bool destroyTick(std::vector<std::vector<int>> stagedwords);
 
     /**
      * @brief Retreives all the letters from a column and assembles them together into a string
@@ -138,7 +141,7 @@ public:
     */
     std::string crunchCol(int8_t col);
 
-    void setColor(sf::Vector2i posInit, sf::Vector2i span);
+    void setColor(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSpan);
 
     void initInput();
 
