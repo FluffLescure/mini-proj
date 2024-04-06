@@ -152,11 +152,10 @@ void LetterBlock::randLetter()
 
     int random_number = rand() % totalWeight;
     int sum = 0, letter = 0;
-    while (random_number > sum){
-        sum += Config::getInstance()->weights[letter];
-        letter++;
-    }
-    setLetter((char) 'A'+ letter--);
+    while (random_number > sum)
+        sum += Config::getInstance()->weights[letter++];
+
+    setLetter((char) 'A'+ --letter);
     centerLetter();     	
 }
 
