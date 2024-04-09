@@ -6,6 +6,7 @@
 #include <SFML/System/Vector2.hpp>
 
 #include "LetterBlock.hpp"
+#include "GameLogs.hpp"
 
 /** This class' only prupose is to check if a valid word is contained inside the grid, be it horizontally or vertically.
  * 
@@ -19,10 +20,14 @@ class Wordle {
 
 private:
     std::map<std::string, int> hashmap;
+
+    GameLogs *logs;
+
 public:
     Wordle();
     void initHashmap();
-    sf::Vector2i findWord(const std::string& word);
+    sf::Vector2i findWordPosition(const std::string& word);
+    std::string findWord(const std::string& word);
 
 
 
