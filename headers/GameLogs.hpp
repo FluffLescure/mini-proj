@@ -24,13 +24,19 @@ class GameLogs : sf::NonCopyable {
 private:
 
     // Border used to draw the grid frame
-    sf::RectangleShape gridBorder;
+    sf::RectangleShape logsFrame;
     sf::Text title;
-    sf::Text historique[10];
+    std::vector<sf::Text> logs;
 
 
 public:
     GameLogs();
+
+    void initFrame();
+    void initTitle();
+    void initLogs();
+
+    void emplaceLog(std::string word);
 
     /**
      * @brief Renders the grid's bounding frame and the 2D game grid
