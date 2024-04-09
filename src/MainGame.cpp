@@ -1,11 +1,22 @@
 
-#include<iostream>
 
 #include <SFML/Window/Event.hpp>
 
 #include "../headers/MainGame.hpp"
 #include "../headers/Config.hpp"
 
+
+void MainGame::initLayout() {
+    Config* config = Config::getInstance();
+    layout = sf::VertexArray(sf::Quads, config->layoutPoints.size());
+
+    // Layout points are assimilited into a VertexArray to create a single
+    // custom drawable
+    for (size_t i = 0; i < config->layoutPoints.size(); ++i) {
+        layout[i].texCoords = config->layoutPoints[i]; // Texture layout
+        layout[i].position = config->layoutPoints[i];
+    }
+}
 
 void MainGame::initWindow() {
 
@@ -20,11 +31,6 @@ void MainGame::initWindow() {
     window->setVisible(true);
 }
 
-void MainGame::initInterface() {
-    display = new GameDisplay();
-}
-
-//
 void MainGame::pollEvent() {
     sf::Event event;
 
@@ -46,10 +52,12 @@ bool MainGame::isRunning() {
 void MainGame::render() {
     window->clear(); // Clear the old frame from window
 
-    display->render(window);
-    
+    window->draw(layout,Config::getInstance()->layoutTex); // renders layout
+    game->render(window);
+    logs->render(window);
+
     window->display(); // Displays the new fram to window
-}
+}   
 
 void MainGame::run(){
     //main instance
@@ -60,17 +68,22 @@ void MainGame::run(){
     }
 }
 
-MainGame::MainGame(){
-    initWindow();
-    initInterface();
-}
-
-MainGame::~MainGame(){
-    delete window;
-    delete display;
-}
 
 void MainGame::update() {
     pollEvent();
-    display->update();
+    game->update();
+}
+
+
+MainGame::MainGame() {
+    initLayout();
+    initWindow();
+    game = new GameGrid();
+    logs = new GameLogs();
+}
+
+MainGame::~MainGame() {
+    delete game;
+    delete window;
+    delete logs;
 }
