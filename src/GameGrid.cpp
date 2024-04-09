@@ -166,7 +166,7 @@ std::vector<std::vector<int>> GameGrid::stageWords() {
 
     for (int col = cols - 1; col >= 0; col--) {
         word = crunchCol(col);
-        sf::Vector2i pos = wordle->findWord(word);
+        sf::Vector2i pos = wordle->findWordPosition(word);
         if (pos.x != -1 && pos.y != -1)
             stagedwords.push_back({pos.x, pos.y, col, -1});
     }
@@ -174,7 +174,7 @@ std::vector<std::vector<int>> GameGrid::stageWords() {
 
     for (int row = rows - 1; row >= 0; row--) {
         word = crunchRow(row);
-        sf::Vector2i pos = wordle->findWord(word);
+        sf::Vector2i pos = wordle->findWordPosition(word);
         if (pos.x != -1 && pos.y != -1)
             stagedwords.push_back({pos.x, pos.y, -1, row});
     }
