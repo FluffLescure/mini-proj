@@ -41,19 +41,21 @@ void GameGrid::blockDisplay(sf::Vector2u posInit, sf::Vector2u span, bool visibl
             grid[i][j].display(visible);
 }
 
-void GameGrid::initGrid() {
-    // Pulls the dimensions from the Config
-    rows = Config::getInstance()->gamegrid_rows;
-    cols = Config::getInstance()->gamegrid_cols;
 
-
+void GameGrid::initFrame() {
     // Draws the bounding frame of the grid
     gridBorder = sf::RectangleShape(sf::Vector2f(336, 486));
     gridBorder.setPosition(sf::Vector2f(312, 27));
     gridBorder.setOutlineColor(sf::Color(125, 125, 125));
     gridBorder.setOutlineThickness(5);
     gridBorder.setFillColor(sf::Color(0, 0, 0, 0));
-    
+}
+
+void GameGrid::initGrid() {
+    // Pulls the dimensions from the Config
+    rows = Config::getInstance()->gamegrid_rows;
+    cols = Config::getInstance()->gamegrid_cols;
+
     // Creates the 2D grid and fills it with empty LetterBlocks
     grid = Grid(cols, std::vector<LetterBlock>(rows));
 
@@ -63,9 +65,6 @@ void GameGrid::initGrid() {
             grid[i][j].display(false);
         }
     }
-
-
-    
 }
 
 GameGrid::GameGrid() {

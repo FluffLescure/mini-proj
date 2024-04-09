@@ -103,6 +103,11 @@ public:
     void initGrid();
 
     /**
+     * @brief Draws the frame for the game grid
+    */
+    void initFrame();
+
+    /**
      * @brief Renders the grid's bounding frame and the 2D game grid
      * @param *target the rendered shared to other classes
     */
