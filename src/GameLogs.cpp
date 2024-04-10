@@ -1,3 +1,7 @@
+
+
+#include<iostream>
+
 #include "../headers/GameLogs.hpp"
 #include "../headers/Config.hpp"
 
@@ -49,7 +53,9 @@ void GameLogs::render(sf::RenderTarget *target){
 
 void GameLogs::emplaceLog(std::string word) {
     for(int i = 9; i > 0; i--) {
-        logs[i].setString(logs[i-1].getString());
+        std::cout << logs[i].getString().toAnsiString().c_str() << std::endl;
+
+        logs[i].setString(logs[i-1].getString().toAnsiString());
     }
     logs[0].setString(word);
 }
