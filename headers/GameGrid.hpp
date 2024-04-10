@@ -51,6 +51,7 @@ private:
     // Agregated classes
     Input *input;
     Wordle *wordle;
+    GameLogs *logs;
 
     // The 2D grid where the game takes place
     Grid grid;
@@ -137,7 +138,7 @@ public:
 
     std::vector<std::vector<int>> stageWords();
 
-    bool destroyTick(std::vector<std::vector<int>> stagedwords);
+    int destroyTick(bool start);
 
     /**
      * @brief Retreives all the letters from a column and assembles them together into a string

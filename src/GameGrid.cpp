@@ -71,6 +71,7 @@ GameGrid::GameGrid() {
     initGrid();
     initInput();
     initWordle();
+    logs = new GameLogs;
 }
 
  void GameGrid::initInput(){
@@ -88,6 +89,9 @@ void GameGrid::render(sf::RenderTarget *target){
     for(int j = 0; j < rows; j++ )
         for (int i = 0; i< cols; i++)
             grid[i][j].render(target);   
+
+    logs->render(target);
+
 }
 
 void GameGrid::blockTick() {
@@ -158,8 +162,6 @@ std::string GameGrid::crunchCol(int8_t col) {
 
 
 
-//Needs to be cleaned and segmented properly
-
 std::vector<std::vector<int>> GameGrid::stageWords() {
     std::string word;
     std::vector<std::vector<int>> stagedwords;
@@ -167,36 +169,51 @@ std::vector<std::vector<int>> GameGrid::stageWords() {
     for (int col = cols - 1; col >= 0; col--) {
         word = crunchCol(col);
         sf::Vector2i pos = wordle->findWordPosition(word);
-        if (pos.x != -1 && pos.y != -1)
+
+        if (pos.x != -1 && pos.y != -1){
             stagedwords.push_back({pos.x, pos.y, col, -1});
+            logs->emplaceLog(wordle->findWord(word));
+        }
     }
 
 
     for (int row = rows - 1; row >= 0; row--) {
         word = crunchRow(row);
         sf::Vector2i pos = wordle->findWordPosition(word);
-        if (pos.x != -1 && pos.y != -1)
+        if (pos.x != -1 && pos.y != -1) {
             stagedwords.push_back({pos.x, pos.y, -1, row});
+            logs->emplaceLog(wordle->findWord(word));
+        }
     }
 
     return stagedwords;
 }
 
 
-bool GameGrid::destroyTick(std::vector<std::vector<int>> stagedwords){
+int GameGrid::destroyTick(bool start){
     static uint8_t destroy_tick = 0;
+
+    if(!start)
+        return destroy_tick;
     
-    if(!stagedwords.empty() && destroy_tick != 30 ){
+    if(destroy_tick != 30){
         destroy_tick++;
-        return false;     
+        return destroy_tick;     
     }
     destroy_tick=0;
-    return true;
+    return 0;
 }
 
 void GameGrid::wordDestroy(){
 
-    std::vector<std::vector<int>> stagedwords = stageWords();
+
+    static std::vector<std::vector<int>> stagedwords;
+
+    if(!destroyTick(false))
+        stagedwords = stageWords();
+
+    if(stagedwords.empty())
+        return;
 
     for(std::vector<int> word : stagedwords){
         if(word[2] == -1)
@@ -204,8 +221,8 @@ void GameGrid::wordDestroy(){
         else 
             setColor(word[2], word[0], 1, word[1]);
     }
-
-    if(!destroyTick(stagedwords))
+    
+    if(destroyTick(true))
         return;
 
     for(std::vector<int> word : stagedwords){
