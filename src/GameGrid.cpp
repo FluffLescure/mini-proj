@@ -68,10 +68,12 @@ void GameGrid::initGrid() {
 }
 
 GameGrid::GameGrid() {
+    initFrame();
     initGrid();
     initInput();
     initWordle();
     logs = new GameLogs;
+    score = new GameScore;
 }
 
  void GameGrid::initInput(){
@@ -91,6 +93,7 @@ void GameGrid::render(sf::RenderTarget *target){
             grid[i][j].render(target);   
 
     logs->render(target);
+    score->render(target);
 
 }
 

@@ -14,6 +14,7 @@
 #include "LetterBlock.hpp"
 #include "Input.hpp"
 #include "Wordle.hpp"
+#include "GameScore.hpp"
 
 // Macro of a 2D grid of LetterBlock used for legibility reasons
 typedef std::vector<std::vector<LetterBlock>> Grid;
@@ -52,6 +53,7 @@ private:
     Input *input;
     Wordle *wordle;
     GameLogs *logs;
+    GameScore *score;
 
     // The 2D grid where the game takes place
     Grid grid;
