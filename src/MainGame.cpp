@@ -54,7 +54,6 @@ void MainGame::render() {
 
     window->draw(layout,Config::getInstance()->layoutTex); // renders layout
     game->render(window);
-    logs->render(window);
 
     window->display(); // Displays the new fram to window
 }   
