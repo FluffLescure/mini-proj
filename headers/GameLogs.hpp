@@ -27,6 +27,7 @@ private:
     sf::RectangleShape logsFrame;
     sf::Text title;
     std::vector<sf::Text> logs;
+    std::vector<sf::Text> points;
 
 
 public:
@@ -35,8 +36,11 @@ public:
     void initFrame();
     void initTitle();
     void initLogs();
+    void initPoints();
 
     void emplaceLog(std::string word);
+
+    void emplacePoints(std::string word);
 
     /**
      * @brief Renders the grid's bounding frame and the 2D game grid
