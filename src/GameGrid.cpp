@@ -173,6 +173,7 @@ std::vector<std::vector<int>> GameGrid::stageWords() {
         if (pos.x != -1 && pos.y != -1){
             stagedwords.push_back({pos.x, pos.y, col, -1});
             logs->emplaceLog(wordle->findWord(word));
+            logs->emplacePoints(wordle->findWord(word));
         }
     }
 
@@ -183,6 +184,7 @@ std::vector<std::vector<int>> GameGrid::stageWords() {
         if (pos.x != -1 && pos.y != -1) {
             stagedwords.push_back({pos.x, pos.y, -1, row});
             logs->emplaceLog(wordle->findWord(word));
+            logs->emplacePoints(wordle->findWord(word));
         }
     }
 
