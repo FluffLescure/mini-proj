@@ -21,7 +21,6 @@ class Wordle {
 private:
     std::map<std::string, int> hashmap;
 
-    GameLogs *logs;
 
 public:
     Wordle();

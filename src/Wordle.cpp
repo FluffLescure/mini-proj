@@ -24,14 +24,13 @@ sf::Vector2i Wordle::findWordPosition(const std::string& word) {
             std::string substring = word.substr(i, j);
 
             if (hashmap.find(substring) != hashmap.end() && substring.size() >1) {
-                std::cout << word.substr(i, j) << std::endl;
+                std::cout << substring << std::endl;
                 return {i,j};
             }
         }
     }
     return {-1,-1};
 }
-
 
 std::string Wordle::findWord(const std::string& word) {
     for (int i = 0; i < (int)word.length(); i++){
