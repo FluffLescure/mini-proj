@@ -88,10 +88,12 @@ void GameScore::addPoints(std::string word) {
 
 
 GameScore::~GameScore() {
-    std::ofstream scoreFile("resources/Scores.txt", std::ios::app); // create a new output file or overwrite an existing one
 
-    if (scoreFile.is_open()) { // check if the file was opened successfully
-        scoreFile << scoreVal.getString().toAnsiString() << std::endl; // write data to the file
-        scoreFile.close(); // close the file when done
+    //This can be slow to write the file so comment this all out in debugging
+    std::ofstream scoreFile("resources/Scores.txt", std::ios::app); 
+
+    if (scoreFile.is_open()) { 
+        scoreFile << scoreVal.getString().toAnsiString() << std::endl; 
+        scoreFile.close(); 
     }
 }
