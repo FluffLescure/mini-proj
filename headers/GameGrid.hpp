@@ -14,6 +14,7 @@
 #include "LetterBlock.hpp"
 #include "Input.hpp"
 #include "Wordle.hpp"
+#include "GameLogs.hpp"
 #include "GameScore.hpp"
 
 // Macro of a 2D grid of LetterBlock used for legibility reasons
@@ -53,7 +54,7 @@ private:
     Input *input;
     Wordle *wordle;
     GameLogs *logs;
-    GameScore *score;
+    GameScore* score;
 
     // The 2D grid where the game takes place
     Grid grid;
@@ -67,6 +68,8 @@ public:
      * agregated classes
     */
     GameGrid();
+
+    ~GameGrid();
 
     /**
      * @brief Updates the grid to make necessary LetterBlocks fall 1 block lower.

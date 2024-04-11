@@ -166,28 +166,34 @@ std::string GameGrid::crunchCol(int8_t col) {
 
 
 std::vector<std::vector<int>> GameGrid::stageWords() {
-    std::string word;
+    std::string crunched;
     std::vector<std::vector<int>> stagedwords;
+    std::string word;
+    sf::Vector2i position;
 
     for (int col = cols - 1; col >= 0; col--) {
-        word = crunchCol(col);
-        sf::Vector2i pos = wordle->findWordPosition(word);
+        crunched = crunchCol(col);
+        position = wordle->findWordPosition(crunched);
+        word = wordle->findWord(crunched);
 
-        if (pos.x != -1 && pos.y != -1){
-            stagedwords.push_back({pos.x, pos.y, col, -1});
-            logs->emplaceLog(wordle->findWord(word));
-            logs->emplacePoints(wordle->findWord(word));
+        if (position.x != -1 && position.y != -1){
+            stagedwords.push_back({position.x, position.y, col, -1});
+            logs->emplaceLog(word);
+            logs->emplacePoints(word);
+            score->addPoints(word);
+
         }
     }
 
-
     for (int row = rows - 1; row >= 0; row--) {
-        word = crunchRow(row);
-        sf::Vector2i pos = wordle->findWordPosition(word);
-        if (pos.x != -1 && pos.y != -1) {
-            stagedwords.push_back({pos.x, pos.y, -1, row});
-            logs->emplaceLog(wordle->findWord(word));
-            logs->emplacePoints(wordle->findWord(word));
+        crunched = crunchRow(row);
+        position = wordle->findWordPosition(crunched);
+        word = wordle->findWord(crunched);
+        if (position.x != -1 && position.y != -1) {
+            stagedwords.push_back({position.x, position.y, -1, row});
+            logs->emplaceLog(word);
+            logs->emplacePoints(word);
+            score->addPoints(word);
         }
     }
 
@@ -243,4 +249,12 @@ void GameGrid::setColor(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSp
     for (uint8_t j = row; j < row + rowSpan; j++)
         for (uint8_t i = col; i < col + colSpan; i++) 
             grid[i][j].setColor(sf::Color(122,220,220));
+}
+
+
+GameGrid::~GameGrid() {
+    delete input;
+    delete wordle;
+    delete logs;
+    delete score;
 }
