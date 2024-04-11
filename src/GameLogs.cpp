@@ -18,12 +18,12 @@ void GameLogs::initFrame() {
     logsFrame = sf::RectangleShape(sf::Vector2f(213, 324));
     logsFrame.setPosition(sf::Vector2f(53, 162));
     logsFrame.setOutlineColor(sf::Color(125, 125, 125));
-    logsFrame.setOutlineThickness(5);
+    logsFrame.setOutlineThickness(3);
     logsFrame.setFillColor(sf::Color(0, 0, 0, 0)); 
 }
 
 void GameLogs::initTitle() {
-    title.setString("Stats");
+    title.setString("STATS");
     title.setCharacterSize(30);
     title.setFillColor(sf::Color::White);
     title.setFont(*(Config::getInstance()->font));
@@ -83,8 +83,8 @@ void GameLogs::emplaceLog(std::string word) {
 }
 
 void GameLogs::emplacePoints(std::string word) {
-    int size = word.size();
-    std::string point = std::to_string((int)std::pow(size, 3));
+    std::string point = std::to_string((int)std::pow(word.size(), 3));
+
     for(int i = 9; i > 0; i--) {
         points[i].setString(points[i-1].getString().toAnsiString());
         sf::Vector2f text_size = sf::Vector2f(points[i].getGlobalBounds().getSize() + points[i].getLocalBounds().getPosition()); //size of the text

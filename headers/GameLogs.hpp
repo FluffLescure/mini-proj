@@ -10,6 +10,8 @@
 
 #include "LetterBlock.hpp"
 
+#include "GameScore.hpp" 
+
 
 /**
  * @class GameLogs
@@ -28,6 +30,8 @@ private:
     sf::Text title;
     std::vector<sf::Text> logs;
     std::vector<sf::Text> points;
+
+    GameScore* score;
 
 
 public:
