@@ -3,6 +3,8 @@
 
 #include <SFML/System/Vector3.hpp>
 
+#include<ctime>
+#include<random>
 #include "../headers/GameGrid.hpp"
 #include "../headers/Config.hpp"
 
@@ -20,7 +22,9 @@ void GameGrid::gridTick() {
     if(!blocks_falling && grid[5][0].isHidden()) {
         blockDisplay({5,0}, {1,1}, true);
         grid[5][0].setState(State::Falling);
-        grid[5][0].randLetter();
+        grid[5][0].setLetter(nextLetter);
+        grid[5][0].centerLetter();
+        randLetter();
     }
 }
 
@@ -74,6 +78,8 @@ GameGrid::GameGrid() {
     initWordle();
     logs = new GameLogs;
     score = new GameScore;
+    next = new GameLetter;
+    randLetter();
 }
 
  void GameGrid::initInput(){
@@ -94,6 +100,7 @@ void GameGrid::render(sf::RenderTarget *target){
 
     logs->render(target);
     score->render(target);
+    next->render(target);
 
 }
 
@@ -159,6 +166,27 @@ std::string GameGrid::crunchCol(int8_t col) {
         else
             crunched_col.append(grid[col][j]);
     return crunched_col;
+}
+
+
+void GameGrid::randLetter()
+{
+    int max = 0;
+    for (int i=0; i < 26; i++){
+        max += Config::getInstance()->weights[i];
+    }
+    int min=0;
+    int r = ((double) rand() / (RAND_MAX+1)) * (max-min+1) + min;
+    int sum = 0;
+    int letter = 0;
+    std::cout << r << std::endl;
+    while (r>sum){
+        sum += Config::getInstance()->weights[letter];
+        letter++;
+    }
+    letter--;
+    nextLetter = ((char) 'A'+ letter);
+    next->changeLetter(nextLetter);
 }
 
 
@@ -257,4 +285,5 @@ GameGrid::~GameGrid() {
     delete wordle;
     delete logs;
     delete score;
+    delete next;
 }
