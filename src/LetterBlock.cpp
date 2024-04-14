@@ -2,8 +2,7 @@
 
 #include<stdlib.h>
 #include<iostream>
-#include<ctime>
-#include<random>
+
 
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -144,20 +143,6 @@ bool LetterBlock::move(Blockgrid &grid, Direction direction){
 
 
 
-void LetterBlock::randLetter()
-{
-    int totalWeight = 0;
-    for (int weight : Config::getInstance()->weights)
-        totalWeight += weight;
-
-    int random_number = rand() % totalWeight;
-    int sum = 0, letter = 0;
-    while (random_number > sum)
-        sum += Config::getInstance()->weights[letter++];
-
-    setLetter((char) 'A'+ --letter);
-    centerLetter();     	
-}
 
 void LetterBlock::centerLetter() {
     

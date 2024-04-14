@@ -176,11 +176,6 @@ public:
     bool move(Blockgrid &grid, Direction direction);
 
     /**
-     * @brief Sets the letter attribute to a capitalized letter between A-Z
-     */
-    void randLetter();
-
-    /**
      * @brief Centers the letter to the center of the LetterBlock. 
      * @remark Since this is based on the size and shape of the letter, it should
      * be called everytime the letter is changed to guranteee its correct positioning 
