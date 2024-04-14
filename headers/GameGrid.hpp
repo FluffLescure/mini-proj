@@ -16,6 +16,7 @@
 #include "Wordle.hpp"
 #include "GameLogs.hpp"
 #include "GameScore.hpp"
+#include "GameLetter.hpp"
 
 // Macro of a 2D grid of LetterBlock used for legibility reasons
 typedef std::vector<std::vector<LetterBlock>> Grid;
@@ -55,6 +56,8 @@ private:
     Wordle *wordle;
     GameLogs *logs;
     GameScore* score;
+    GameLetter* next;
+    char nextLetter;
 
     // The 2D grid where the game takes place
     Grid grid;
@@ -151,6 +154,8 @@ public:
      * @returns a string of all the letter in the column
     */
     std::string crunchCol(int8_t col);
+
+    void randLetter();
 
     void setColor(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSpan);
 
