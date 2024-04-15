@@ -41,6 +41,11 @@ void GameLetter::initLetter() {
 
 void GameLetter::changeLetter(char newLetter){
     letter.setString(newLetter);
+    letter.setOrigin(sf::Vector2f(letter.getGlobalBounds().getSize().x / 2.f + letter.getLocalBounds().getPosition().x,0));
+}
+
+void GameLetter::centerLetter(){
+
 }
 
 
@@ -48,6 +53,7 @@ void GameLetter::changeLetter(char newLetter){
 void GameLetter::render(sf::RenderTarget *target){
     target->draw(letterFrame); // renders the frame
     target->draw(title);
+    centerLetter();
     target->draw(letter);
 }
 

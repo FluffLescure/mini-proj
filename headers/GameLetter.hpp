@@ -39,6 +39,8 @@ public:
 
     void changeLetter(char newLetter);
 
+    void centerLetter();
+
     /**
      * @brief Renders the grid's bounding frame and the 2D game grid
      * @param *target the rendered shared to other classes
