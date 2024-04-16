@@ -23,7 +23,7 @@ sf::Vector2i Wordle::findWordPosition(const std::string& word) {
 
             std::string substring = word.substr(i, j);
 
-            if (hashmap.find(substring) != hashmap.end() && substring.size() >1) {
+            if (hashmap.find(substring) != hashmap.end() && substring.size() >3) {
                 std::cout << substring << std::endl;
                 return {i,j};
             }
@@ -38,7 +38,7 @@ std::string Wordle::findWord(const std::string& word) {
 
             std::string substring = word.substr(i, j);
 
-            if (hashmap.find(substring) != hashmap.end() && substring.size() >1) {
+            if (hashmap.find(substring) != hashmap.end() && substring.size() >3) {
                 return word.substr(i,j);
             }
         }
