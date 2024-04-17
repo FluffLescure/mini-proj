@@ -58,6 +58,7 @@ private:
     GameScore* score;
     GameLetter* next;
     char nextLetter;
+    bool pause;
 
     // The 2D grid where the game takes place
     Grid grid;

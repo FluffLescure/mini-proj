@@ -80,6 +80,7 @@ GameGrid::GameGrid() {
     score = new GameScore;
     next = new GameLetter;
     randLetter();
+    pause = false;
 }
 
  void GameGrid::initInput(){
@@ -125,10 +126,10 @@ void GameGrid::update() {
 
     wordDestroy();
 
-    if(!(tick % 5))
+    if(!(tick % 5) && !pause)
         blockTick();
 
-    if(!(tick % 30) ) 
+    if(!(tick % 30) && !pause) 
         gridTick();
     
     if(tick == 60)
@@ -246,10 +247,12 @@ void GameGrid::wordDestroy(){
 
     if(!destroyTick(false))
         stagedwords = stageWords();
-
-    if(stagedwords.empty())
+    
+    if(stagedwords.empty()){
+        pause = false;
         return;
-
+    }
+    pause = true;
     for(std::vector<int> word : stagedwords){
         if(word[2] == -1)
             setColor(word[0], word[3], word[1], 1);
