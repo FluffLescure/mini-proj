@@ -8,6 +8,13 @@
 #include "LetterBlock.hpp"
 #include "GameLogs.hpp"
 
+
+struct wordPos{
+    std::string word;
+    sf::Vector2i position;
+};
+
+
 /** This class' only prupose is to check if a valid word is contained inside the grid, be it horizontally or vertically.
  * 
  * The algorithm used to check if a word is formed will be using a hashmap
@@ -26,7 +33,8 @@ public:
     Wordle();
     void initHashmap();
     sf::Vector2i findWordPosition(const std::string& word);
-    std::string findWord(const std::string& word);
+    std::string findWord_old(const std::string& word);
+    std::vector<wordPos> findWord(const std::string& word);
 
 
 

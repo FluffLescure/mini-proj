@@ -32,7 +32,7 @@ sf::Vector2i Wordle::findWordPosition(const std::string& word) {
     return {-1,-1};
 }
 
-std::string Wordle::findWord(const std::string& word) {
+std::string Wordle::findWord_old(const std::string& word) {
     for (int i = 0; i < (int)word.length(); i++){
         for (int j = word.length()-i; j >= 1; j--){
 
@@ -44,6 +44,25 @@ std::string Wordle::findWord(const std::string& word) {
         }
     }
     return "";
+}
+
+
+std::vector<wordPos> Wordle::findWord(const std::string& word){
+    std::vector<wordPos> wordList;
+    wordPos wp;
+    for (int i = 0; i < (int)word.length(); i++){
+        for (int j = word.length()-i; j >= 1; j--){
+
+            std::string substring = word.substr(i, j);
+
+            if (hashmap.find(substring) != hashmap.end() && substring.size() >3) {
+                wp.word = word.substr(i,j);
+                wp.position = {i,j};
+                wordList.push_back(wp);
+            }
+        }
+    }
+    return wordList;
 }
 
 

@@ -196,32 +196,28 @@ void GameGrid::randLetter()
 std::vector<std::vector<int>> GameGrid::stageWords() {
     std::string crunched;
     std::vector<std::vector<int>> stagedwords;
-    std::string word;
-    sf::Vector2i position;
+    std::vector<wordPos> wordList;
 
     for (int col = cols - 1; col >= 0; col--) {
         crunched = crunchCol(col);
-        position = wordle->findWordPosition(crunched);
-        word = wordle->findWord(crunched);
 
-        if (position.x != -1 && position.y != -1){
-            stagedwords.push_back({position.x, position.y, col, -1});
-            logs->emplaceLog(word);
-            logs->emplacePoints(word);
-            score->addPoints(word);
+        for (unsigned int i=0; i<wordList.size();i++){
+            stagedwords.push_back({wordList[i].position.x, wordList[i].position.y, col, -1});
+            logs->emplaceLog(wordList[i].word);
+            logs->emplacePoints(wordList[i].word);
+            score->addPoints(wordList[i].word);
 
         }
     }
 
     for (int row = rows - 1; row >= 0; row--) {
         crunched = crunchRow(row);
-        position = wordle->findWordPosition(crunched);
-        word = wordle->findWord(crunched);
-        if (position.x != -1 && position.y != -1) {
-            stagedwords.push_back({position.x, position.y, -1, row});
-            logs->emplaceLog(word);
-            logs->emplacePoints(word);
-            score->addPoints(word);
+        wordList = wordle->findWord(crunched);
+        for (unsigned int i=0; i<wordList.size();i++){
+            stagedwords.push_back({wordList[i].position.x, wordList[i].position.y, -1, row});
+            logs->emplaceLog(wordList[i].word);
+            logs->emplacePoints(wordList[i].word);
+            score->addPoints(wordList[i].word);
         }
     }
 
