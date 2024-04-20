@@ -143,7 +143,7 @@ void GameGrid::groundBlock(uint8_t i, uint8_t j) {
     if(!grid[i][j].isState(Falling))
         return; 
 
-    // if its on the last row or if the block under it is grounded, then
+    // if its on the last row or if the block beneath is grounded, then
     // set the block to grounded
     if(j == rows - 1 || (j < rows - 1 && grid[i][j+1].isState(Grounded)))
         grid[i][j].setState(Grounded);
@@ -180,7 +180,6 @@ void GameGrid::randLetter()
     int r = ((double) rand() / (RAND_MAX+1)) * (max-min+1) + min;
     int sum = 0;
     int letter = 0;
-    std::cout << r << std::endl;
     while (r>sum){
         sum += Config::getInstance()->weights[letter];
         letter++;
@@ -236,7 +235,7 @@ int GameGrid::destroyTick(bool start){
         destroy_tick++;
         return destroy_tick;     
     }
-    destroy_tick=0;
+    destroy_tick = 0;
     return 0;
 }
 

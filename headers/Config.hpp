@@ -95,7 +95,7 @@ public:
     */
     static Config* getInstance();
 
-    // Deletion of copy constructors as per its singleton property.
+    // Deletion of copy constructors for its singleton property.
     Config(const Config&) = delete;
     Config& operator=(const Config&) = delete;
 

@@ -23,7 +23,7 @@ void LetterBlock::display(bool visible) {
         letter_color.a = 255;
     }
     else {
-        block_color.a = 50;
+        block_color.a = 50; 
         letter_color.a = 0;
     }
 
@@ -50,7 +50,7 @@ void LetterBlock::initBlock() {
     block.setFillColor(sf::Color(175,175,175));
     block.setOutlineColor(sf::Color(75,75,75));
     block.setOutlineThickness(1);  
-    state = Fixed;
+    state = State::Fixed;
 }
 
 
@@ -72,14 +72,14 @@ void LetterBlock::render(sf::RenderTarget *target) {
     target->draw(letter);
 }
 
-void LetterBlock::operator=(LetterBlock& LB) {
+void LetterBlock::operator=(LetterBlock& block) {
     // Block colors, letter and state are transfered
-    this->block.setFillColor(LB.getBlock().getFillColor());
-    this->block.setOutlineColor(LB.getBlock().getOutlineColor());
-    this->letter.setString(LB.getLetter().getString());
-    this->letter.setFillColor(LB.getLetter().getFillColor());
+    this->block.setFillColor(block.getBlock().getFillColor());
+    this->block.setOutlineColor(block.getBlock().getOutlineColor());
+    this->letter.setString(block.getLetter().getString());
+    this->letter.setFillColor(block.getLetter().getFillColor());
     centerLetter(); // guarantees that the new letter is centered
-    state = LB.getState();
+    state = block.getState();
 }
 
 sf::Vector2u LetterBlock::getPosition(const Blockgrid& grid) const {
@@ -92,7 +92,7 @@ sf::Vector2u LetterBlock::getPosition(const Blockgrid& grid) const {
             }
         }
     }
-    return sf::Vector2u(-1, -1); // if not found throws the following coords
+    return sf::Vector2u(-1, -1); // if not found returns (-1, -1)
 }
 
 bool LetterBlock::isState(State state) {

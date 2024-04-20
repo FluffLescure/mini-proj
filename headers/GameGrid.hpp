@@ -75,6 +75,11 @@ public:
 
     ~GameGrid();
 
+    void initInput();
+
+    void initWordle();
+
+
     /**
      * @brief Updates the grid to make necessary LetterBlocks fall 1 block lower.
      */
@@ -160,9 +165,6 @@ public:
 
     void setColor(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSpan);
 
-    void initInput();
-
-    void initWordle();
 
 
 
