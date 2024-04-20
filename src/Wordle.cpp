@@ -17,52 +17,22 @@ void Wordle::initHashmap() {
     }
 }
 
-sf::Vector2i Wordle::findWordPosition(const std::string& word) {
+std::vector<foundWord> Wordle::findWord(const std::string& word){
+    std::vector<foundWord> foundWords;
+    foundWord found;
     for (int i = 0; i < (int)word.length(); i++){
         for (int j = word.length()-i; j >= 1; j--){
 
             std::string substring = word.substr(i, j);
 
-            if (hashmap.find(substring) != hashmap.end() && substring.size() >3) {
-                std::cout << substring << std::endl;
-                return {i,j};
+            if (hashmap.find(substring) != hashmap.end() && substring.size() >= 4) {
+                found.word = substring;
+                found.position = {i,j};
+                foundWords.push_back(found);
             }
         }
     }
-    return {-1,-1};
-}
-
-std::string Wordle::findWord_old(const std::string& word) {
-    for (int i = 0; i < (int)word.length(); i++){
-        for (int j = word.length()-i; j >= 1; j--){
-
-            std::string substring = word.substr(i, j);
-
-            if (hashmap.find(substring) != hashmap.end() && substring.size() >3) {
-                return word.substr(i,j);
-            }
-        }
-    }
-    return "";
-}
-
-
-std::vector<wordPos> Wordle::findWord(const std::string& word){
-    std::vector<wordPos> wordList;
-    wordPos wp;
-    for (int i = 0; i < (int)word.length(); i++){
-        for (int j = word.length()-i; j >= 1; j--){
-
-            std::string substring = word.substr(i, j);
-
-            if (hashmap.find(substring) != hashmap.end() && substring.size() >3) {
-                wp.word = word.substr(i,j);
-                wp.position = {i,j};
-                wordList.push_back(wp);
-            }
-        }
-    }
-    return wordList;
+    return foundWords;
 }
 
 

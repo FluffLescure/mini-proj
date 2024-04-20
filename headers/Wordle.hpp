@@ -9,7 +9,7 @@
 #include "GameLogs.hpp"
 
 
-struct wordPos{
+struct foundWord{
     std::string word;
     sf::Vector2i position;
 };
@@ -32,9 +32,7 @@ private:
 public:
     Wordle();
     void initHashmap();
-    sf::Vector2i findWordPosition(const std::string& word);
-    std::string findWord_old(const std::string& word);
-    std::vector<wordPos> findWord(const std::string& word);
+    std::vector<foundWord> findWord(const std::string& word);
 
 
 
