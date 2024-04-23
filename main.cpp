@@ -1,8 +1,6 @@
 
 #include<iostream>
 
-#include <SFML/Graphics.hpp>
-
 #include "headers/MainGame.hpp"
 
 int main() {

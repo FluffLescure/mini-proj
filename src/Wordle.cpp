@@ -19,25 +19,21 @@ void Wordle::initHashmap() {
 
 
 //Needs optimisation
-std::vector<foundWord> Wordle::findWord(const std::string& word){
-    std::vector<foundWord> foundWords;
-    foundWord found;
+std::map<std::string, sf::Vector2i> Wordle::findWord(const std::string& word){
+    std::map<std::string, sf::Vector2i> foundWords;
     std::string r_word = word;
 
     for(int i = 0; i < (int)word.size(); i++)
-        r_word[i] = word[word.size() -i -1];
+        r_word[i] = word[(word.size() - 1) - i];
 
     for (int i = 0; i < (int)word.length(); i++){
-        for (int j = word.length() - i; j >= 1; j--){
+        for (int length = word.length() - i; length >= 1; length--){
 
-            std::string substring = word.substr(i, j);
+            std::string substring = word.substr(i, length);
 
-            if (hashmap.find(substring) != hashmap.end() && substring.size() >= 4) {
-                std::cout << substring << i << " " << j <<std::endl;
-                found.word = substring;
-                found.position = {i,j};
-                foundWords.push_back(found);
-            }
+            if (hashmap.find(substring) != hashmap.end() && substring.size() >= 4) 
+                foundWords.emplace(std::pair(substring, sf::Vector2i(i, length)));
+            
 
         }
     }
@@ -47,16 +43,9 @@ std::vector<foundWord> Wordle::findWord(const std::string& word){
 
             std::string substring = r_word.substr(i, j);
 
-            if (hashmap.find(substring) != hashmap.end() && substring.size() >= 4) {
-                std::cout << substring << i << " " << j << std::endl;
-                std::cout << (int)word.length() -1 -j << std::endl;
-                std::cout << (int)word.size() -1 -i<< std::endl;
-
-                found.word = substring;
-                found.position = {(int)word.length()-i -j,j};
-                foundWords.push_back(found);
-            }
-
+            if (hashmap.find(substring) != hashmap.end() && substring.size() >= 4) 
+                foundWords.emplace(std::pair(substring, sf::Vector2i((int)word.size() - i - j, j)));
+            
         }
     }
 

@@ -32,9 +32,7 @@ private:
 public:
     Wordle();
     void initHashmap();
-    std::vector<foundWord> findWord(const std::string& word);
-
-
+    std::map<std::string, sf::Vector2i> findWord(const std::string& word);
 
 };
 

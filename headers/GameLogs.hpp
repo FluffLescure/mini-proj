@@ -42,6 +42,8 @@ public:
     void initLogs();
     void initPoints();
 
+    void emplace(std::string word);
+
     void emplaceLog(std::string word);
 
     void emplacePoints(std::string word);

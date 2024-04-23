@@ -75,9 +75,9 @@ void GameLogs::render(sf::RenderTarget *target){
 
 void GameLogs::emplaceLog(std::string word) {
     for(int i = 9; i > 0; i--) {
-        logs[i].setString(logs[i-1].getString().toAnsiString());
-        sf::Vector2f text_size = sf::Vector2f(logs[i].getGlobalBounds().getSize() + logs[i].getLocalBounds().getPosition()); //size of the text
-        logs[i].setPosition(sf::Vector2f(63,220+i*(text_size.y+5)));
+        logs[i].setString(logs[i - 1].getString().toAnsiString());
+        sf::Vector2f text_size = logs[i].getGlobalBounds().getSize() + logs[i].getLocalBounds().getPosition(); //size of the text
+        logs[i].setPosition({63, 220 + i * (text_size.y + 5)});
     }
     logs[0].setString(word);
 }
@@ -86,10 +86,15 @@ void GameLogs::emplacePoints(std::string word) {
     std::string point = std::to_string((int)std::pow(word.size(), 3));
 
     for(int i = 9; i > 0; i--) {
-        points[i].setString(points[i-1].getString().toAnsiString());
-        sf::Vector2f text_size = sf::Vector2f(points[i].getGlobalBounds().getSize() + points[i].getLocalBounds().getPosition()); //size of the text
-        points[i].setPosition(sf::Vector2f(213,220+i*(text_size.y+5)));
+        points[i].setString(points[i - 1].getString().toAnsiString());
+        sf::Vector2f text_size = points[i].getGlobalBounds().getSize() + points[i].getLocalBounds().getPosition(); //size of the text
+        points[i].setPosition({213, 220 + i * (text_size.y + 5)});
     }
     points[0].setString(point);
 
+}
+
+void GameLogs::emplace(std::string word){
+    emplaceLog(word);
+    emplacePoints(word);
 }

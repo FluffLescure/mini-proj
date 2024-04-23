@@ -20,8 +20,7 @@
 				"editor.formatOnSave": true,
 				"files.autoSaveDelay": 300000
 			},
-			"extensions": [
-				"GitHub.copilot",
+			"extensions": [	
 				"ms-vsliveshare.vsliveshare",
                 "ms-vscode.cpptools-extension-pack"
 			]
