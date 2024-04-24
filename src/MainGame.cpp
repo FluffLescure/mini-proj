@@ -39,6 +39,7 @@ void MainGame::initWindow() {
 }
 
 void MainGame::initComponents() {
+    level = new GameLevel;
     input = new Input;
     logs = new GameLogs;
     score = new GameScore;
@@ -54,6 +55,7 @@ MainGame::~MainGame() {
     delete logs;
     delete score;
     delete next;
+    delete level;
 }
 
 
@@ -91,10 +93,26 @@ void MainGame::render() {
 
 
 void MainGame::update() {
+    static uint8_t tick = 0;
+
     pollEvent();
-    input->pollEvent();
-    game->update();
+    input->pollEvent(); 
+
+    if(game->wordDestroy())
+        return;
+
+    if(!(tick % 5))
+        game->blockTick();
+
+    if(!(tick % 10)) 
+        game->gridTick();
+    
+    if(tick == 60)
+        tick = 0;
+
+    tick++;
 }
+
 
 void MainGame::pollEvent() {
     sf::Event event;

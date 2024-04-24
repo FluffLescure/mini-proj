@@ -54,8 +54,8 @@ private:
     Input *input;
     Wordle *wordle;
     GameLogs *logs;
-    GameScore* score;
-    GameLetter* next;
+    GameScore *score;
+    GameLetter *next;
 
     // The 2D grid where the game takes place
     Grid grid;
@@ -85,12 +85,10 @@ public:
     void initComponents(Input *input = nullptr, GameLogs *logs = nullptr, GameScore *score = nullptr, GameLetter *next = nullptr);
 
 
-
     /**
      * @brief Frees the wordle link
     */
     ~GameGrid();
-
 
 
     /**
@@ -98,15 +96,6 @@ public:
      * @param *target the rendered shared by other classes
     */
     void render(sf::RenderTarget *target);
-
-
-
-    /**
-     * @brief Actively retrieves user input and updates the game correspondingly.
-     * Every 5 ticks the blocks are updated in relation to the input, and every
-     * 30 ticks the grid is updated based on the state of the grid at that time.
-    */
-    void update();
 
 
     /**
@@ -187,6 +176,8 @@ public:
      */
     void gridTick();
 
+    void newBlock();
+
     /**
      * @brief Updates the visibility a zone of blocks delimited by the span entered
      * @param posInit the starting position of the span
@@ -196,7 +187,6 @@ public:
     void blockDisplay(sf::Vector2u posInit, sf::Vector2u span, bool visible);
 
     
-
    
 
     

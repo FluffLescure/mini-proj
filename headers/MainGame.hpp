@@ -8,6 +8,12 @@
 
 
 #include "GameGrid.hpp"
+#include "Config.hpp"
+#include "Input.hpp"
+#include "GameLogs.hpp"
+#include "GameScore.hpp"
+#include "GameLetter.hpp"
+#include "GameLevel.hpp"
 
 /**
 * @class MainGame
@@ -32,6 +38,7 @@ private:
     GameScore *score;
     GameLogs *logs;
     GameLetter *next;
+    GameLevel *level;
 
 public:
     /**
@@ -78,7 +85,7 @@ public:
     void render();
 
     /**
-    * @brief Calls for the update of game logic and states of each class 
+    * @brief Calls for the update of game logic with tick dependent timing
     */
     void update();
 

@@ -71,23 +71,7 @@ void GameGrid::render(sf::RenderTarget *target){
 
 
 
-void GameGrid::update() {
-    static uint8_t tick = 0;
 
-    if(wordDestroy())
-        return;
-
-    if(!(tick % 5))
-        blockTick();
-
-    if(!(tick % 30)) 
-        gridTick();
-    
-    if(tick == 60)
-        tick = 0;
-
-    tick++;
-}
 
 
 bool GameGrid::wordDestroy(){
@@ -187,7 +171,8 @@ std::string GameGrid::crunchCol(int8_t col) {
 void GameGrid::setColor(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSpan){
     for (uint8_t j = row; j < row + rowSpan; j++)
         for (uint8_t i = col; i < col + colSpan; i++) 
-            grid[i][j].setColor({122, 220, 220});
+            grid[i][j].setColor(sf::Color(0xABFFFF));
+            //grid[i][j].setColor({122, 220, 220});
 }
 
 void GameGrid::blockDestroy(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSpan) {
@@ -241,12 +226,21 @@ void GameGrid::gridTick() {
 
     // if no blocks are falling then add a new falling LetterBlock
     if(!blocks_falling && grid[5][0].isHidden()) {
-        blockDisplay({5, 0}, {1, 1}, true);
-        grid[5][0].setState(State::Falling);
-        grid[5][0].setLetter(next->getLetter());
-        grid[5][0].centerLetter();
-        next->changeLetter();
+        newBlock();
     }
+}
+
+void GameGrid::newBlock(){
+    int color_type = next->getLetter() % 3;
+    std::cout << "searching color: bg" <<  color_type << std::endl;
+    sf::Color color = Config::getInstance()->colorScheme.find("bg" + (char)color_type)->second;
+    std::cout << "found color: " << color.toInteger() << std::endl;
+    blockDisplay({5, 0}, {1, 1}, true);
+    grid[5][0].setState(State::Falling);
+    grid[5][0].setLetter(next->getLetter());
+    grid[5][0].setColor(color);
+    grid[5][0].centerLetter();
+    next->changeLetter();
 }
 
 void GameGrid::blockDisplay(sf::Vector2u posInit, sf::Vector2u span, bool visible) {
@@ -254,27 +248,3 @@ void GameGrid::blockDisplay(sf::Vector2u posInit, sf::Vector2u span, bool visibl
         for (uint8_t i = posInit.x; i < posInit.x + span.x; i++) 
             grid[i][j].display(visible);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

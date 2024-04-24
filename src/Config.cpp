@@ -72,6 +72,7 @@ void Config::loadWordlist() {
 
 
 
+
 Config::~Config() {
     delete font;
     delete layoutTex;
