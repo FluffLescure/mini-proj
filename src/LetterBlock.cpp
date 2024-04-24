@@ -145,7 +145,7 @@ void LetterBlock::display(bool visible) {
         letter_color.a = 255;
     }
     else {
-        block_color.a = 50; 
+        block_color = sf::Color(175, 175, 175, 50); 
         letter_color.a = 0;
     }
 

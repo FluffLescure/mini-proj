@@ -15,21 +15,16 @@ GameLevel::GameLevel() {
 void GameLevel::initColorschemes() {
     std::ifstream file(Config::getInstance()->colorscheme_file);
     std::string theme, type, color_str;
-    int theme_val;
 
 
-     std::cout << "loading\n";
     while(file >> theme >> type >> color_str){
-        sf::Color color = sf::Color(std::stoul(color_str, nullptr, 16));
+        sf::Color color = sf::Color(std::stoul(color_str + "FF", nullptr, 16));
         std::cout << color.toInteger() << std::endl;
-        theme_val = theme.back();
-        std::cout << "done\n";
-        colorScheme[theme_val].insert(std::pair(type, color));
-        std::cout << "done2\n";
+        int theme_val = theme.back() - '0';
+        colorScheme[theme_val].emplace(type, color);
     }
 
-    std::cout << "loaded\n";
-    Config::getInstance()->colorScheme = colorScheme[0];
+    Config::getInstance()->colorScheme = colorScheme[3];
 }
 
 int GameLevel::getSpeed() const {

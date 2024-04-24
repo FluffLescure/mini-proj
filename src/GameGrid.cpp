@@ -231,10 +231,9 @@ void GameGrid::gridTick() {
 }
 
 void GameGrid::newBlock(){
-    int color_type = next->getLetter() % 3;
-    std::cout << "searching color: bg" <<  color_type << std::endl;
-    sf::Color color = Config::getInstance()->colorScheme.find("bg" + (char)color_type)->second;
-    std::cout << "found color: " << color.toInteger() << std::endl;
+    std::string color_type = "bg" + std::to_string(next->getLetter() % 3);
+    sf::Color color = Config::getInstance()->colorScheme.find(color_type)->second;
+
     blockDisplay({5, 0}, {1, 1}, true);
     grid[5][0].setState(State::Falling);
     grid[5][0].setLetter(next->getLetter());

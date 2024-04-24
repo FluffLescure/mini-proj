@@ -116,7 +116,6 @@ public:
     const std::vector<int>generator_weights = {711, 114, 318, 367, 1210, 111, 123, 111, 659, 34, 29, 496, 262, 639, 502, 249, 65, 607, 651, 592, 449, 111, 17, 38, 46, 15};
     const std::string scores_file = "resources/Scores.txt";
     const std::string colorscheme_file = "resources/colorscheme.theme";
-    const sf::Color Blank = sf::Color(175, 175, 175, 50);
     
 
     // Storage of game resources
