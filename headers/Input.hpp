@@ -20,13 +20,15 @@ enum Direction {
 class Input {
 private:
     // input direction
-    Direction direction;
+    Direction direction = Direction::Unchanged;
 
 public:
     /**
     * @brief Polls arrow key events and stores them to 'direction' 
     */
     void pollEvent();
+
+    int pressTick(bool keepTicking = true);
 
 
     /**
