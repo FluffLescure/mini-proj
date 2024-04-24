@@ -28,6 +28,12 @@ public:
     */
     void pollEvent();
 
+
+    /**
+     * @brief Keeps the value of the input for a duration of 5 ticks
+     * @param keepTicking determines if the counter should keep ticking
+     * @returns The value of the counter;
+    */
     int inputTick(bool keepTicking = true);
 
 
