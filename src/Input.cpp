@@ -11,21 +11,21 @@ void Input::pollEvent() {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) direction = Right;
 
     if(direction != Direction::Unchanged)
-        pressTick();
+        inputTick();
 }
 
-int Input::pressTick(bool keepTicking) {
-    static int pressTick = 0;
+int Input::inputTick(bool keepTicking) {
+    static int inputTick = 0;
 
     if(!keepTicking)
-        return pressTick;
+        return inputTick;
 
-    if(pressTick != 5){
-        pressTick++;
-        return pressTick;     
+    if(inputTick != 5){
+        inputTick++;
+        return inputTick;     
     }
 
     direction = Direction::Unchanged;
-    pressTick = 0;
+    inputTick = 0;
     return 0;
 }

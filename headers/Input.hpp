@@ -28,7 +28,7 @@ public:
     */
     void pollEvent();
 
-    int pressTick(bool keepTicking = true);
+    int inputTick(bool keepTicking = true);
 
 
     /**
