@@ -5,9 +5,6 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "LetterBlock.hpp"
-#include "GameLogs.hpp"
-
 
 struct foundWord{
     std::string word;
@@ -26,13 +23,28 @@ struct foundWord{
 class Wordle {
 
 private:
-    std::map<std::string, int> hashmap;
+    // A word map that contains a unique hash for each word.
+    std::map<std::string, int> map;
 
 
 public:
+
+    /**
+     * @brief Constructors that call initialisation of components
+    */
     Wordle();
-    void initHashmap();
-    std::map<std::string, sf::Vector2i> findWord(const std::string& word);
+
+    /**
+     * @brief Initialises the map using config wordlist
+    */
+    void initMap();
+
+    /**
+     * @brief Finds words that are matched by the map inside a combination of characters
+     * @param str the combination of characters 
+     * @returns a map of the words and their position inside the combination
+    */
+    std::map<std::string, sf::Vector2i> findWord(std::string str);
 
 };
 

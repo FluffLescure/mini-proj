@@ -66,7 +66,7 @@ public:
      * @brief Constructor which calls the initialisation of components and
      *  agregated classes
     */
-    GameGrid();
+    GameGrid(Input *input = nullptr, GameLogs *logs = nullptr, GameScore *score = nullptr, GameLetter *next = nullptr);
 
     /**
      * @brief Builds the 2D grid using dimensions pulled from Config
@@ -80,19 +80,14 @@ public:
     void initFrame();
 
     /**
-     * @brief Initialises link with the Input class
+     * @brief Initialises links with other required classes when required
     */
-    void initInput();
-
-    /**
-     * @brief Initialises links with other required classes 
-    */
-    void initComponents();
+    void initComponents(Input *input = nullptr, GameLogs *logs = nullptr, GameScore *score = nullptr, GameLetter *next = nullptr);
 
 
 
     /**
-     * @brief Frees all the links
+     * @brief Frees the wordle link
     */
     ~GameGrid();
 
@@ -100,7 +95,7 @@ public:
 
     /**
      * @brief Renders the grid's bounding frame and the 2D game grid
-     * @param *target the rendered shared to other classes
+     * @param *target the rendered shared by other classes
     */
     void render(sf::RenderTarget *target);
 

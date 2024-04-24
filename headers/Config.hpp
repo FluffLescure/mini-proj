@@ -88,6 +88,7 @@ private:
     const std::string layout_file = "resources/layout.map";
     const std::string wordlist_file = "resources/wordlist.txt";
     
+    
 public:
 
     /**
@@ -112,6 +113,7 @@ public:
     const uint8_t gamegrid_rows = 15;
     const uint8_t gamegrid_cols = 10;
     const std::vector<int>generator_weights = {711, 114, 318, 367, 1210, 111, 123, 111, 659, 34, 29, 496, 262, 639, 502, 249, 65, 607, 651, 592, 449, 111, 17, 38, 46, 15};
+    const std::string scores_file = "resources/Scores.txt";
 
     // Storage of game resources
     sf::Font *font;

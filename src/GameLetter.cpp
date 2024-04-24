@@ -33,12 +33,11 @@ void GameLetter::initTitle() {
 }
 
 void GameLetter::initLetter() {
-    letter.setString(randLetter());
     letter.setCharacterSize(50);
     letter.setFillColor(sf::Color::White);
     letter.setFont(*(Config::getInstance()->font));
-    letter.setOrigin({letter.getGlobalBounds().getSize().x / 2.f + letter.getLocalBounds().getPosition().x,0});
-    letter.setPosition(sf::Vector2f(760,283));
+    letter.setPosition({760, 283});
+    changeLetter();
 }
 
 
@@ -57,13 +56,15 @@ char GameLetter::getLetter() {
 
 
 void GameLetter::changeLetter() {
-    letter.setString(randLetter());
-    letter.setOrigin({letter.getGlobalBounds().getSize().x / 2.f + letter.getLocalBounds().getPosition().x,0});
+    char let = randLetter();
+    letter.setString(let);
+
+    letter.setOrigin({letter.getGlobalBounds().getSize().x / 2.f + letter.getLocalBounds().getPosition().x,0}); // recenters the letter
 }
 
 char GameLetter::randLetter() {
     int max = 0, min = 0;
-    for (int i = 0; i < 26; i++)
+    for (uint8_t i = 0; i < 26; i++)
         max += Config::getInstance()->generator_weights[i];
 
     int r = ((double) rand() / (RAND_MAX + 1)) * (max - min + 1) + min;

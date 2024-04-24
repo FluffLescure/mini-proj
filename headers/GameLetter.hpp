@@ -12,12 +12,20 @@
 /**
  * @class GameLetter
  * 
- * @brief Randomizes the next falling letter and displays it on the game layout.
+ * @brief Randomises the next falling letter and displays it on the game layout.
  * The letter will then be retrieved by the grid in which case a new letter is then 
  * loaded.  
  * 
+ * @remark The class alllows simple randomisation with getters and setters.
+ * @code 
+ * GameLetter next = GameLetter();  // init with random letter
  * 
+ * char c = next->getLetter();      // retrieves current displayed letter
  * 
+ * c = next->randLetter();          // returns a random letter;
+ * 
+ * next->changeLetter();            // randomises the display letter
+ * @endcode
  */
 class GameLetter {
 private:
@@ -38,7 +46,7 @@ public:
     GameLetter();
 
     /**
-     * @brief Draws the frame of the object
+     * @brief Initialises the frame of the object
     */
     void initFrame();
 
@@ -55,7 +63,7 @@ public:
 
     /**
      * @brief Renders the object's bounding frame and its text
-     * @param *target the rendered shared to other classes
+     * @param *target the rendered shared by other classes
     */
     void render(sf::RenderTarget *target);
 
@@ -68,7 +76,7 @@ public:
 
 
     /**
-     * @brief Changes the letter that is displayed
+     * @brief Randomises and changes the letter that is displayed 
     */
     void changeLetter();
     

@@ -1,10 +1,19 @@
 
+#include<iostream>
 
 #include <SFML/Window/Event.hpp>
+#include <SFML/Graphics/PrimitiveType.hpp>
 
 #include "../headers/MainGame.hpp"
 #include "../headers/Config.hpp"
 
+
+
+MainGame::MainGame() {
+    initLayout();
+    initWindow();
+    initComponents();
+}
 
 void MainGame::initLayout() {
     Config* config = Config::getInstance();
@@ -19,11 +28,9 @@ void MainGame::initLayout() {
 }
 
 void MainGame::initWindow() {
-
     Config* config = Config::getInstance();
     //Sets window (2:1 true window scale) framerate and size
     const sf::VideoMode windowframe = sf::VideoMode(config->window_size.x,config->window_size.y);
-
 
     window = new sf::RenderWindow(windowframe,"Lettris");
     window->setFramerateLimit(config->window_framerate);
@@ -31,17 +38,25 @@ void MainGame::initWindow() {
     window->setVisible(true);
 }
 
-void MainGame::pollEvent() {
-    sf::Event event;
-
-    //Listens for any event on window 
-
-    while(window->pollEvent(event)) {
-        if(event.type == sf::Event::Closed) {
-            window->close();
-        }
-    }
+void MainGame::initComponents() {
+    input = new Input;
+    logs = new GameLogs;
+    score = new GameScore;
+    next = new GameLetter;
+    game = new GameGrid(input, logs, score, next);
 }
+
+
+MainGame::~MainGame() {
+    delete game;
+    delete window;
+    delete input;
+    delete logs;
+    delete score;
+    delete next;
+}
+
+
 
 bool MainGame::isRunning() {
     if(window == nullptr)
@@ -49,40 +64,43 @@ bool MainGame::isRunning() {
     return window->isOpen();
 }
 
-void MainGame::render() {
-    window->clear(); // Clear the old frame from window
 
-    window->draw(layout,Config::getInstance()->layoutTex); // renders layout
-    game->render(window);
-
-    window->display(); // Displays the new fram to window
-}   
 
 void MainGame::run(){
     //main instance
     while(isRunning()){
         render();
         update();
-       
     }
 }
+
+void MainGame::render() {
+    static sf::Texture *layoutTexture = Config::getInstance()->layoutTex;
+
+    window->clear(); // Clear the old frame from window
+
+    window->draw(layout, layoutTexture); // renders layout with texture
+
+    game->render(window);
+    logs->render(window);
+    score->render(window);
+    next->render(window);
+
+    window->display(); // Displays the new frame to window
+}  
 
 
 void MainGame::update() {
     pollEvent();
+    input->pollEvent();
     game->update();
 }
 
+void MainGame::pollEvent() {
+    sf::Event event;
 
-MainGame::MainGame() {
-    initLayout();
-    initWindow();
-    game = new GameGrid();
-    logs = new GameLogs();
-}
-
-MainGame::~MainGame() {
-    delete game;
-    delete window;
-    delete logs;
+    //Listens for any event on window
+    while(window->pollEvent(event))
+        if(event.type == sf::Event::Closed)
+            window->close();
 }

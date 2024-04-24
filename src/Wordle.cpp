@@ -6,50 +6,44 @@
 #include "../headers/Config.hpp"
 
 Wordle::Wordle() {
-    initHashmap();
+    initMap();
 }
 
-void Wordle::initHashmap() {
+void Wordle::initMap() {
     int hash = 1; 
     //Assignes unique hash to each word from the wordlist
     for (std::string word : Config::getInstance()->wordlist)
-        hashmap[word] = hash++;
+        map[word] = hash++;
     
 }
 
 
-//Needs optimisation
-std::map<std::string, sf::Vector2i> Wordle::findWord(const std::string& word){
+
+std::map<std::string, sf::Vector2i> Wordle::findWord(std::string str){
     std::map<std::string, sf::Vector2i> foundWords;
-    std::string r_word = word;
 
-    for(int i = 0; i < (int)word.size(); i++)
-        r_word[i] = word[(word.size() - 1) - i];
+    // A forward iteration scanning for any character combination of length bigger than 4
+    // Checks if the combination corresponds to a word from the map.
+    for (size_t i = 0; i < str.length(); i++){
+        for (size_t length = str.length() - i; length >= 4; length--){
+            std::string substring = str.substr(i, length);
 
-    for (int i = 0; i < (int)word.length(); i++){
-        for (int length = word.length() - i; length >= 1; length--){
-
-            std::string substring = word.substr(i, length);
-
-            if (hashmap.find(substring) != hashmap.end() && substring.size() >= 4) 
+            if (map.find(substring) != map.end()) 
                 foundWords.emplace(std::pair(substring, sf::Vector2i(i, length)));
-            
-
         }
     }
 
-     for (int i = (int)r_word.length(); i >= 0; i--){
-        for (int j = 1; j < (int)r_word.length() - i; j++){
+    // Reverses the string before iterating backwards
+    std::reverse(str.begin(), str.end());
 
-            std::string substring = r_word.substr(i, j);
+    for (ssize_t i = str.length(); i >= 0; i--){
+        for (size_t length = 4; length < str.length() - i; length++){
+            std::string substring = str.substr(i, length);
 
-            if (hashmap.find(substring) != hashmap.end() && substring.size() >= 4) 
-                foundWords.emplace(std::pair(substring, sf::Vector2i((int)word.size() - i - j, j)));
-            
+            if (map.find(substring) != map.end()) 
+                foundWords.emplace(std::pair(substring, sf::Vector2i((int)str.size() - i - length, length)));
         }
     }
-
-
     return foundWords;
 }
 

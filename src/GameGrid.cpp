@@ -4,11 +4,10 @@
 #include "../headers/GameGrid.hpp"
 
 
-GameGrid::GameGrid() {
+GameGrid::GameGrid(Input *input, GameLogs *logs, GameScore *score, GameLetter *next) {
     initFrame();
     initGrid();
-    initInput();
-    initComponents();
+    initComponents(input, logs, score, next);
 }
 
 void GameGrid::initFrame() {
@@ -33,25 +32,29 @@ void GameGrid::initGrid() {
     }
 }
 
- void GameGrid::initInput(){
-    input = new Input;
- }
+void GameGrid::initComponents(Input *input, GameLogs *logs, GameScore *score, GameLetter *next) {
+    this->wordle = new Wordle;
+    
+    // If a component is missing then create a new instance of the missing component
+    if(input == nullptr)
+        this->input = new Input;
+    if(logs == nullptr)
+        this->logs = new GameLogs;
+    if(score == nullptr)
+        this->score = new GameScore;
+    if(next == nullptr)
+        this->next = new GameLetter;
 
-void GameGrid::initComponents() {
-    wordle = new Wordle;
-    logs = new GameLogs;
-    score = new GameScore;
-    next = new GameLetter;
+    this->input = input;
+    this->logs = logs;
+    this->score = score;
+    this->next = next;
 }
 
 
 
 GameGrid::~GameGrid() {
-    delete input;
     delete wordle;
-    delete logs;
-    delete score;
-    delete next;
 }
 
 
@@ -64,19 +67,12 @@ void GameGrid::render(sf::RenderTarget *target){
         for (uint8_t i = 0; i < cols; i++)
             grid[i][j].render(target);   
 
-    logs->render(target);
-    score->render(target);
-    next->render(target);
-
 }
 
 
 
 void GameGrid::update() {
     static uint8_t tick = 0;
-
-    // Retrieves user input
-    input->pollEvent();
 
     if(wordDestroy())
         return;

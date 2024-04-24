@@ -6,14 +6,16 @@
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/System/Vector2.hpp>
 
 #include "Input.hpp"
 
 
 /**
 * @enum State
-* @brief Possible states of the LetterBlock: Falling, Grounded, Fixed
+* @brief Possible states of the LetterBlock: Falling, Grounded or Fixed
 */
 enum State {
     Falling,
@@ -73,7 +75,7 @@ enum State {
 class LetterBlock {
 
     // Macro of a 2D grid of LetterBlock used for legibility reasons
-    typedef std::vector<std::vector<LetterBlock>> Blockgrid;
+    using Blockgrid = std::vector<std::vector<LetterBlock>>;
 
 
 private:
@@ -81,12 +83,23 @@ private:
     sf::RectangleShape block;
     State state;
 
-
 public:
+
     /**
      * @brief Default class constructor that can accept a letter to display
     */
     LetterBlock(char str = ' ');
+
+    /**
+     * @brief Initialises the block
+    */
+    void initBlock();
+
+    /**
+     * @brief Initialises the letter with a given word
+    */
+    void initLetter(char str = ' ');
+
 
     /**
      * @brief Operator used for the sole purpose of transfering the LetterBlock
@@ -95,7 +108,20 @@ public:
      * blocks by transfering letter and fill color to the next.
      * @param &block the block that will be transfered.
     */
-    void operator =(LetterBlock& block);
+    void operator=(LetterBlock& block);
+
+    /**
+     * @brief Centers the letter to the center of the LetterBlock. 
+     * @remark Since this is based on the size and shape of the letter, it should
+     * be called everytime the letter is changed to guaranteee its correct positioning 
+    */
+    void centerLetter();
+
+    /**
+     * @brief Return the current state of the LetterBlock
+    */
+    State getState() const { return state; }
+
 
     /**
      * @brief conversion operator to string which will allow to extract the block's
@@ -103,15 +129,7 @@ public:
     */
     operator std::string() const { return letter.getString().toAnsiString(); }
 
-    /**
-     * @brief Initialises the block with a set of given properties
-    */
-    void initBlock();
-    /**
-     * @brief Initialises the letter with a set of given properties
-    */
-    void initLetter(char str = ' ');
-
+    
     /**
      * @brief Changes the color of the LetterBlock filler
      * @param color The color to be set
@@ -133,24 +151,20 @@ public:
      */
     void setPosition(sf::Vector2f pos);
 
-    /**
-     * @brief Return the current state of the LetterBlock
-    */
-    State getState() const { return state; }
 
     /**
      * @brief Returns a copy of the block attribute
      */
     sf::RectangleShape getBlock() const { return block; }
-
     /**
      * @brief Returns a copy of the letter attribute
      */
     sf::Text getLetter() const { return letter; }
-
     /**
      * @brief Return the current position of the LetterBlock inside the 2D LetterBlock
-     * grid
+     *  grid
+     * @param &grid the reference of the grid which its contained in
+     * @return A vector of the coordinates inside the grid
     */
     sf::Vector2u getPosition(const Blockgrid &grid) const;
 
@@ -164,8 +178,9 @@ public:
     /**
      * @brief Checks if the LetterBlock is hidden (transparent) or not
      * @returns result of the check, either true or false
-     */
+    */
     bool isHidden();
+
 
     /**
      * @brief Moves the LetterBlock inside the 2D grid according to the given direction
@@ -175,22 +190,17 @@ public:
     */
     bool move(Blockgrid &grid, Direction direction);
 
-    /**
-     * @brief Centers the letter to the center of the LetterBlock. 
-     * @remark Since this is based on the size and shape of the letter, it should
-     * be called everytime the letter is changed to guranteee its correct positioning 
-    */
-    void centerLetter();
-
+    
     /**
      * @brief Decides whether to hide or display the LetterBlock
      * @param visible LetterBlock hidden if true
      */
     void display(bool visible);
 
+
     /**
      * @brief Renders the components of the LetterBlock
-     * @param *target the rendered shared amongst classes
+     * @param *target the target shared amongst classes
     */
     void render(sf::RenderTarget *target);
 

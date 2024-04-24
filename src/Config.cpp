@@ -49,7 +49,7 @@ void Config::loadLayout() {
 
     // Loads x and y coords of the layout
     while (file >> x >> y) {
-        layoutPoints.push_back(sf::Vector2f(x, y));
+        layoutPoints.push_back({x, y});
     }
 
     file.close();

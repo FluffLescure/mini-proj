@@ -8,7 +8,6 @@
 
 
 #include "GameGrid.hpp"
-#include "GameLogs.hpp"
 
 /**
 * @class MainGame
@@ -16,29 +15,29 @@
 *
 * @remark The class' main function is to display and update each 
 * layout block with an aggregation link and through methods render() 
-* and update(). The update() method is used for back-end changes
-* while render() will exclusively be used to render drawables to 
-* window.
+* and update().
+* The update() method is used for back-end changes while render() will
+* exclusively be used to render drawables to window.
 */
 class MainGame: sf::NonCopyable {
 private:
     sf::RenderWindow *window;
-    // map that stores the layout, built in sf::Quads
+
+    // map that stores the game layout built in sf::Quads
     sf::VertexArray layout;
-    // aggregation link to GameGrid
+
+    // Agregated classes
+    Input *input;
     GameGrid *game;
+    GameScore *score;
     GameLogs *logs;
+    GameLetter *next;
 
 public:
     /**
     * @brief Constructor that links to GameGrid and initialises layout
     */
     MainGame();
-
-    /**
-    * @brief Frees GameGrid from memory 
-    */
-    ~MainGame();
 
     /**
     * @brief Initialises the layout using preloaded resources from Config 
@@ -50,23 +49,48 @@ public:
     */
     void initWindow();
 
-    bool isRunning();
-
-    void run();
-
-    void pollEvent();
+    /**
+     * @brief initalises game components
+    */
+    void initComponents();
 
 
     /**
-    * @brief Renders blocks and layout of the game 
-    * @param *target the renderer shared to other classes
+    * @brief Frees GameGrid from memory 
+    */
+    ~MainGame();
+
+
+    /**
+     * @brief Determines if the gam is running based on the state of the window
+    */
+    bool isRunning();
+
+
+    /**
+     * @brief Runs the main instance of the game
+    */
+    void run();
+
+    /**
+    * @brief Renders the game
     */
     void render();
 
     /**
-    * @brief calls for update of the logic and states of each class 
+    * @brief Calls for the update of game logic and states of each class 
     */
     void update();
+
+    /**
+     * @brief Retrieves events related to the game window
+    */
+    void pollEvent();
+
+
+    
+
+    
 };
 
 #endif
