@@ -22,6 +22,7 @@ void GameScore::initFrame() {
     scoreFrame.setFillColor({0, 0, 0, 0}); 
 }
 
+
 void GameScore::initText() {
     scoreText.setString("SCORE");
     scoreText.setCharacterSize(24);
@@ -38,13 +39,6 @@ void GameScore::initText() {
     topScoreText.setPosition({710, 114});
 }
 
-void GameScore::render(sf::RenderTarget *target){
-    target->draw(scoreFrame);
-    target->draw(scoreText);
-    target->draw(scoreVal);
-    target->draw(topScoreText);
-    target->draw(topScoreVal);
-}
 
 void GameScore::initScore() {
     std::ifstream scoreFile(Config::getInstance()->scores_file);
@@ -70,12 +64,14 @@ void GameScore::initScore() {
     scoreVal.setPosition({890, 153});
 }
 
-void GameScore::addPoints(std::string word) {
-    int points = (int)std::pow(word.size(), 3);
-    int current_points = atoi(scoreVal.getString().toAnsiString().c_str()); 
 
-    scoreVal.setString(std::to_string(current_points + points));
-    scoreVal.setOrigin({scoreVal.getGlobalBounds().width, scoreVal.getGlobalBounds().height / 2.0f}); // left center alignment
+
+void GameScore::render(sf::RenderTarget *target){
+    target->draw(scoreFrame);
+    target->draw(scoreText);
+    target->draw(scoreVal);
+    target->draw(topScoreText);
+    target->draw(topScoreVal);
 }
 
 
@@ -89,3 +85,19 @@ GameScore::~GameScore() {
         scoreFile.close(); 
     }
 }
+
+
+int GameScore::getScore() const {
+    return atoi(scoreVal.getString().toAnsiString().c_str());
+}
+
+
+void GameScore::addPoints(std::string word) {
+    int points = (int)std::pow(word.size(), 3);
+    int current_points = atoi(scoreVal.getString().toAnsiString().c_str()); 
+
+    scoreVal.setString(std::to_string(current_points + points));
+    scoreVal.setOrigin({scoreVal.getGlobalBounds().width, scoreVal.getGlobalBounds().height / 2.0f}); // left center alignment
+}
+
+

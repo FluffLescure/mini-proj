@@ -1,5 +1,6 @@
 
 #include<iostream>
+#include<cmath>
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/PrimitiveType.hpp>
@@ -87,6 +88,7 @@ void MainGame::render() {
     logs->render(window);
     score->render(window);
     next->render(window);
+    level->render(window);
 
     window->display(); // Displays the new frame to window
 }  
@@ -94,6 +96,7 @@ void MainGame::render() {
 
 void MainGame::update() {
     static uint8_t tick = 0;
+    static uint8_t lvl = 0;
 
     pollEvent();
     input->pollEvent(); 
@@ -104,9 +107,14 @@ void MainGame::update() {
     if(!(tick % 5))
         game->blockTick();
 
-    if(!(tick % 10)) 
+    if(!(tick % level->getSpeed())) 
         game->gridTick();
-    
+
+    if(score->getScore() > 100 * std::pow(2, lvl)){
+        lvl++;
+        level->levelUp();
+    }
+
     if(tick == 60)
         tick = 0;
 

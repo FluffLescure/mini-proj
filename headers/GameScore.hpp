@@ -48,6 +48,8 @@ public:
     */
     ~GameScore();
 
+    int getScore() const;
+
     /**
      * @brief Adds points to the score based on the length of the word given
      * @param word the word that needs to be scored

@@ -10,6 +10,8 @@
 GameLevel::GameLevel() {
     speed = 30;
     initColorschemes();
+    initFrames();
+    initText();
 }
 
 void GameLevel::initColorschemes() {
@@ -24,13 +26,56 @@ void GameLevel::initColorschemes() {
         colorScheme[theme_val].emplace(type, color);
     }
 
-    Config::getInstance()->colorScheme = colorScheme[3];
+    Config::getInstance()->colorScheme = colorScheme[0];
 }
 
-int GameLevel::getSpeed() const {
-    return 0;
+void GameLevel::initFrames() {
+    stageFrame = sf::RectangleShape({160, 54});
+    stageFrame.setPosition({106.6, 54});
+    stageFrame.setOutlineColor({125, 125, 125});
+    stageFrame.setOutlineThickness(3);
+    stageFrame.setFillColor({0, 0, 0, 0}); 
+
+    levelFrame = sf::RectangleShape({186.6, 54});
+    levelFrame.setPosition({693.3, 378});
+    levelFrame.setOutlineColor({125, 125, 125});
+    levelFrame.setOutlineThickness(3);
+    levelFrame.setFillColor({0, 0, 0, 0}); 
 }
+
+void GameLevel::initText() {
+    stageText.setString("STAGE - 1");
+    stageText.setCharacterSize(24);
+    stageText.setFillColor(sf::Color::White);
+    stageText.setFont(*(Config::getInstance()->font));
+    stageText.setOrigin({0, stageText.getGlobalBounds().height / 2.f + stageText.getLocalBounds().getPosition().y}); // right center alignment
+    stageText.setPosition({123.3, 81});
+
+    levelText.setString("LEVEL             1");
+    levelText.setCharacterSize(24);
+    levelText.setFillColor(sf::Color::White);
+    levelText.setFont(*(Config::getInstance()->font));
+    levelText.setOrigin({0, levelText.getGlobalBounds().height / 2.f + levelText.getLocalBounds().getPosition().y}); // right center alignment
+    levelText.setPosition({710, 405});
+}
+
 
 void GameLevel::levelUp() {
+    static int lvl = 0;
+    speed -= levelSpeed[lvl];
+    int scheme = levelSpeed[9-lvl] - 2;
 
+    Config::getInstance()->colorScheme = colorScheme[scheme];
+
+    lvl++;
+    levelText.setString("LEVEL             " + lvl + 1);
+}
+
+
+void GameLevel::render(sf::RenderTarget *target) {
+    target->draw(stageFrame);
+    target->draw(levelFrame);
+
+    target->draw(stageText);
+    target->draw(levelText);
 }
