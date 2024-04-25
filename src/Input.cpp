@@ -14,7 +14,7 @@ void Input::pollEvent() {
         inputTick();
 }
 
-int Input::inputTick(bool keepTicking) {
+constexpr const int Input::inputTick(bool keepTicking) {
     static int inputTick = 0;
 
     if(!keepTicking)

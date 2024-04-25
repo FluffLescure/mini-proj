@@ -12,7 +12,7 @@ LetterBlock::LetterBlock(char str) {
     initLetter(str);
 }
 
-void LetterBlock::initBlock() {
+constexpr void LetterBlock::initBlock() {
     block = sf::RectangleShape(Config::getInstance()->block_size);
     block.setFillColor({175,175,175});
     block.setOutlineColor({75,75,75});
@@ -20,7 +20,7 @@ void LetterBlock::initBlock() {
     state = State::Fixed;
 }
 
-void LetterBlock::initLetter(char str) {
+constexpr void LetterBlock::initLetter(char str) {
     letter.setString(str);
     letter.setCharacterSize(24);
     letter.setFillColor(sf::Color::Black);
@@ -29,7 +29,7 @@ void LetterBlock::initLetter(char str) {
 
 
 
-void LetterBlock::operator=(LetterBlock& block) {
+constexpr void LetterBlock::operator=(LetterBlock& block) {
     // Block colors, letter and state are transfered
     this->block.setFillColor(block.getBlock().getFillColor());
     this->block.setOutlineColor(block.getBlock().getOutlineColor());
@@ -53,7 +53,7 @@ void LetterBlock::setPosition(sf::Vector2f pos) {
 
 
 
-sf::Vector2u LetterBlock::getPosition(const Blockgrid& grid) const {
+constexpr const sf::Vector2u LetterBlock::getPosition(const Blockgrid& grid) const {
     // Runs throught the entire the grid comparing the memory address of each block 
     // with the current one to find its coordinates
     for (uint8_t i = 0; i < grid.size(); i++) {
@@ -68,7 +68,7 @@ sf::Vector2u LetterBlock::getPosition(const Blockgrid& grid) const {
 
 
 
-bool LetterBlock::isState(State state) {
+const bool LetterBlock::isState(State state) {
     if(this->state == state)
         return true;
     return false;
@@ -76,7 +76,7 @@ bool LetterBlock::isState(State state) {
 
 
 
-bool LetterBlock::isHidden() {
+const bool LetterBlock::isHidden() {
     sf::Color col = block.getFillColor();
     if (col.a == 50)
         return true;
@@ -86,7 +86,7 @@ bool LetterBlock::isHidden() {
 
 
 
-bool LetterBlock::move(Blockgrid &grid, Direction direction){
+const bool LetterBlock::move(Blockgrid &grid, Direction direction){
     sf::Vector2u pos = getPosition(grid);
     uint8_t rows = Config::getInstance()->gamegrid_rows;
     uint8_t cols = Config::getInstance()->gamegrid_cols;

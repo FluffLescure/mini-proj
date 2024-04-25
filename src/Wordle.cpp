@@ -9,7 +9,7 @@ Wordle::Wordle() {
     initMap();
 }
 
-void Wordle::initMap() {
+constexpr void Wordle::initMap() {
     int hash = 1; 
     //Assignes unique hash to each word from the wordlist
     for (std::string word : Config::getInstance()->wordlist)
@@ -19,7 +19,7 @@ void Wordle::initMap() {
 
 
 
-std::map<std::string, sf::Vector2u> Wordle::findWord(std::string str){
+const std::map<std::string, sf::Vector2u> Wordle::findWord(std::string str){
     std::map<std::string, sf::Vector2u> foundWords;
 
     // A forward iteration scanning for any character combination of length bigger than 4

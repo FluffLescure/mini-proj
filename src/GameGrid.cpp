@@ -9,7 +9,7 @@ GameGrid::GameGrid() {
     initWordle();
 }
 
-void GameGrid::initGrid() {
+constexpr void GameGrid::initGrid() {
     Config* config = Config::getInstance();
 
     // Creates the 2D grid and fills it with empty LetterBlocks
@@ -23,7 +23,7 @@ void GameGrid::initGrid() {
 }
 
 
-void GameGrid::initFrame() {
+constexpr void GameGrid::initFrame() {
     // Draws the bounding frame of the grid
     gridBorder = sf::RectangleShape({336, 486});
     gridBorder.setPosition({312, 27});
@@ -33,7 +33,7 @@ void GameGrid::initFrame() {
 }
 
 
-void GameGrid::initWordle() {
+constexpr void GameGrid::initWordle() {
     this->wordle = new Wordle;
 }
 
@@ -99,7 +99,7 @@ constexpr int GameGrid::destroyTick(const bool &keepTicking) const{
     return 0;
 }
 
-std::vector<WordBlock> GameGrid::stageWords() {
+constexpr std::vector<WordBlock> GameGrid::stageWords() {
     std::string crunched;
     std::vector<WordBlock> stagedwords;
     std::map<std::string, sf::Vector2u> foundWords;
@@ -121,7 +121,7 @@ std::vector<WordBlock> GameGrid::stageWords() {
     return stagedwords;
 }
 
-const std::string GameGrid::crunchRow(const int8_t &row) {
+constexpr const std::string GameGrid::crunchRow(const int8_t &row) {
     std::string crunched_row;
     for(uint8_t i = 0; i < cols; i++)
         if(!grid[i][row].isState(Grounded))
@@ -131,7 +131,7 @@ const std::string GameGrid::crunchRow(const int8_t &row) {
     return crunched_row;
 }
 
-const std::string GameGrid::crunchCol(const int8_t &col) {
+constexpr const std::string GameGrid::crunchCol(const int8_t &col) {
     std::string crunched_col;
     for(uint8_t j = 0; j < rows; j++)
         if (!grid[col][j].isState(Grounded))
@@ -141,14 +141,14 @@ const std::string GameGrid::crunchCol(const int8_t &col) {
     return crunched_col;
 }
 
-void GameGrid::setColor(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSpan){
+constexpr void GameGrid::setColor(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSpan){
     for (uint8_t j = row; j < row + rowSpan; j++)
         for (uint8_t i = col; i < col + colSpan; i++) 
             grid[i][j].setColor(sf::Color(0xABFFFF));
             //grid[i][j].setColor({122, 220, 220});
 }
 
-void GameGrid::blockDestroy(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSpan) {
+constexpr void GameGrid::blockDestroy(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSpan) {
     for (uint8_t j = row; j < row + rowSpan; j++) {
         for (uint8_t i = col; i < col + colSpan; i++) {
             grid[i][j].display(false);
@@ -175,7 +175,7 @@ void GameGrid::blockMove(const Direction &input) {
     }
 }
 
-void GameGrid::groundBlock(uint8_t i, uint8_t j) {
+constexpr void GameGrid::groundBlock(uint8_t i, uint8_t j) {
     // if the block isn't falling exit
     if(!grid[i][j].isState(Falling))
         return; 
@@ -215,7 +215,7 @@ void GameGrid::newBlock(const char &letter){
     grid[5][0].centerLetter();
 }
 
-void GameGrid::blockDisplay(sf::Vector2u posInit, sf::Vector2u span, bool visible) {
+constexpr void GameGrid::blockDisplay(sf::Vector2u posInit, sf::Vector2u span, bool visible) {
     for (uint8_t j = posInit.y; j < posInit.y + span.y; j++)
         for (uint8_t i = posInit.x; i < posInit.x + span.x; i++) 
             grid[i][j].display(visible);

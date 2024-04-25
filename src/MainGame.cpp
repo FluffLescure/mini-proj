@@ -16,7 +16,7 @@ MainGame::MainGame() {
     initComponents();
 }
 
-void MainGame::initLayout() {
+constexpr void MainGame::initLayout() {
     Config* config = Config::getInstance();
     layout = sf::VertexArray(sf::Quads, config->layoutPoints.size());
 
@@ -39,7 +39,7 @@ void MainGame::initWindow() {
     window->setVisible(true);
 }
 
-void MainGame::initComponents() {
+constexpr void MainGame::initComponents() {
     level = new GameLevel;
     input = new Input;
     logs = new GameLogs;
@@ -61,7 +61,7 @@ MainGame::~MainGame() {
 
 
 
-bool MainGame::isRunning() {
+constexpr const bool MainGame::isRunning() const {
     if(window == nullptr)
         return false;
     return window->isOpen();
@@ -77,7 +77,7 @@ void MainGame::run(){
     }
 }
 
-void MainGame::render() {
+constexpr void MainGame::render() const {
     static sf::Texture *layoutTexture = Config::getInstance()->layoutTex;
 
     window->clear(); // Clear the old frame from window
@@ -94,7 +94,7 @@ void MainGame::render() {
 }  
 
 
-void MainGame::update() {
+constexpr void MainGame::update() {
     static uint8_t tick = 0;
     static uint8_t lvl = 0;
     static std::vector<WordBlock> words;
@@ -102,8 +102,10 @@ void MainGame::update() {
     pollEvent();
     input->pollEvent(); 
 
-    // Pauses the game while the word is being destroyed
+    
     words = game->wordDestroy();
+
+    // Pauses the game while the word is being destroyed
     if(!words.empty()){
         for (WordBlock &word : words){
             logs->emplace(word.string);
@@ -133,7 +135,7 @@ void MainGame::update() {
 }
 
 
-void MainGame::pollEvent() {
+constexpr void MainGame::pollEvent() {
     static sf::Event event;
 
     //Listens for any event on window

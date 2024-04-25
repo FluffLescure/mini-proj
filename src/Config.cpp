@@ -9,14 +9,14 @@
 // is called in runtime
 Config* Config::instance = new Config();
 
-Config::Config() {
+constexpr Config::Config() {
     loadFonts();
     loadTextures();
     loadLayout();
     loadWordlist();
 }
 
-void Config::loadFonts() {
+constexpr void Config::loadFonts() {
     font = new sf::Font();
 
     if(!font->loadFromFile(font_file)) {
@@ -25,7 +25,7 @@ void Config::loadFonts() {
     }
 }
 
-void Config::loadTextures() {
+constexpr void Config::loadTextures() {
     layoutTex = new sf::Texture();
     if(!layoutTex->loadFromFile(texture_file)) {
         std::cout << "ERROR: Failed to load texture file : " << texture_file << std::endl;
@@ -33,7 +33,7 @@ void Config::loadTextures() {
     }
 }
 
-void Config::loadLayout() {
+constexpr void Config::loadLayout() {
     float x,y;
     std::ifstream file(layout_file);
 
@@ -45,7 +45,7 @@ void Config::loadLayout() {
     file.close();
 }
 
-void Config::loadWordlist() {
+constexpr void Config::loadWordlist() {
     std::string word;
     std::ifstream file(wordlist_file);
 
@@ -60,10 +60,14 @@ void Config::loadWordlist() {
     file.close();
 }
 
+Config* Config::getInstance() {
+    if(!instance)
+        instance = new Config;
+    return instance;
+}
 
 
-
-Config::~Config() {
+constexpr Config::~Config() {
     delete font;
     delete layoutTex;
 }

@@ -48,17 +48,17 @@ public:
     /**
      * @brief Initialises the frame of the object
     */
-    void initFrame();
+    constexpr void initFrame();
 
     /**
      * @brief Initiliases the title text
     */
-    void initTitle();
+    constexpr void initTitle();
 
     /**
      * @brief Initialises the next letter text
     */
-    void initLetter();
+    constexpr void initLetter();
 
 
     /**
@@ -72,7 +72,7 @@ public:
      * @brief A simple getter function
      * @return The letter displayed
     */
-    char getLetter();
+    const char getLetter();
 
 
     /**
@@ -84,7 +84,7 @@ public:
      * @brief The weighed randomiser which creates the new letter to be displayed
      * @return A randomised character between A and Z
     */
-    char randLetter();
+    constexpr const char randLetter();
 
     
 

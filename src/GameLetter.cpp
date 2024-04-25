@@ -15,7 +15,7 @@ GameLetter::GameLetter(){
     initLetter();
 }
 
-void GameLetter::initFrame() {
+constexpr void GameLetter::initFrame() {
     letterFrame = sf::RectangleShape({80, 108});
     letterFrame.setPosition({720, 243});
     letterFrame.setOutlineColor({125, 125, 125});
@@ -23,7 +23,7 @@ void GameLetter::initFrame() {
     letterFrame.setFillColor({0, 0, 0, 0}); 
 }
 
-void GameLetter::initTitle() {
+constexpr void GameLetter::initTitle() {
     title.setString("NEXT");
     title.setCharacterSize(20);
     title.setFillColor(sf::Color::White);
@@ -32,7 +32,7 @@ void GameLetter::initTitle() {
     title.setPosition({760, 243});
 }
 
-void GameLetter::initLetter() {
+constexpr void GameLetter::initLetter() {
     letter.setCharacterSize(50);
     letter.setFillColor(sf::Color::White);
     letter.setFont(*(Config::getInstance()->font));
@@ -49,7 +49,7 @@ void GameLetter::render(sf::RenderTarget *target){
 }
 
 
-char GameLetter::getLetter() {
+const char GameLetter::getLetter() {
     return letter.getString().toAnsiString().c_str()[0];
 }
 
@@ -62,7 +62,7 @@ void GameLetter::changeLetter() {
     letter.setOrigin({letter.getGlobalBounds().getSize().x / 2.f + letter.getLocalBounds().getPosition().x,0}); // recenters the letter
 }
 
-char GameLetter::randLetter() {
+constexpr const char GameLetter::randLetter() {
     int max = 0, min = 0;
     for (uint8_t i = 0; i < 26; i++)
         max += Config::getInstance()->generator_weights[i];

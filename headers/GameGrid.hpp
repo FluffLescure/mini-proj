@@ -75,17 +75,17 @@ public:
      * @brief Builds the 2D grid using dimensions pulled from Config
      *  as well as the grid's bounding frame
     */
-    void initGrid();
+    constexpr void initGrid();
 
     /**
      * @brief Draws the frame for the game grid
     */
-    void initFrame();
+    constexpr void initFrame();
 
     /**
      * @brief Initialises links with other required classes when required
     */
-    void initWordle();
+    constexpr void initWordle();
 
 
     /**
@@ -123,7 +123,7 @@ public:
      *  includes their position([0] and [1]) and span([2] and [3]).
      * @return Staged words that need to be destroyed
     */
-    std::vector<WordBlock> stageWords();
+    constexpr std::vector<WordBlock> stageWords();
 
     /**
      * @brief Retreives all the letters from a row and crunches them together
@@ -131,7 +131,7 @@ public:
      * @param row the row that will be crunched
      * @returns a string of all the letters in the row
     */
-    const std::string crunchRow(const int8_t &row);
+    constexpr const std::string crunchRow(const int8_t &row);
 
     /**
      * @brief Retreives all the letters from a column and crunches them together
@@ -139,7 +139,7 @@ public:
      * @param col the column that will be crunched
      * @returns a string of all the letters in the column
     */
-    const std::string crunchCol(const int8_t &col);
+    constexpr const std::string crunchCol(const int8_t &col);
 
     /**
      * @brief Changes the color of the span of blocks given as parameter.
@@ -148,7 +148,7 @@ public:
      * @param colSpan span of blocks in the column 
      * @param rowSpan span of blocks in the row
     */
-    void setColor(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSpan);
+    constexpr void setColor(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSpan);
 
     /**
      * @brief Destroys LetterBlocks that are inside the specified span
@@ -157,7 +157,7 @@ public:
      * @param colSpan span of blocks in the column 
      * @param rowSpan span of blocks in the row
      */
-    void blockDestroy(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSpan);
+    constexpr void blockDestroy(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSpan);
 
 
     /**
@@ -172,7 +172,7 @@ public:
      * @param i the column of the block
      * @param j the row of the block
     */
-    void groundBlock(uint8_t i, uint8_t j);
+    constexpr void groundBlock(uint8_t i, uint8_t j);
 
 
     /**
@@ -181,7 +181,7 @@ public:
      */
     const bool gridTick();
 
-    void newBlock(const char &letter = ' ');
+     void newBlock(const char &letter = ' ');
 
     /**
      * @brief Updates the visibility a zone of blocks delimited by the span entered
@@ -189,7 +189,7 @@ public:
      * @param span span of blocks to be updated
      * @param visible sets the the visibility of the block
      */
-    void blockDisplay(sf::Vector2u posInit, sf::Vector2u span, bool visible);
+    constexpr void blockDisplay(sf::Vector2u posInit, sf::Vector2u span, bool visible);
 
     
    

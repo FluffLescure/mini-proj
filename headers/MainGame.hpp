@@ -49,7 +49,7 @@ public:
     /**
     * @brief Initialises the layout using preloaded resources from Config 
     */
-    void initLayout();
+    constexpr void initLayout();
 
     /**
      * @brief Initialises the game window
@@ -59,7 +59,7 @@ public:
     /**
      * @brief initalises game components
     */
-    void initComponents();
+    constexpr void initComponents();
 
 
     /**
@@ -71,7 +71,7 @@ public:
     /**
      * @brief Determines if the gam is running based on the state of the window
     */
-    bool isRunning();
+    constexpr const bool isRunning() const;
 
 
     /**
@@ -82,17 +82,17 @@ public:
     /**
     * @brief Renders the game
     */
-    void render();
+    constexpr void render() const;
 
     /**
     * @brief Calls for the update of game logic with tick dependent timing
     */
-    void update();
+    constexpr void update();
 
     /**
      * @brief Retrieves events related to the game window
     */
-    void pollEvent();
+    constexpr void pollEvent();
 
 
     
