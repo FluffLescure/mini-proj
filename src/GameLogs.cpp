@@ -62,11 +62,11 @@ void GameLogs::emplace(std::string word){
 void GameLogs::emplaceLog(std::string word) {
     for(uint8_t i = 9; i > 0; i--) {
         logs[i].setString(logs[i - 1].getString().toAnsiString());
-        logs[i].setPosition({63, 220 + i * (logs[i].getGlobalBounds().height + 5)});
+        logs[i].setPosition({70, 220 + i * (logs[i].getGlobalBounds().height + 11)});
     }
 
     logs[0].setString(word);
-    logs[0].setPosition({63, 220});
+    logs[0].setPosition({70, 220});
 }
 
 void GameLogs::emplacePoints(std::string word) {
@@ -75,12 +75,12 @@ void GameLogs::emplacePoints(std::string word) {
     for(uint8_t i = 9; i > 0; i--) {
         points[i].setString(points[i - 1].getString().toAnsiString());
         points[i].setOrigin({points[i].getGlobalBounds().width, 0}); // left alignmnet
-        points[i].setPosition({213, 220 + i * (points[i].getGlobalBounds().height + 5)});
+        points[i].setPosition({243, 220 + i * (points[i].getGlobalBounds().height + 11)});
     }
 
     points[0].setString(point);
     points[0].setOrigin({points[0].getGlobalBounds().width, 0}); // left alignment
-    points[0].setPosition({213, 220});
+    points[0].setPosition({243, 220});
 }
 
 

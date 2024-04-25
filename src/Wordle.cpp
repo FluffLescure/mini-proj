@@ -19,8 +19,8 @@ void Wordle::initMap() {
 
 
 
-std::map<std::string, sf::Vector2i> Wordle::findWord(std::string str){
-    std::map<std::string, sf::Vector2i> foundWords;
+std::map<std::string, sf::Vector2u> Wordle::findWord(std::string str){
+    std::map<std::string, sf::Vector2u> foundWords;
 
     // A forward iteration scanning for any character combination of length bigger than 4
     // Checks if the combination corresponds to a word from the map.
@@ -29,7 +29,7 @@ std::map<std::string, sf::Vector2i> Wordle::findWord(std::string str){
             std::string substring = str.substr(i, length);
 
             if (map.find(substring) != map.end()) 
-                foundWords.emplace(std::pair(substring, sf::Vector2i(i, length)));
+                foundWords.emplace(std::pair(substring, sf::Vector2u(i, length)));
         }
     }
 
@@ -41,7 +41,7 @@ std::map<std::string, sf::Vector2i> Wordle::findWord(std::string str){
             std::string substring = str.substr(i, length);
 
             if (map.find(substring) != map.end()) 
-                foundWords.emplace(std::pair(substring, sf::Vector2i((int)str.size() - i - length, length)));
+                foundWords.emplace(std::pair(substring, sf::Vector2u((int)str.size() - i - length, length)));
         }
     }
     return foundWords;

@@ -5,19 +5,9 @@
 #include "../headers/Config.hpp"
 
 
-// First instance of Config is set null before Config::getInstance() is called
-Config* Config::instance = nullptr;
-
-
-
-Config* Config::getInstance() {
-    // if there isn't any ongoing instance, create one, else return the current instance
-    if (instance == nullptr)
-        instance = new Config();
-    return instance;
-}
-
-
+// First instance of Config is populated before Config::getInstance()
+// is called in runtime
+Config* Config::instance = new Config();
 
 Config::Config() {
     loadFonts();

@@ -2,9 +2,12 @@
 #define CONFIG_HPP
 
 #include<stdint.h>
+#include<map>
+#include<string_view>
 
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Vector2.hpp>
 
 
@@ -45,6 +48,7 @@
 */
 class Config {
 private:
+
     /** 
      * Stores a single instance of the class to access class configs and
      * resources.
@@ -82,14 +86,12 @@ private:
 
 
     // Resources file path 
-    const std::string font_file = "resources/Lato-Black.ttf";
-    const std::string texture_file = "resources/background_texture.jpg";
-    const std::string layout_file = "resources/layout.map";
-    const std::string wordlist_file = "resources/wordlist.txt";
+    static constexpr const char *font_file = "resources/Lato-Black.ttf";
+    static constexpr const char *texture_file = "resources/background_texture.jpg";
+    static constexpr const char *layout_file = "resources/layout.map";
+    static constexpr const char *wordlist_file = "resources/wordlist.txt";
     
-    
-    
-    
+
 public:
 
     /**
@@ -97,7 +99,7 @@ public:
      * the class.
      * @returns A Config pointer to access config parameters
     */
-    static Config* getInstance();
+    static constexpr Config* getInstance() {return instance;}
 
     // Deletion of copy constructors according to singleton properties.
     Config(const Config&) = delete;
@@ -108,14 +110,16 @@ public:
 
     // Global configs of the game
     const sf::Vector2i window_size = {960, 540};
-    const int window_framerate = 60;
+    static constexpr int8_t window_framerate = 60;
     const sf::Vector2f block_size = {33.6, 32.4};
-    const std::string window_title = "Lettris";
-    const uint8_t gamegrid_rows = 15;
-    const uint8_t gamegrid_cols = 10;
-    const std::vector<int>generator_weights = {711, 114, 318, 367, 1210, 111, 123, 111, 659, 34, 29, 496, 262, 639, 502, 249, 65, 607, 651, 592, 449, 111, 17, 38, 46, 15};
-    const std::string scores_file = "resources/Scores.txt";
-    const std::string colorscheme_file = "resources/colorscheme.theme";
+    static constexpr const char *window_title = "Lettris";
+    static constexpr uint8_t gamegrid_rows = 15;
+    static constexpr uint8_t gamegrid_cols = 10;
+    static constexpr uint16_t generator_weights[26] = {711, 114, 318, 367, 1210, 111, 123, 111, 659, 34, 29, 496, 262, 639, 502, 249, 65, 607, 651, 592, 449, 111, 17, 38, 46, 15};
+
+    // Auxiliairy resources files
+    static constexpr const char *scores_file = "resources/Scores.txt";
+    static constexpr const char *colorscheme_file = "resources/colorscheme.theme";
     
 
     // Storage of game resources
@@ -125,7 +129,5 @@ public:
     std::vector<std::string> wordlist;
     std::map<std::string, sf::Color> colorScheme;
 };
-
-
 
 #endif

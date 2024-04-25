@@ -44,14 +44,14 @@ void GameLevel::initFrames() {
 }
 
 void GameLevel::initText() {
-    stageText.setString("STAGE - 1");
+    stageText.setString("STAGE       1");
     stageText.setCharacterSize(24);
     stageText.setFillColor(sf::Color::White);
     stageText.setFont(*(Config::getInstance()->font));
     stageText.setOrigin({0, stageText.getGlobalBounds().height / 2.f + stageText.getLocalBounds().getPosition().y}); // right center alignment
     stageText.setPosition({123.3, 81});
 
-    levelText.setString("LEVEL             1");
+    levelText.setString("LEVEL            1");
     levelText.setCharacterSize(24);
     levelText.setFillColor(sf::Color::White);
     levelText.setFont(*(Config::getInstance()->font));
@@ -68,7 +68,8 @@ void GameLevel::levelUp() {
     Config::getInstance()->colorScheme = colorScheme[scheme];
 
     lvl++;
-    levelText.setString("LEVEL             " + lvl + 1);
+    levelText.setString("LEVEL            " + std::to_string(lvl));
+    stageText.setString("Stage       " + std::to_string( scheme + 1 ));
 }
 
 

@@ -3,20 +3,10 @@
 
 #include "../headers/GameGrid.hpp"
 
-
 GameGrid::GameGrid(Input *input, GameLogs *logs, GameScore *score, GameLetter *next) {
     initFrame();
     initGrid();
     initComponents(input, logs, score, next);
-}
-
-void GameGrid::initFrame() {
-    // Draws the bounding frame of the grid
-    gridBorder = sf::RectangleShape({336, 486});
-    gridBorder.setPosition({312, 27});
-    gridBorder.setOutlineColor({125,125,125});
-    gridBorder.setOutlineThickness(5);
-    gridBorder.setFillColor({0,0,0,0});
 }
 
 void GameGrid::initGrid() {
@@ -31,6 +21,17 @@ void GameGrid::initGrid() {
         }
     }
 }
+
+
+void GameGrid::initFrame() {
+    // Draws the bounding frame of the grid
+    gridBorder = sf::RectangleShape({336, 486});
+    gridBorder.setPosition({312, 27});
+    gridBorder.setOutlineColor({125,125,125});
+    gridBorder.setOutlineThickness(5);
+    gridBorder.setFillColor({0,0,0,0});
+}
+
 
 void GameGrid::initComponents(Input *input, GameLogs *logs, GameScore *score, GameLetter *next) {
     this->wordle = new Wordle;
@@ -71,11 +72,8 @@ void GameGrid::render(sf::RenderTarget *target){
 
 
 
-
-
-
-bool GameGrid::wordDestroy(){
-    static std::vector<std::vector<int>> stagedwords;
+const bool GameGrid::wordDestroy() {
+    static std::vector<WordBlock> stagedwords;
 
     // if the destroy tick is inactive then retrieve staged words
     if(!destroyTick(false))
@@ -85,27 +83,28 @@ bool GameGrid::wordDestroy(){
     if(stagedwords.empty())
         return false;
 
-    for(std::vector<int> word : stagedwords){
-        if(word[2] == -1)
-            setColor(word[0], word[1], word[3], 1);
-        else 
-            setColor(word[1], word[0], 1, word[2]);
+    for(WordBlock word : stagedwords){
+        // If the word is horizontal  
+        //if(word.span.y == 1)
+        setColor(word.pos.x, word.pos.y, word.span.x, word.span.y);
+        //else 
+        //    setColor(word[1], word[0], 1, word[2]);
     }
     
     if(destroyTick(true))
         return true;
 
-    for(std::vector<int> word : stagedwords){
-        if(word[2] == -1)
-            blockDestroy(word[0], word[1], word[3], 1);
-        else 
-            blockDestroy(word[1], word[0], 1, word[2]);
+    for(WordBlock word : stagedwords){
+        //if(word[2] == -1)
+            blockDestroy(word.pos.x, word.pos.y, word.span.x, word.span.y);
+        //else 
+        //    blockDestroy(word[1], word[0], 1, word[2]);
     }
 
     return false;
 }
 
-int GameGrid::destroyTick(bool keepTicking){
+constexpr int GameGrid::destroyTick(const bool &keepTicking) const{
     static uint8_t destroy_tick = 0;
 
     if(!keepTicking)
@@ -120,16 +119,16 @@ int GameGrid::destroyTick(bool keepTicking){
     return 0;
 }
 
-std::vector<std::vector<int>> GameGrid::stageWords() {
+std::vector<WordBlock> GameGrid::stageWords() {
     std::string crunched;
-    std::vector<std::vector<int>> stagedwords;
-    std::map<std::string, sf::Vector2i> foundWords;
+    std::vector<WordBlock> stagedwords;
+    std::map<std::string, sf::Vector2u> foundWords;
 
     for (int8_t col = cols - 1; col >= 0; col--) {
         crunched = crunchCol(col);
         foundWords = wordle->findWord(crunched);
         for (std::pair word : foundWords){
-            stagedwords.push_back({word.second.x, col, word.second.y, -1});
+            stagedwords.push_back({word.first, {word.second.x, (unsigned)col}, {1, word.second.y}});
             logs->emplace(word.first);
             score->addPoints(word.first);
         }
@@ -139,7 +138,7 @@ std::vector<std::vector<int>> GameGrid::stageWords() {
         crunched = crunchRow(row);
         foundWords = wordle->findWord(crunched);
         for (std::pair word : foundWords) {
-            stagedwords.push_back({word.second.x, row, -1, word.second.y});
+            stagedwords.push_back({word.first, {(unsigned)row, word.second.x}, {word.second.y, 1}});
             logs->emplace(word.first);
             score->addPoints(word.first);
         }
@@ -148,7 +147,7 @@ std::vector<std::vector<int>> GameGrid::stageWords() {
     return stagedwords;
 }
 
-std::string GameGrid::crunchRow(int8_t row) {
+const std::string GameGrid::crunchRow(const int8_t &row) {
     std::string crunched_row;
     for(uint8_t i = 0; i < cols; i++)
         if(!grid[i][row].isState(Grounded))
@@ -158,7 +157,7 @@ std::string GameGrid::crunchRow(int8_t row) {
     return crunched_row;
 }
 
-std::string GameGrid::crunchCol(int8_t col) {
+const std::string GameGrid::crunchCol(const int8_t &col) {
     std::string crunched_col;
     for(uint8_t j = 0; j < rows; j++)
         if (!grid[col][j].isState(Grounded))

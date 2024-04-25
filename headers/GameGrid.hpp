@@ -23,6 +23,13 @@
 using Grid = std::vector<std::vector<LetterBlock>>;
 
 
+struct WordBlock {
+    std::string word;
+    sf::Vector2u pos = {0, 0};
+    sf::Vector2u span = {0, 0};
+};
+
+
 /**
  * @class GameGrid
  * 
@@ -44,8 +51,8 @@ class GameGrid : sf::NonCopyable {
 private:
 
     // dimensions of the grid;
-    const uint8_t cols = Config::getInstance()->gamegrid_cols;
-    const uint8_t rows = Config::getInstance()->gamegrid_rows;
+    static constexpr uint8_t cols = Config::gamegrid_cols;
+    static constexpr uint8_t rows = Config::gamegrid_rows;
 
     // Border used to draw the grid frame
     sf::RectangleShape gridBorder;
@@ -87,6 +94,8 @@ public:
 
     /**
      * @brief Frees the wordle link
+     * @remark The wordle link is the only one which freed as the other
+     * links are destroyed in MainGame
     */
     ~GameGrid();
 
@@ -101,7 +110,7 @@ public:
     /**
      * @brief Destroys all block that form a word from the wordlist
     */
-    bool wordDestroy();
+    const bool wordDestroy();
 
     /**
      * @brief A tick counter which is used to time the destruction
@@ -111,14 +120,14 @@ public:
      * @param keepTicking keeps ticking the counter or not
      * @return The value of the destroy counter
     */
-    int destroyTick(bool keepTicking);
+    constexpr int destroyTick(const bool &keepTicking) const;
 
     /**
      * @brief Retrieves a list of staged words identified from the grid which
      *  includes their position([0] and [1]) and span([2] and [3]).
      * @return Staged words that need to be destroyed
     */
-    std::vector<std::vector<int>> stageWords();
+    std::vector<WordBlock> stageWords();
 
     /**
      * @brief Retreives all the letters from a row and crunches them together
@@ -126,7 +135,7 @@ public:
      * @param row the row that will be crunched
      * @returns a string of all the letters in the row
     */
-    std::string crunchRow(int8_t row);
+    const std::string crunchRow(const int8_t &row);
 
     /**
      * @brief Retreives all the letters from a column and crunches them together
@@ -134,7 +143,7 @@ public:
      * @param col the column that will be crunched
      * @returns a string of all the letters in the column
     */
-    std::string crunchCol(int8_t col);
+    const std::string crunchCol(const int8_t &col);
 
     /**
      * @brief Changes the color of the span of blocks given as parameter.

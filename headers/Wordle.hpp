@@ -34,9 +34,9 @@ public:
     /**
      * @brief Finds words that are matched by the map inside a combination of characters
      * @param str the combination of characters 
-     * @returns a map of the words and their position inside the combination
+     * @returns a map of the words with their position and span inside the combination
     */
-    std::map<std::string, sf::Vector2i> findWord(std::string str);
+    std::map<std::string, sf::Vector2u> findWord(std::string str);
 
 };
 
