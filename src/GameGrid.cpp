@@ -3,10 +3,10 @@
 
 #include "../headers/GameGrid.hpp"
 
-GameGrid::GameGrid(Input *input, GameLogs *logs, GameScore *score, GameLetter *next) {
+GameGrid::GameGrid() {
     initFrame();
     initGrid();
-    initComponents(input, logs, score, next);
+    initWordle();
 }
 
 void GameGrid::initGrid() {
@@ -33,23 +33,8 @@ void GameGrid::initFrame() {
 }
 
 
-void GameGrid::initComponents(Input *input, GameLogs *logs, GameScore *score, GameLetter *next) {
+void GameGrid::initWordle() {
     this->wordle = new Wordle;
-    
-    // If a component is missing then create a new instance of the missing component
-    if(input == nullptr)
-        this->input = new Input;
-    if(logs == nullptr)
-        this->logs = new GameLogs;
-    if(score == nullptr)
-        this->score = new GameScore;
-    if(next == nullptr)
-        this->next = new GameLetter;
-
-    this->input = input;
-    this->logs = logs;
-    this->score = score;
-    this->next = next;
 }
 
 
@@ -72,36 +57,31 @@ void GameGrid::render(sf::RenderTarget *target){
 
 
 
-const bool GameGrid::wordDestroy() {
+const std::vector<WordBlock> GameGrid::wordDestroy() {
     static std::vector<WordBlock> stagedwords;
 
-    // if the destroy tick is inactive then retrieve staged words
+    // If the destroy tick is not ticking then retrieve staged words
     if(!destroyTick(false))
         stagedwords = stageWords();
     
-    // if there are words found then pause the grid, else exit
+    // If there aren't any words found then exit
     if(stagedwords.empty())
-        return false;
+        return stagedwords;
 
-    for(WordBlock word : stagedwords){
-        // If the word is horizontal  
-        //if(word.span.y == 1)
+    // Color each block staged for destruction
+    for(WordBlock word : stagedwords)
         setColor(word.pos.x, word.pos.y, word.span.x, word.span.y);
-        //else 
-        //    setColor(word[1], word[0], 1, word[2]);
-    }
     
+    // Keep ticking the destroy tick and return an empty vector until its finished 
     if(destroyTick(true))
-        return true;
+        return std::vector<WordBlock>();
+    
+    // Destroy the staged words
+    for(WordBlock word : stagedwords)
+        blockDestroy(word.pos.x, word.pos.y, word.span.x, word.span.y);
 
-    for(WordBlock word : stagedwords){
-        //if(word[2] == -1)
-            blockDestroy(word.pos.x, word.pos.y, word.span.x, word.span.y);
-        //else 
-        //    blockDestroy(word[1], word[0], 1, word[2]);
-    }
-
-    return false;
+    // Return the staged words
+    return stagedwords;
 }
 
 constexpr int GameGrid::destroyTick(const bool &keepTicking) const{
@@ -127,21 +107,15 @@ std::vector<WordBlock> GameGrid::stageWords() {
     for (int8_t col = cols - 1; col >= 0; col--) {
         crunched = crunchCol(col);
         foundWords = wordle->findWord(crunched);
-        for (std::pair word : foundWords){
-            stagedwords.push_back({word.first, {word.second.x, (unsigned)col}, {1, word.second.y}});
-            logs->emplace(word.first);
-            score->addPoints(word.first);
-        }
+        for (std::pair word : foundWords)
+            stagedwords.push_back({word.first, {(unsigned)col, word.second.x}, {1, word.second.y}});
     }
 
     for (int8_t row = rows - 1; row >= 0; row--) {
         crunched = crunchRow(row);
         foundWords = wordle->findWord(crunched);
-        for (std::pair word : foundWords) {
-            stagedwords.push_back({word.first, {(unsigned)row, word.second.x}, {word.second.y, 1}});
-            logs->emplace(word.first);
-            score->addPoints(word.first);
-        }
+        for (std::pair word : foundWords)
+            stagedwords.push_back({word.first, {word.second.x, (unsigned)row}, {word.second.y, 1}});
     }
 
     return stagedwords;
@@ -186,7 +160,7 @@ void GameGrid::blockDestroy(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t r
 }
 
 
-void GameGrid::blockTick() {
+void GameGrid::blockMove(const Direction &input) {
     // Variable used to determine if a block has already been moved.
     // This avoids moving a same block too many times within the loop
     bool moved = false;
@@ -194,7 +168,7 @@ void GameGrid::blockTick() {
     for (int8_t i = 0; i < cols; i++) {
         for (int8_t j = rows - 1; j >= 0; j--) {
             if(grid[i][j].isState(State::Falling) && !moved)
-                moved = grid[i][j].move(grid, input->getDirection());
+                moved = grid[i][j].move(grid, input);
 
             groundBlock(i,j); // grounds every block that should be grounded
         }
@@ -213,7 +187,7 @@ void GameGrid::groundBlock(uint8_t i, uint8_t j) {
 }
 
 
-void GameGrid::gridTick() {
+const bool GameGrid::gridTick() {
     // This is variable used to determine if the grid has changed or not
     bool blocks_falling = false;
 
@@ -223,22 +197,22 @@ void GameGrid::gridTick() {
             if (!grid[i][j].isHidden() && grid[i][j].move(grid, Direction::Down))
                 blocks_falling = true;
 
-    // if no blocks are falling then add a new falling LetterBlock
-    if(!blocks_falling && grid[5][0].isHidden()) {
-        newBlock();
-    }
+    // If no blocks are falling then exit with false
+    if(!blocks_falling && grid[5][0].isHidden())
+        return false;
+
+    return true;
 }
 
-void GameGrid::newBlock(){
-    std::string color_type = "bg" + std::to_string(next->getLetter() % 3);
+void GameGrid::newBlock(const char &letter){
+    std::string color_type = "bg" + std::to_string(letter % 3);
     sf::Color color = Config::getInstance()->colorScheme.find(color_type)->second;
 
     blockDisplay({5, 0}, {1, 1}, true);
     grid[5][0].setState(State::Falling);
-    grid[5][0].setLetter(next->getLetter());
+    grid[5][0].setLetter(letter);
     grid[5][0].setColor(color);
     grid[5][0].centerLetter();
-    next->changeLetter();
 }
 
 void GameGrid::blockDisplay(sf::Vector2u posInit, sf::Vector2u span, bool visible) {

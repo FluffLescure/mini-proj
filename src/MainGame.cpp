@@ -30,10 +30,10 @@ void MainGame::initLayout() {
 
 void MainGame::initWindow() {
     Config* config = Config::getInstance();
-    //Sets window (2:1 true window scale) framerate and size
+    //Sets window framerate and size (2:1 true window scale)
     const sf::VideoMode windowframe = sf::VideoMode(config->window_size.x,config->window_size.y);
 
-    window = new sf::RenderWindow(windowframe,"Lettris");
+    window = new sf::RenderWindow(windowframe, config->window_title);
     window->setFramerateLimit(config->window_framerate);
     window->setVerticalSyncEnabled(true); //VSync
     window->setVisible(true);
@@ -45,7 +45,7 @@ void MainGame::initComponents() {
     logs = new GameLogs;
     score = new GameScore;
     next = new GameLetter;
-    game = new GameGrid(input, logs, score, next);
+    game = new GameGrid;
 }
 
 
@@ -97,18 +97,29 @@ void MainGame::render() {
 void MainGame::update() {
     static uint8_t tick = 0;
     static uint8_t lvl = 0;
+    static std::vector<WordBlock> words;
 
     pollEvent();
     input->pollEvent(); 
 
-    if(game->wordDestroy())
+    // Pauses the game while the word is being destroyed
+    words = game->wordDestroy();
+    if(!words.empty()){
+        for (WordBlock &word : words){
+            logs->emplace(word.string);
+            score->addPoints(word.string);
+        }
         return;
+    }
 
     if(!(tick % 5))
-        game->blockTick();
+        game->blockMove(input->getInput());
 
     if(!(tick % level->getSpeed())) 
-        game->gridTick();
+        if(!game->gridTick()) {
+            game->newBlock(next->getLetter());
+            next->changeLetter();
+        }
 
     if(score->getScore() > 100 * std::pow(2, lvl)){
         lvl++;
@@ -123,7 +134,7 @@ void MainGame::update() {
 
 
 void MainGame::pollEvent() {
-    sf::Event event;
+    static sf::Event event;
 
     //Listens for any event on window
     while(window->pollEvent(event))

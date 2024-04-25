@@ -24,7 +24,7 @@ using Grid = std::vector<std::vector<LetterBlock>>;
 
 
 struct WordBlock {
-    std::string word;
+    std::string string;
     sf::Vector2u pos = {0, 0};
     sf::Vector2u span = {0, 0};
 };
@@ -58,12 +58,8 @@ private:
     sf::RectangleShape gridBorder;
 
     // Agregated classes
-    Input *input;
     Wordle *wordle;
-    GameLogs *logs;
-    GameScore *score;
-    GameLetter *next;
-
+    
     // The 2D grid where the game takes place
     Grid grid;
 
@@ -73,7 +69,7 @@ public:
      * @brief Constructor which calls the initialisation of components and
      *  agregated classes
     */
-    GameGrid(Input *input = nullptr, GameLogs *logs = nullptr, GameScore *score = nullptr, GameLetter *next = nullptr);
+    GameGrid();
 
     /**
      * @brief Builds the 2D grid using dimensions pulled from Config
@@ -89,7 +85,7 @@ public:
     /**
      * @brief Initialises links with other required classes when required
     */
-    void initComponents(Input *input = nullptr, GameLogs *logs = nullptr, GameScore *score = nullptr, GameLetter *next = nullptr);
+    void initWordle();
 
 
     /**
@@ -110,7 +106,7 @@ public:
     /**
      * @brief Destroys all block that form a word from the wordlist
     */
-    const bool wordDestroy();
+    const std::vector<WordBlock> wordDestroy();
 
     /**
      * @brief A tick counter which is used to time the destruction
@@ -168,11 +164,11 @@ public:
      * @brief Updates the falling blocks based on user input and grounds them
      *  when needed.
     */
-    void blockTick();
+    void blockMove(const Direction &input);
 
     /**
-     * @brief Checks if a block should be grounded based on game rules and sets
-     *  them grounded if needed.
+     * @brief Checks if a block should be grounded based on game rules and grounds
+     *  them if needed.
      * @param i the column of the block
      * @param j the row of the block
     */
@@ -183,9 +179,9 @@ public:
      * @brief Updates the grid to make necessary LetterBlocks fall 1 block down and 
      *  adds a new block when no blocks can fall.
      */
-    void gridTick();
+    const bool gridTick();
 
-    void newBlock();
+    void newBlock(const char &letter = ' ');
 
     /**
      * @brief Updates the visibility a zone of blocks delimited by the span entered

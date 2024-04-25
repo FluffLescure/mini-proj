@@ -20,7 +20,7 @@ enum Direction {
 class Input {
 private:
     // input direction
-    Direction direction = Direction::Unchanged;
+    Direction input = Direction::Unchanged;
 
 public:
     /**
@@ -41,7 +41,7 @@ public:
     * @brief Returns the stored direction from input
     * @returns The direction of the input  
     */
-    Direction getDirection() { return direction; }
+    Direction getInput() { return input; }
 };
 
 #endif
