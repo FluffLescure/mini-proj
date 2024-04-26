@@ -15,7 +15,7 @@ The SFML libraries are included in the repository. You don't need to download th
 
 ### Setup
 
-After downloading the MinGW build, extract the contents of mingw64 to `C:\MinGW\` .
+After downloading the MinGW build, extract the contents of mingw64 to `C:\MinGW\` and add binaries to system path
 
 Alternatively, you can extract the contents of mingw64 to another location and change the path of the compiler in the  [`c_cpp_properties.json`](https://github.com/FluffLescure/mini-proj/blob/main/.vscode/c_cpp_properties.json) and [`tasks.json`](https://github.com/FluffLescure/mini-proj/blob/main/.vscode/tasks.json) files.
 
