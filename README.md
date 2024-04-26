@@ -9,7 +9,7 @@ The game has been entirely developped in a windows environment on VSCode using M
 ### Prerequisites
 
 You need to have the correct version and build of MinGW-W64 to compile the game.
-The MinGW build used in developpement is : [`x86_64-13.1.0-release-posix-seh-msvcrt-rt_v11-rev1`](https://github.com/niXman/mingw-builds-binaries/releases/download/13.1.0-rt_v11-rev1/x86_64-13.1.0-release-posix-seh-msvcrt-rt_v11-rev1.7z)
+The MinGW build used in developpement is : [x86_64-13.1.0-release-posix-seh-msvcrt-rt_v11-rev1](https://github.com/niXman/mingw-builds-binaries/releases/download/13.1.0-rt_v11-rev1/x86_64-13.1.0-release-posix-seh-msvcrt-rt_v11-rev1.7z)
 
 The SFML libraries are included in the repository. You don't need to download them.
 
@@ -21,8 +21,8 @@ Alternatively, you can extract the contents of mingw64 to another location and c
 
 ## Documentation
 
-The documentation of the front-end design is available in the [`doc`](https://github.com/FluffLescure/mini-proj/blob/main/doc) folder.
-The game logic is not documented but has been heavily inspired by the online lettris game available [`here`](https://https://langue-francaise.tv5monde.com/jouer/jeux/lettris).
+The documentation of the front-end design is available in the [doc](https://github.com/FluffLescure/mini-proj/blob/main/doc) folder.
+The game logic is not documented but has been heavily inspired by the online lettris game available [here](https://https://langue-francaise.tv5monde.com/jouer/jeux/lettris).
 
 
 
