@@ -51,17 +51,17 @@ class GameGrid : sf::NonCopyable {
 private:
 
     // dimensions of the grid;
-    static constexpr uint8_t cols = Config::gamegrid_cols;
-    static constexpr uint8_t rows = Config::gamegrid_rows;
+    static constexpr uint8_t cols_ = Config::gamegrid_cols_;
+    static constexpr uint8_t rows_ = Config::gamegrid_rows_;
 
     // Border used to draw the grid frame
-    sf::RectangleShape gridBorder;
+    sf::RectangleShape gridBorder_;
 
     // Agregated classes
-    Wordle *wordle;
+    Wordle *wordle_;
     
     // The 2D grid where the game takes place
-    Grid grid;
+    Grid grid_;
 
 public:
 

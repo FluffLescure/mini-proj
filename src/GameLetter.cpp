@@ -18,41 +18,41 @@ GameLetter::GameLetter(){
 }
 
 void GameLetter::initFrame() {
-    letterFrame = sf::RectangleShape({80, 108});
-    letterFrame.setPosition({720, 243});
-    letterFrame.setOutlineColor({125, 125, 125});
-    letterFrame.setOutlineThickness(3);
-    letterFrame.setFillColor({0, 0, 0, 0}); 
+    letterFrame_ = sf::RectangleShape({80, 108});
+    letterFrame_.setPosition({720, 243});
+    letterFrame_.setOutlineColor({125, 125, 125});
+    letterFrame_.setOutlineThickness(3);
+    letterFrame_.setFillColor({0, 0, 0, 0}); 
 }
 
 void GameLetter::initTitle() {
-    title.setString("NEXT");
-    title.setCharacterSize(20);
-    title.setFillColor(sf::Color::White);
-    title.setFont(*(Config::getInstance()->font));
-    title.setOrigin({title.getGlobalBounds().getSize().x / 2.f + title.getLocalBounds().getPosition().x,0});
-    title.setPosition({760, 243});
+    title_.setString("NEXT");
+    title_.setCharacterSize(20);
+    title_.setFillColor(sf::Color::White);
+    title_.setFont(*(Config::getInstance()->font_));
+    title_.setOrigin({title_.getGlobalBounds().getSize().x / 2.f + title_.getLocalBounds().getPosition().x,0});
+    title_.setPosition({760, 243});
 }
 
 void GameLetter::initLetter() {
-    letter.setCharacterSize(50);
-    letter.setFillColor(sf::Color::White);
-    letter.setFont(*(Config::getInstance()->font));
-    letter.setPosition({760, 283});
+    letter_.setCharacterSize(50);
+    letter_.setFillColor(sf::Color::White);
+    letter_.setFont(*(Config::getInstance()->font_));
+    letter_.setPosition({760, 283});
     changeLetter();
 }
 
 
 
 void GameLetter::render(sf::RenderTarget *target) const {
-    target->draw(letterFrame);
-    target->draw(title);
-    target->draw(letter);
+    target->draw(letterFrame_);
+    target->draw(title_);
+    target->draw(letter_);
 }
 
 
 const char GameLetter::getLetter() {
-    return letter.getString().toAnsiString().c_str()[0];
+    return letter_.getString().toAnsiString().c_str()[0];
 }
 
 
@@ -60,14 +60,14 @@ const char GameLetter::getLetter() {
 void GameLetter::changeLetter() {
     // Sets the letter to a random char
     char c = randLetter();
-    letter.setString(c);
+    letter_.setString(c);
 
-    letter.setOrigin({letter.getGlobalBounds().getSize().x / 2.f + letter.getLocalBounds().getPosition().x,0}); // recenters the letter
+    letter_.setOrigin({letter_.getGlobalBounds().getSize().x / 2.f + letter_.getLocalBounds().getPosition().x,0}); // recenters the letter
 }
 
 const char GameLetter::randLetter() {
     static const int min = 0;
-    static const int max = std::accumulate(std::begin(Config::generator_weights), std::end(Config::generator_weights), 0);
+    static const int max = std::accumulate(std::begin(Config::generator_weights_), std::end(Config::generator_weights_), 0);
 
     // Generates a random number between min and max
     static int r;
@@ -77,7 +77,7 @@ const char GameLetter::randLetter() {
 
     // Finds the letter that corresponds to the random number
     for(letter = 0, sum=0; r > sum; letter++)
-        sum += Config::generator_weights[letter];
+        sum += Config::generator_weights_[letter];
 
     return (char) 'A' +  --letter;
 }

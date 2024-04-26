@@ -13,41 +13,41 @@ LetterBlock::LetterBlock(const char& str) {
 }
 
 void LetterBlock::initBlock() {
-    block = sf::RectangleShape(Config::getInstance()->block_size);
-    block.setFillColor({175,175,175});
-    block.setOutlineColor({75,75,75});
-    block.setOutlineThickness(1);  
-    state = State::Fixed;
+    block_ = sf::RectangleShape(Config::getInstance()->block_size_);
+    block_.setFillColor({175,175,175});
+    block_.setOutlineColor({75,75,75});
+    block_.setOutlineThickness(1);  
+    state_ = State::Fixed;
 }
 
 void LetterBlock::initLetter(const char& str) {
-    letter.setString(str);
-    letter.setCharacterSize(24);
-    letter.setFillColor(sf::Color::Black);
-    letter.setFont(*Config::getInstance()->font);
+    letter_.setString(str);
+    letter_.setCharacterSize(24);
+    letter_.setFillColor(sf::Color::Black);
+    letter_.setFont(*Config::getInstance()->font_);
 }
 
 
 
-void LetterBlock::operator=(const LetterBlock& block) {
+void LetterBlock::operator=(const LetterBlock& block_) {
     // Block colors, letter and state are transfered
-    this->block.setFillColor(block.getBlock().getFillColor());
-    this->block.setOutlineColor(block.getBlock().getOutlineColor());
-    this->letter.setString(block.getLetter().getString());
-    this->letter.setFillColor(block.getLetter().getFillColor());
+    this->block_.setFillColor(block_.getBlock().getFillColor());
+    this->block_.setOutlineColor(block_.getBlock().getOutlineColor());
+    this->letter_.setString(block_.getLetter().getString());
+    this->letter_.setFillColor(block_.getLetter().getFillColor());
     centerLetter(); // guarantees that the new letter is centered
-    state = block.getState();
+    state_ = block_.getState();
 }
 
 void LetterBlock::centerLetter() {
-    letter.setOrigin(letter.getGlobalBounds().getSize() / 2.f + letter.getLocalBounds().getPosition());
-    letter.setPosition(block.getPosition() + block.getSize() / 2.f);
+    letter_.setOrigin(letter_.getGlobalBounds().getSize() / 2.f + letter_.getLocalBounds().getPosition());
+    letter_.setPosition(block_.getPosition() + block_.getSize() / 2.f);
 }
 
 
 
 void LetterBlock::setPosition(const sf::Vector2f& pos) {
-    block.setPosition(pos);
+    block_.setPosition(pos);
     centerLetter();
 }  
 
@@ -69,7 +69,7 @@ const sf::Vector2u LetterBlock::getPosition(const Blockgrid& grid) const {
 
 
 const bool LetterBlock::isState(const State& state) const {
-    if(this->state == state)
+    if(this->state_ == state)
         return true;
     return false;
 }
@@ -77,7 +77,7 @@ const bool LetterBlock::isState(const State& state) const {
 
 
 const bool LetterBlock::isHidden() {
-    sf::Color col = block.getFillColor();
+    sf::Color col = block_.getFillColor();
     if (col.a == 50)
         return true;
     else
@@ -88,8 +88,8 @@ const bool LetterBlock::isHidden() {
 
 const bool LetterBlock::move(Blockgrid &grid, const Direction& direction) const{
     sf::Vector2u pos = getPosition(grid);
-    uint8_t rows = Config::gamegrid_rows;
-    uint8_t cols = Config::gamegrid_cols;
+    uint8_t rows = Config::gamegrid_rows_;
+    uint8_t cols = Config::gamegrid_cols_;
     uint8_t i = pos.x, j = pos.y;
 
     switch(direction) {
@@ -136,8 +136,8 @@ const bool LetterBlock::move(Blockgrid &grid, const Direction& direction) const{
 
 void LetterBlock::display(const bool& visible) {
     //retrieves the current block colors
-    sf::Color block_color = block.getFillColor();
-    sf::Color letter_color = letter.getFillColor();    
+    sf::Color block_color = block_.getFillColor();
+    sf::Color letter_color = letter_.getFillColor();    
 
     // If true then alpha value is 255, else hide
     if (visible){
@@ -149,13 +149,13 @@ void LetterBlock::display(const bool& visible) {
         letter_color.a = 0;
     }
 
-    block.setFillColor(block_color);
-    letter.setFillColor(letter_color);
+    block_.setFillColor(block_color);
+    letter_.setFillColor(letter_color);
 }
 
 
 
 void LetterBlock::render(sf::RenderTarget *target) const {
-    target->draw(block);
-    target->draw(letter);
+    target->draw(block_);
+    target->draw(letter_);
 }

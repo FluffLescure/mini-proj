@@ -20,7 +20,7 @@ enum Direction {
 class Input {
 private:
     // input direction
-    Direction input = Direction::Unchanged;
+    Direction input_ = Direction::Unchanged;
 
 public:
     /**
@@ -41,7 +41,7 @@ public:
     * @brief Returns the stored direction from input
     * @returns The direction of the input  
     */
-    const Direction& getInput() const { return input; }
+    const Direction& getInput() const { return input_; }
 };
 
 #endif

@@ -27,21 +27,21 @@
 */
 class MainGame: sf::NonCopyable {
 private:
-    sf::RenderWindow *window;
+    sf::RenderWindow *window_;
 
     // map that stores the game layout built in sf::Quads
-    sf::VertexArray layout;
+    sf::VertexArray layout_;
 
     // Game over message
-    sf::Text over;
+    sf::Text over_;
 
     // Agregated classes
-    Input *input;
-    GameGrid *game;
-    GameScore *score;
-    GameLogs *logs;
-    GameLetter *next;
-    GameLevel *level;
+    Input *input_;
+    GameGrid *game_;
+    GameScore *score_;
+    GameLogs *logs_;
+    GameLetter *next_;
+    GameLevel *level_;
 
 public:
     /**

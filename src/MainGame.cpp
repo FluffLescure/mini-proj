@@ -20,63 +20,63 @@ MainGame::MainGame() {
 
 void MainGame::initLayout() {
     Config* config = Config::getInstance();
-    layout = sf::VertexArray(sf::Quads, config->layoutPoints.size());
+    layout_ = sf::VertexArray(sf::Quads, config->layoutPoints_.size());
 
     // Layout points are assimilited into a VertexArray to create a single
     // custom drawable
-    for (size_t i = 0; i < config->layoutPoints.size(); ++i) {
-        layout[i].texCoords = config->layoutPoints[i]; // Texture layout
-        layout[i].position = config->layoutPoints[i];
+    for (size_t i = 0; i < config->layoutPoints_.size(); ++i) {
+        layout_[i].texCoords = config->layoutPoints_[i]; // Texture layout
+        layout_[i].position = config->layoutPoints_[i];
     }
 }
 
 void MainGame::initWindow() {
     Config* config = Config::getInstance();
     //Sets window framerate and size (2:1 true window scale)
-    const sf::VideoMode windowframe = sf::VideoMode(config->window_size.x,config->window_size.y);
+    const sf::VideoMode windowframe = sf::VideoMode(config->window_size_.x,config->window_size_.y);
 
-    window = new sf::RenderWindow(windowframe, config->window_title);
-    window->setFramerateLimit(config->window_framerate);
-    window->setVerticalSyncEnabled(true); //VSync
-    window->setVisible(true);
+    window_ = new sf::RenderWindow(windowframe, config->window_title_);
+    window_->setFramerateLimit(config->window_framerate_);
+    window_->setVerticalSyncEnabled(true); //VSync
+    window_->setVisible(true);
 }
 
 void MainGame::initComponents() {
-    level = new GameLevel;
-    input = new Input;
-    logs = new GameLogs;
-    score = new GameScore;
-    next = new GameLetter;
-    game = new GameGrid;
+    level_ = new GameLevel;
+    input_ = new Input;
+    logs_ = new GameLogs;
+    score_ = new GameScore;
+    next_ = new GameLetter;
+    game_ = new GameGrid;
 }
 
 void MainGame::initOver(){
-    over.setFont(*Config::getInstance()->font);
-    over.setString("Game Over\nPress 'Space' to restart");
-    over.setCharacterSize(30);
-    over.setFillColor({0, 0, 0, 0});
-    over.setOutlineColor({0, 0, 0, 0});
-    over.setOutlineThickness(1.5);
-    over.setPosition(320, 250);
+    over_.setFont(*Config::getInstance()->font_);
+    over_.setString("Game Over\nPress 'Space' to restart");
+    over_.setCharacterSize(30);
+    over_.setFillColor({0, 0, 0, 0});
+    over_.setOutlineColor({0, 0, 0, 0});
+    over_.setOutlineThickness(1.5);
+    over_.setPosition(320, 250);
 }
 
 
 MainGame::~MainGame() {
-    delete game;
-    delete window;
-    delete input;
-    delete logs;
-    delete score;
-    delete next;
-    delete level;
+    delete game_;
+    delete window_;
+    delete input_;
+    delete logs_;
+    delete score_;
+    delete next_;
+    delete level_;
 }
 
 
 
 const bool MainGame::isRunning() {
-    if(window == nullptr)
+    if(window_ == nullptr)
         return false;
-    return window->isOpen();
+    return window_->isOpen();
 }
 
 
@@ -90,21 +90,21 @@ void MainGame::run(){
 }
 
 void MainGame::render() {
-    static sf::Texture *layoutTexture = Config::getInstance()->layoutTex;
+    static sf::Texture *layoutTexture = Config::getInstance()->layoutTex_;
 
-    window->clear(); // Clear the old frame from window
+    window_->clear(); // Clear the old frame from window
 
-    window->draw(layout, layoutTexture); // renders layout with texture
+    window_->draw(layout_, layoutTexture); // renders layout with texture
 
-    game->render(window);
-    logs->render(window);
-    score->render(window);
-    next->render(window);
-    level->render(window);
+    game_->render(window_);
+    logs_->render(window_);
+    score_->render(window_);
+    next_->render(window_);
+    level_->render(window_);
     
-    window->draw(over); // renders game over message
+    window_->draw(over_); // renders game over message
 
-    window->display(); // Displays the new frame to window
+    window_->display(); // Displays the new frame to window
 }  
 
 
@@ -116,16 +116,16 @@ void MainGame::update() {
 
     // Retreives the input from the user and polls for window events
     pollEvent();
-    input->pollEvent(); 
+    input_->pollEvent(); 
 
     // Destroys the words in the grid if they exists
-    words = game->wordDestroy();
+    words = game_->wordDestroy();
 
     // Pauses the game while the word is being destroyed
     if(!words.empty()){
         for (WordBlock &word : words){
-            logs->emplace(word.string);
-            score->addPoints(word.string);
+            logs_->emplace(word.string);
+            score_->addPoints(word.string);
 
             // Writes the word to a file
             file << word.string << std::endl; 
@@ -135,22 +135,22 @@ void MainGame::update() {
 
     // Moves the block every 5 ticks if input is detected
     if(!(tick % 5))
-        game->blockMove(input->getInput());
+        game_->blockMove(input_->getInput());
 
     // Moves the block down every speed ticks
-    if(!(tick % level->getSpeed()) && !game->gridTick() ) {
+    if(!(tick % level_->getSpeed()) && !game_->gridTick() ) {
         // If the grid can't move down, and no new block can be created, game over
-        if(!game->newBlock(next->getLetter())) {
-            GameOver(input->getInput());
+        if(!game_->newBlock(next_->getLetter())) {
+            GameOver(input_->getInput());
         }
         else
-            next->changeLetter();
+            next_->changeLetter();
     }
 
     // Level up values
-    if(score->getScore() > 100 * std::pow(2, lvl)){
+    if(score_->getScore() > 100 * std::pow(2, lvl)){
         lvl++;
-        level->levelUp();
+        level_->levelUp();
     }
 
     // Resets the tick every 60 ticks
@@ -165,32 +165,36 @@ void MainGame::pollEvent() {
     static sf::Event event;
 
     //Listens for any event on window
-    while(window->pollEvent(event))
+    while(window_->pollEvent(event))
         if(event.type == sf::Event::Closed)
-            window->close();
+            window_->close();
 }
 
 
 
-void MainGame::GameOver(const Direction &input) {
+void MainGame::GameOver(const Direction &input_) {
 
     // Displays the game over message
-    over.setFillColor(sf::Color::Black);
-    over.setOutlineColor({255, 75, 75});
+    over_.setFillColor(sf::Color::Black);
+    over_.setOutlineColor({255, 75, 75});
 
 
     // Restarts the game if the user presses space
-    if(input == Direction::Space){
-        delete game;
-        delete score;
-        delete next;
-        delete level;
-        delete logs;
+    if(input_ == Direction::Space){
+        delete game_;
+        delete score_;
+        delete next_;
+        delete level_;
+        delete logs_;
 
         initComponents();
         
         // Hides the game over message
-        over.setFillColor({0, 0, 0, 0});
-        over.setOutlineColor({0, 0, 0, 0});
+        over_.setFillColor({0, 0, 0, 0});
+        over_.setOutlineColor({0, 0, 0, 0});
+
+        // Resets the found words file
+        std::ofstream file("resources/foundWords.txt");
+        file.close();
     }
 }

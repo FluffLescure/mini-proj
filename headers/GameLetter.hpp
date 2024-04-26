@@ -31,11 +31,11 @@ class GameLetter {
 private:
 
     // Border used to draw the frame
-    sf::RectangleShape letterFrame;
+    sf::RectangleShape letterFrame_;
 
     //Tittle and letter text attributes
-    sf::Text title;
-    sf::Text letter;
+    sf::Text title_;
+    sf::Text letter_;
 
 
 public:

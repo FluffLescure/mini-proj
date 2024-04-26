@@ -30,18 +30,18 @@
 class GameLevel {
 private:
     // The tick speed of the game
-    int speed;
+    int speed_;
 
     //Color Schemes
-    std::map<std::string, sf::Color> colorScheme[4];
+    std::map<std::string, sf::Color> colorScheme_[4];
 
     // Frame components
-    sf::RectangleShape stageFrame;
-    sf::RectangleShape levelFrame;
+    sf::RectangleShape stageFrame_;
+    sf::RectangleShape levelFrame_;
 
     // Text components
-    sf::Text levelText;
-    sf::Text stageText;
+    sf::Text levelText_;
+    sf::Text stageText_;
 
 public:
 
@@ -70,7 +70,7 @@ public:
      * @brief A getter function for the speed of the game
      * @return The current speed 
     */
-    const int& getSpeed() const { return speed; }
+    const int& getSpeed() const { return speed_; }
 
 
     /**

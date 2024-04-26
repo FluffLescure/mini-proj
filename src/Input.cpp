@@ -8,12 +8,12 @@
 
 void Input::pollEvent() {
     // Directions respectfully stored from input
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) input = Down;
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) input = Left;
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) input = Right;
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) input = Space;
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) input_ = Down;
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) input_ = Left;
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) input_ = Right;
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) input_ = Space;
 
-    if(input != Direction::Unchanged)
+    if(input_ != Direction::Unchanged)
         inputTick();
 }
 
@@ -25,7 +25,7 @@ const int Input::inputTick(const bool& keepTicking) {
         return inputTick;
 
     // If the input is space then the counter ticks for 30 ticks
-    if(input == Direction::Space && inputTick != 30){
+    if(input_ == Direction::Space && inputTick != 30){
         inputTick++;
         return inputTick;
     }
@@ -37,6 +37,6 @@ const int Input::inputTick(const bool& keepTicking) {
     }    
     
     // Resets the input and the counter
-    input = Direction::Unchanged;
+    input_ = Direction::Unchanged;
     return inputTick = 0;
 }
