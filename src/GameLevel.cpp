@@ -8,14 +8,14 @@
 
 
 GameLevel::GameLevel() {
-    speed = 30;
+    speed_ = 30;
     initColorschemes();
     initFrames();
     initText();
 }
 
 void GameLevel::initColorschemes() {
-    std::ifstream file(Config::getInstance()->colorscheme_file);
+    std::ifstream file(Config::getInstance()->colorscheme_file_);
     std::string theme, type, color_str;
 
     // Reads the color scheme file and creates a map of color objects
@@ -26,40 +26,40 @@ void GameLevel::initColorschemes() {
 
         // Necessary convertion to index the colorScheme array and avoid exception error
         int theme_val = theme.back() - '0';
-        colorScheme[theme_val].emplace(type, color);
+        colorScheme_[theme_val].emplace(type, color);
     }
 
-    Config::getInstance()->colorScheme = colorScheme[0];
+    Config::getInstance()->colorScheme_ = colorScheme_[0];
 }
 
 void GameLevel::initFrames() {
-    stageFrame = sf::RectangleShape({160, 54});
-    stageFrame.setPosition({106.6, 54});
-    stageFrame.setOutlineColor({125, 125, 125});
-    stageFrame.setOutlineThickness(3);
-    stageFrame.setFillColor({0, 0, 0, 0}); 
+    stageFrame_ = sf::RectangleShape({160, 54});
+    stageFrame_.setPosition({106.6, 54});
+    stageFrame_.setOutlineColor({125, 125, 125});
+    stageFrame_.setOutlineThickness(3);
+    stageFrame_.setFillColor({0, 0, 0, 0}); 
 
-    levelFrame = sf::RectangleShape({186.6, 54});
-    levelFrame.setPosition({693.3, 378});
-    levelFrame.setOutlineColor({125, 125, 125});
-    levelFrame.setOutlineThickness(3);
-    levelFrame.setFillColor({0, 0, 0, 0}); 
+    levelFrame_ = sf::RectangleShape({186.6, 54});
+    levelFrame_.setPosition({693.3, 378});
+    levelFrame_.setOutlineColor({125, 125, 125});
+    levelFrame_.setOutlineThickness(3);
+    levelFrame_.setFillColor({0, 0, 0, 0}); 
 }
 
 void GameLevel::initText() {
-    stageText.setString("STAGE       1");
-    stageText.setCharacterSize(24);
-    stageText.setFillColor(sf::Color::White);
-    stageText.setFont(*Config::getInstance()->font);
-    stageText.setOrigin({0, stageText.getGlobalBounds().height / 2.f + stageText.getLocalBounds().getPosition().y}); // right center alignment
-    stageText.setPosition({123.3, 81});
+    stageText_.setString("STAGE       1");
+    stageText_.setCharacterSize(24);
+    stageText_.setFillColor(sf::Color::White);
+    stageText_.setFont(*Config::getInstance()->font_);
+    stageText_.setOrigin({0, stageText_.getGlobalBounds().height / 2.f + stageText_.getLocalBounds().getPosition().y}); // right center alignment
+    stageText_.setPosition({123.3, 81});
 
-    levelText.setString("LEVEL            1");
-    levelText.setCharacterSize(24);
-    levelText.setFillColor(sf::Color::White);
-    levelText.setFont(*Config::getInstance()->font);
-    levelText.setOrigin({0, levelText.getGlobalBounds().height / 2.f + levelText.getLocalBounds().getPosition().y}); // right center alignment
-    levelText.setPosition({710, 405});
+    levelText_.setString("LEVEL            1");
+    levelText_.setCharacterSize(24);
+    levelText_.setFillColor(sf::Color::White);
+    levelText_.setFont(*Config::getInstance()->font_);
+    levelText_.setOrigin({0, levelText_.getGlobalBounds().height / 2.f + levelText_.getLocalBounds().getPosition().y}); // right center alignment
+    levelText_.setPosition({710, 405});
 }
 
 
@@ -68,21 +68,21 @@ void GameLevel::levelUp() {
     static int lvl = 0;
 
     // The color scheme is changed every time the value of levelspeed is different
-    const int scheme = Config::levelSpeed[9-lvl] - 2;
-    speed -= Config::levelSpeed[lvl];
+    const int scheme = Config::levelSpeed_[9-lvl] - 2;
+    speed_ -= Config::levelSpeed_[lvl];
 
-    Config::getInstance()->colorScheme = colorScheme[scheme];
+    Config::getInstance()->colorScheme_ = colorScheme_[scheme];
 
     lvl++;
-    levelText.setString("LEVEL            " + std::to_string(lvl));
-    stageText.setString("Stage       " + std::to_string( scheme + 1 ));
+    levelText_.setString("LEVEL            " + std::to_string(lvl));
+    stageText_.setString("Stage       " + std::to_string( scheme + 1 ));
 }
 
 
 void GameLevel::render(sf::RenderTarget *target) const {
-    target->draw(stageFrame);
-    target->draw(levelFrame);
+    target->draw(stageFrame_);
+    target->draw(levelFrame_);
 
-    target->draw(stageText);
-    target->draw(levelText);
+    target->draw(stageText_);
+    target->draw(levelText_);
 }

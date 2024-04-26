@@ -12,8 +12,8 @@ Wordle::Wordle() {
 void Wordle::initMap() {
     int hash = 1; 
     //Assignes unique hash to each word from the wordlist
-    for (std::string word : Config::getInstance()->wordlist)
-        map[word] = hash++;
+    for (std::string word : Config::getInstance()->wordlist_)
+        map_[word] = hash++;
     
 }
 
@@ -28,7 +28,7 @@ std::map<std::string, sf::Vector2u> Wordle::findWord(std::string str){
         for (size_t length = str.length() - i; length >= 4; length--){
             std::string substring = str.substr(i, length);
 
-            if (map.find(substring) != map.end()) 
+            if (map_.find(substring) != map_.end()) 
                 foundWords.emplace(std::pair(substring, sf::Vector2u(i, length)));
         }
     }
@@ -40,7 +40,7 @@ std::map<std::string, sf::Vector2u> Wordle::findWord(std::string str){
         for (size_t length = 4; length < str.length() - i; length++){
             std::string substring = str.substr(i, length);
 
-            if (map.find(substring) != map.end()) 
+            if (map_.find(substring) != map_.end()) 
                 foundWords.emplace(std::pair(substring, sf::Vector2u((int)str.size() - i - length, length)));
         }
     }

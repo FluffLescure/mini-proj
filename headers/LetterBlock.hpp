@@ -79,9 +79,9 @@ class LetterBlock {
 
 
 private:
-    sf::Text letter;
-    sf::RectangleShape block;
-    State state;
+    sf::Text letter_;
+    sf::RectangleShape block_;
+    State state_;
 
 public:
 
@@ -121,31 +121,31 @@ public:
     /**
      * @brief Return the current state of the LetterBlock
     */
-    const State& getState() const { return state; }
+    const State& getState() const { return state_; }
 
 
     /**
      * @brief conversion operator to string which will allow to extract the block's
      * letter easily
     */
-    operator std::string() const { return letter.getString().toAnsiString(); }
+    operator std::string() const { return letter_.getString().toAnsiString(); }
 
     
     /**
      * @brief Changes the color of the LetterBlock filler
      * @param &color The color to be set
      */
-    void setColor(const sf::Color& color) { block.setFillColor(color); }
+    void setColor(const sf::Color& color) { block_.setFillColor(color); }
     /**
      * @brief Changes the letter of the LetterBlock 
      * @param &letter the letter to be set
      */
-    void setLetter(const char& letter = ' ') { this->letter.setString(letter); }
+    void setLetter(const char& letter = ' ') { this->letter_.setString(letter); }
     /**
      * @brief Changes the state of the LetterBlock 
      * @param &state the state to be set
      */
-    void setState(const State& state) {this->state = state;}
+    void setState(const State& state) {this->state_ = state;}
     /**
      * @brief Changes the position of the LetterBlock 
      * @param &pos the position to be set
@@ -156,11 +156,11 @@ public:
     /**
      * @brief Returns a constant reference of the block attribute
      */
-    const sf::RectangleShape& getBlock() const { return block; }
+    const sf::RectangleShape& getBlock() const { return block_; }
     /**
      * @brief Returns a constant reference of the letter attribute
      */
-    const sf::Text& getLetter() const { return letter; }
+    const sf::Text& getLetter() const { return letter_; }
     /**
      * @brief Return the current position of the LetterBlock inside the 2D LetterBlock
      *  grid

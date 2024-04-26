@@ -15,33 +15,33 @@ GameScore::GameScore() {
 }
 
 void GameScore::initFrame() {
-    scoreFrame = sf::RectangleShape({213, 108});
-    scoreFrame.setPosition({693.3, 81});
-    scoreFrame.setOutlineColor({125, 125, 125});
-    scoreFrame.setOutlineThickness(3);
-    scoreFrame.setFillColor({0, 0, 0, 0}); 
+    scoreFrame_ = sf::RectangleShape({213, 108});
+    scoreFrame_.setPosition({693.3, 81});
+    scoreFrame_.setOutlineColor({125, 125, 125});
+    scoreFrame_.setOutlineThickness(3);
+    scoreFrame_.setFillColor({0, 0, 0, 0}); 
 }
 
 
 void GameScore::initText() {
-    scoreText.setString("SCORE");
-    scoreText.setCharacterSize(24);
-    scoreText.setFillColor(sf::Color::White);
-    scoreText.setFont(*Config::getInstance()->font);
-    scoreText.setOrigin({0, scoreText.getGlobalBounds().height / 2.f}); // right center alignment
-    scoreText.setPosition({710, 153});
+    scoreText_.setString("SCORE");
+    scoreText_.setCharacterSize(24);
+    scoreText_.setFillColor(sf::Color::White);
+    scoreText_.setFont(*Config::getInstance()->font_);
+    scoreText_.setOrigin({0, scoreText_.getGlobalBounds().height / 2.f}); // right center alignment
+    scoreText_.setPosition({710, 153});
 
-    topScoreText.setString("TOP");
-    topScoreText.setCharacterSize(24);
-    topScoreText.setFillColor(sf::Color::White);
-    topScoreText.setFont(*Config::getInstance()->font);
-    topScoreText.setOrigin({0, topScoreText.getGlobalBounds().height /2.f}); // right center alignment
-    topScoreText.setPosition({710, 114});
+    topScoreText_.setString("TOP");
+    topScoreText_.setCharacterSize(24);
+    topScoreText_.setFillColor(sf::Color::White);
+    topScoreText_.setFont(*Config::getInstance()->font_);
+    topScoreText_.setOrigin({0, topScoreText_.getGlobalBounds().height /2.f}); // right center alignment
+    topScoreText_.setPosition({710, 114});
 }
 
 
 void GameScore::initScore() {
-    std::ifstream scoreFile(Config::scores_file);
+    std::ifstream scoreFile(Config::scores_file_);
     unsigned int score, topscore = 0;
 
     // Retrieves the biggest logged score
@@ -49,37 +49,37 @@ void GameScore::initScore() {
         if(score > topscore)
             topscore = score;
 
-    topScoreVal.setString(std::to_string(topscore));
-    topScoreVal.setCharacterSize(24);
-    topScoreVal.setFillColor(sf::Color::White);
-    topScoreVal.setFont(*Config::getInstance()->font);
-    topScoreVal.setOrigin({topScoreVal.getGlobalBounds().width ,topScoreVal.getGlobalBounds().height / 2.f}); // left center alignment
-    topScoreVal.setPosition({890, 114});
+    topScoreVal_.setString(std::to_string(topscore));
+    topScoreVal_.setCharacterSize(24);
+    topScoreVal_.setFillColor(sf::Color::White);
+    topScoreVal_.setFont(*Config::getInstance()->font_);
+    topScoreVal_.setOrigin({topScoreVal_.getGlobalBounds().width ,topScoreVal_.getGlobalBounds().height / 2.f}); // left center alignment
+    topScoreVal_.setPosition({890, 114});
 
-    scoreVal.setString("0");
-    scoreVal.setCharacterSize(24);
-    scoreVal.setFillColor(sf::Color::White);
-    scoreVal.setFont(*Config::getInstance()->font);
-    scoreVal.setOrigin({scoreVal.getGlobalBounds().width, scoreVal.getGlobalBounds().height / 2.0f}); // left center alignment
-    scoreVal.setPosition({890, 153});
+    scoreVal_.setString("0");
+    scoreVal_.setCharacterSize(24);
+    scoreVal_.setFillColor(sf::Color::White);
+    scoreVal_.setFont(*Config::getInstance()->font_);
+    scoreVal_.setOrigin({scoreVal_.getGlobalBounds().width, scoreVal_.getGlobalBounds().height / 2.0f}); // left center alignment
+    scoreVal_.setPosition({890, 153});
 }
 
 
 
 GameScore::~GameScore() {
     //In debugging the writting can be slow
-    std::ofstream scoreFile(Config::scores_file, std::ios::app); 
+    std::ofstream scoreFile(Config::scores_file_, std::ios::app); 
 
     //Write scores to file
     if (scoreFile.is_open()) { 
-        scoreFile << scoreVal.getString().toAnsiString() << std::endl; 
+        scoreFile << scoreVal_.getString().toAnsiString() << std::endl; 
         scoreFile.close(); 
     }
 }
 
 
 const int GameScore::getScore() const {
-    return atoi(scoreVal.getString().toAnsiString().c_str());
+    return atoi(scoreVal_.getString().toAnsiString().c_str());
 }
 
 
@@ -88,16 +88,16 @@ void GameScore::addPoints(const std::string& word) {
     int points = (int)std::pow(word.size(), 3);
     int current_points = getScore(); 
 
-    scoreVal.setString(std::to_string(current_points + points));
-    scoreVal.setOrigin({scoreVal.getGlobalBounds().width, scoreVal.getGlobalBounds().height / 2.0f}); // left center alignment
+    scoreVal_.setString(std::to_string(current_points + points));
+    scoreVal_.setOrigin({scoreVal_.getGlobalBounds().width, scoreVal_.getGlobalBounds().height / 2.0f}); // left center alignment
 }
 
 
 
 void GameScore::render(sf::RenderTarget *target) const {
-    target->draw(scoreFrame);
-    target->draw(scoreText);
-    target->draw(scoreVal);
-    target->draw(topScoreText);
-    target->draw(topScoreVal);
+    target->draw(scoreFrame_);
+    target->draw(scoreText_);
+    target->draw(scoreVal_);
+    target->draw(topScoreText_);
+    target->draw(topScoreVal_);
 }

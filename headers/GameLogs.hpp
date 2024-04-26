@@ -32,13 +32,15 @@ class GameLogs {
 private:
 
     // Border used to draw the grid frame
-    sf::RectangleShape logsFrame;
+    sf::RectangleShape logsFrame_;
 
     // Text componnents
-    sf::Text title;
-    sf::Text logs[10];
-    sf::Text points[10];
-
+    sf::Text title_;
+    sf::Text logs_[10];
+    sf::Text points_[10];
+    
+    // Count of words found
+    unsigned char count_ = 0;
 public:
 
     /**

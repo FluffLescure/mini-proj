@@ -13,13 +13,13 @@ class GameScore {
 private:
 
     // Bounding score frame 
-    sf::RectangleShape scoreFrame;
+    sf::RectangleShape scoreFrame_;
 
     //Text components
-    sf::Text scoreVal;
-    sf::Text topScoreVal;
-    sf::Text scoreText;
-    sf::Text topScoreText;
+    sf::Text scoreVal_;
+    sf::Text topScoreVal_;
+    sf::Text scoreText_;
+    sf::Text topScoreText_;
 
 public:
 

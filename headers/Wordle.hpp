@@ -16,7 +16,7 @@ class Wordle {
 
 private:
     // A word map that contains a unique hash for each word.
-    std::map<std::string, int> map;
+    std::map<std::string, int> map_;
 
 
 public:
