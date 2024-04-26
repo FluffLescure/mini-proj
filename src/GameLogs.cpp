@@ -26,7 +26,7 @@ void GameLogs::initFrame() {
 }
 
 void GameLogs::initTitle() {
-    title.setString("STATS");
+    title.setString("STATS : 0");
     title.setCharacterSize(30);
     title.setFillColor(sf::Color::White);
     title.setFont(*Config::getInstance()->font);
@@ -55,8 +55,15 @@ void GameLogs::initPoints() {
 
 
 void GameLogs::emplace(const std::string& word){
+    // Updates the title with the current count of found words
+    static uint8_t count = 1;
+
+
+    title.setString("STATS : " + std::to_string(count));
     emplaceLog(word);
     emplacePoints(word);
+
+    count++;
 }
 
 void GameLogs::emplaceLog(const std::string& word) {
