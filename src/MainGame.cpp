@@ -1,6 +1,7 @@
 
 #include<iostream>
 #include<cmath>
+#include<fstream>
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/PrimitiveType.hpp>
@@ -111,6 +112,7 @@ void MainGame::update() {
     static uint8_t tick = 0;
     static uint8_t lvl = 0;
     static std::vector<WordBlock> words;
+    static std::ofstream file = std::ofstream("resources/foundWords.txt");
 
     // Retreives the input from the user and polls for window events
     pollEvent();
@@ -124,6 +126,9 @@ void MainGame::update() {
         for (WordBlock &word : words){
             logs->emplace(word.string);
             score->addPoints(word.string);
+
+            // Writes the word to a file
+            file << word.string << std::endl; 
         }
         return;
     }
@@ -165,11 +170,14 @@ void MainGame::pollEvent() {
             window->close();
 }
 
+
+
 void MainGame::GameOver(const Direction &input) {
 
     // Displays the game over message
     over.setFillColor(sf::Color::Black);
     over.setOutlineColor({255, 75, 75});
+
 
     // Restarts the game if the user presses space
     if(input == Direction::Space){

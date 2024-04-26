@@ -108,10 +108,6 @@ public:
     */
     void GameOver(const Direction& input);
 
-
-    
-
-    
 };
 
 #endif
