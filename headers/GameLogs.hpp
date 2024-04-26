@@ -69,6 +69,7 @@ public:
 
     /**
      * @brief Places the word and its score to the top of the logs
+     * @remark This is a wrapper for emplaceLog and emplacePoints
      * @param word the word to be logged
     */
     void emplace(const std::string& word);

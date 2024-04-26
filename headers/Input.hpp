@@ -15,7 +15,7 @@ enum Direction {
 * @brief Retrieval of user input to memory 
 * @remark This class polls events that happen on window with the method pollEvent()
 * and stores the input to member direction. The direction of the input can then be
-* retrieved using the getDirection() method
+* retrieved using the getInput() method
 */
 class Input {
 private:
@@ -34,7 +34,7 @@ public:
      * @param keepTicking determines if the counter should keep ticking
      * @returns The value of the counter;
     */
-    const int& inputTick(const bool& keepTicking = true);
+    const int inputTick(const bool& keepTicking = true);
 
 
     /**

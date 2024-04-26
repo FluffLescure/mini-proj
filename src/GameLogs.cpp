@@ -29,7 +29,7 @@ void GameLogs::initTitle() {
     title.setString("STATS");
     title.setCharacterSize(30);
     title.setFillColor(sf::Color::White);
-    title.setFont(*(Config::getInstance()->font));
+    title.setFont(*Config::getInstance()->font);
     title.setOrigin({title.getGlobalBounds().getSize().x / 2.f + title.getLocalBounds().getPosition().x,0}); // center alignment
     title.setPosition({158, 162});
 }
@@ -39,7 +39,7 @@ void GameLogs::initLogs() {
         logs[i].setString("");
         logs[i].setCharacterSize(18);
         logs[i].setFillColor(sf::Color::White);
-        logs[i].setFont(*(Config::getInstance()->font));
+        logs[i].setFont(*Config::getInstance()->font);
     }
 }
 
@@ -48,7 +48,7 @@ void GameLogs::initPoints() {
         points[i].setString("");
         points[i].setCharacterSize(18);
         points[i].setFillColor(sf::Color::White);
-        points[i].setFont(*(Config::getInstance()->font));
+        points[i].setFont*Config::getInstance()->font;
     }
 }
 
@@ -60,6 +60,7 @@ void GameLogs::emplace(const std::string& word){
 }
 
 void GameLogs::emplaceLog(const std::string& word) {
+    // Shifts the logs down and adds the new word to the top
     for(uint8_t i = 9; i > 0; i--) {
         logs[i].setString(logs[i - 1].getString().toAnsiString());
         logs[i].setPosition({70, 220 + i * (logs[i].getGlobalBounds().height + 11)});
@@ -70,8 +71,10 @@ void GameLogs::emplaceLog(const std::string& word) {
 }
 
 void GameLogs::emplacePoints(const std::string& word) {
+    // Calculates the points based on the word size
     std::string point = std::to_string((int)std::pow(word.size(), 3));
 
+    // Shifts the points down and adds the new points to the top
     for(uint8_t i = 9; i > 0; i--) {
         points[i].setString(points[i - 1].getString().toAnsiString());
         points[i].setOrigin({points[i].getGlobalBounds().width, 0}); // left alignmnet
@@ -86,9 +89,10 @@ void GameLogs::emplacePoints(const std::string& word) {
 
 
 void GameLogs::render(sf::RenderTarget *target) const {
-    target->draw(logsFrame); // renders the frame
+    target->draw(logsFrame); 
     target->draw(title);
 
+    //renders the logs and points
     for(uint8_t i = 0; i < 10; i++){
         target->draw(logs[i]);
         target->draw(points[i]);

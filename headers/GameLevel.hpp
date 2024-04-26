@@ -68,7 +68,7 @@ public:
 
     /**
      * @brief A getter function for the speed of the game
-     * @brief Returns the current speed
+     * @return The current speed 
     */
     const int& getSpeed() const { return speed; }
 

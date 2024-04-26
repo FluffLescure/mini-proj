@@ -87,6 +87,7 @@ public:
 
     /**
      * @brief Default class constructor that can accept a letter to display
+     * @param &str the letter to be displayed
     */
     LetterBlock(const char& str = ' ');
 
@@ -108,7 +109,7 @@ public:
      * blocks by transfering letter and fill color to the next.
      * @param &block the block that will be transfered.
     */
-    void operator=(const LetterBlock& block);
+    void operator=(const LetterBlock &block);
 
     /**
      * @brief Centers the letter to the center of the LetterBlock. 
@@ -127,42 +128,44 @@ public:
      * @brief conversion operator to string which will allow to extract the block's
      * letter easily
     */
-    operator const char*() const { return letter.getString().toAnsiString().c_str(); }
+    operator std::string() const { return letter.getString().toAnsiString(); }
 
     
     /**
      * @brief Changes the color of the LetterBlock filler
-     * @param color The color to be set
+     * @param &color The color to be set
      */
     void setColor(const sf::Color& color) { block.setFillColor(color); }
     /**
      * @brief Changes the letter of the LetterBlock 
-     * @param letter the letter to be set
+     * @param &letter the letter to be set
      */
     void setLetter(const char& letter = ' ') { this->letter.setString(letter); }
     /**
      * @brief Changes the state of the LetterBlock 
-     * @param state the state to be set
+     * @param &state the state to be set
      */
     void setState(const State& state) {this->state = state;}
     /**
      * @brief Changes the position of the LetterBlock 
-     * @param pos the position to be set
+     * @param &pos the position to be set
      */
     void setPosition(const sf::Vector2f& pos);
 
 
     /**
-     * @brief Returns a copy of the block attribute
+     * @brief Returns a constant reference of the block attribute
      */
     const sf::RectangleShape& getBlock() const { return block; }
     /**
-     * @brief Returns a copy of the letter attribute
+     * @brief Returns a constant reference of the letter attribute
      */
     const sf::Text& getLetter() const { return letter; }
     /**
      * @brief Return the current position of the LetterBlock inside the 2D LetterBlock
      *  grid
+     * @remark This function is used to find the position of the block inside the grid
+     *  making it easier to know relative positions of other blocks
      * @param &grid the reference of the grid which its contained in
      * @return A vector of the coordinates inside the grid
     */
@@ -170,14 +173,14 @@ public:
 
     /**
      * @brief Tests if the state of the block is the same as the parameter 
-     * @param state the state to be tested for
+     * @param &state the state to be tested for
      * @returns result of the test, either true or false
     */
     const bool isState(const State& state) const;
 
     /**
      * @brief Checks if the LetterBlock is hidden (transparent) or not
-     * @returns result of the check, either true or false
+     * @returns true if the block is hidden, false otherwise
     */
     const bool isHidden();
 
@@ -185,15 +188,15 @@ public:
     /**
      * @brief Moves the LetterBlock inside the 2D grid according to the given direction
      * @param &grid the 2D grid of LetterBlock where its contained
-     * @param direction the direction of movement of the block
-     * @returns true if the block was succesfully moved
+     * @param &direction the direction of movement of the block
+     * @returns true if the block was succesfully moved, false otherwise
     */
     const bool move(Blockgrid &grid, const Direction& direction) const;
 
     
     /**
      * @brief Decides whether to hide or display the LetterBlock
-     * @param visible LetterBlock hidden if true
+     * @param &visible LetterBlock hidden if true
      */
     void display(const bool& visible);
 

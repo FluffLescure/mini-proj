@@ -105,6 +105,7 @@ public:
 
     /**
      * @brief Destroys all block that form a word from the wordlist
+     * @returns a vecotr of WordBlock that were destroyed
     */
     const std::vector<WordBlock> wordDestroy();
 
@@ -148,7 +149,7 @@ public:
      * @param colSpan span of blocks in the column 
      * @param rowSpan span of blocks in the row
     */
-    void setColor(const uint8_t& col, const uint8_t& row, const uint8_t& colSpan, const uint8_t& rowSpan);
+    void setColor(const uint8_t& col, const uint8_t& row, const uint8_t& colSpan, const uint8_t& rowSpan, const uint32_t& color);
 
     /**
      * @brief Destroys LetterBlocks that are inside the specified span
@@ -163,6 +164,7 @@ public:
     /**
      * @brief Updates the falling blocks based on user input and grounds them
      *  when needed.
+     * @param input the direction of the block
     */
     void blockMove(const Direction &input);
 
@@ -178,6 +180,7 @@ public:
     /**
      * @brief Updates the grid to make necessary LetterBlocks fall 1 block down and 
      *  adds a new block when no blocks can fall.
+     * @returns true if a block moved down, false otherwise
      */
     const bool gridTick();
 

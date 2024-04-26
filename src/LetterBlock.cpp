@@ -24,7 +24,7 @@ void LetterBlock::initLetter(const char& str) {
     letter.setString(str);
     letter.setCharacterSize(24);
     letter.setFillColor(sf::Color::Black);
-    letter.setFont(*(Config::getInstance()->font));
+    letter.setFont(*Config::getInstance()->font);
 }
 
 
@@ -88,8 +88,8 @@ const bool LetterBlock::isHidden() {
 
 const bool LetterBlock::move(Blockgrid &grid, const Direction& direction) const{
     sf::Vector2u pos = getPosition(grid);
-    uint8_t rows = Config::getInstance()->gamegrid_rows;
-    uint8_t cols = Config::getInstance()->gamegrid_cols;
+    uint8_t rows = Config::gamegrid_rows;
+    uint8_t cols = Config::gamegrid_cols;
     uint8_t i = pos.x, j = pos.y;
 
     switch(direction) {
@@ -139,7 +139,7 @@ void LetterBlock::display(const bool& visible) {
     sf::Color block_color = block.getFillColor();
     sf::Color letter_color = letter.getFillColor();    
 
-    // If true then alpha value is 255, else alpha is 50
+    // If true then alpha value is 255, else hide
     if (visible){
         block_color.a = 255;
         letter_color.a = 255;

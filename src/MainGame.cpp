@@ -50,14 +50,13 @@ void MainGame::initComponents() {
 }
 
 void MainGame::initOver(){
-    Config* config = Config::getInstance();
-    over.setFont(*config->font);
+    over.setFont(*Config::getInstance()->font);
     over.setString("Game Over\nPress 'Space' to restart");
-    over.setCharacterSize(24);
+    over.setCharacterSize(30);
     over.setFillColor({0, 0, 0, 0});
     over.setOutlineColor({0, 0, 0, 0});
-    over.setOutlineThickness(2);
-    over.setPosition(350, 250);
+    over.setOutlineThickness(1.5);
+    over.setPosition(320, 250);
 }
 
 
@@ -113,10 +112,11 @@ void MainGame::update() {
     static uint8_t lvl = 0;
     static std::vector<WordBlock> words;
 
+    // Retreives the input from the user and polls for window events
     pollEvent();
     input->pollEvent(); 
 
-
+    // Destroys the words in the grid if they exists
     words = game->wordDestroy();
 
     // Pauses the game while the word is being destroyed
@@ -128,24 +128,27 @@ void MainGame::update() {
         return;
     }
 
+    // Moves the block every 5 ticks if input is detected
     if(!(tick % 5))
         game->blockMove(input->getInput());
 
+    // Moves the block down every speed ticks
     if(!(tick % level->getSpeed()) && !game->gridTick() ) {
+        // If the grid can't move down, and no new block can be created, game over
         if(!game->newBlock(next->getLetter())) {
-            std::cout << "Game Over" << std::endl;
             GameOver(input->getInput());
         }
         else
             next->changeLetter();
-        
     }
 
+    // Level up values
     if(score->getScore() > 100 * std::pow(2, lvl)){
         lvl++;
         level->levelUp();
     }
 
+    // Resets the tick every 60 ticks
     if(tick == 60)
         tick = 0;
 
@@ -164,9 +167,11 @@ void MainGame::pollEvent() {
 
 void MainGame::GameOver(const Direction &input) {
 
+    // Displays the game over message
     over.setFillColor(sf::Color::Black);
-    over.setOutlineColor(sf::Color::Red);
+    over.setOutlineColor({255, 75, 75});
 
+    // Restarts the game if the user presses space
     if(input == Direction::Space){
         delete game;
         delete score;
@@ -175,5 +180,9 @@ void MainGame::GameOver(const Direction &input) {
         delete logs;
 
         initComponents();
+        
+        // Hides the game over message
+        over.setFillColor({0, 0, 0, 0});
+        over.setOutlineColor({0, 0, 0, 0});
     }
 }

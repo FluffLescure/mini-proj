@@ -58,8 +58,9 @@ const char GameLetter::getLetter() {
 
 
 void GameLetter::changeLetter() {
-    char let = randLetter();
-    letter.setString(let);
+    // Sets the letter to a random char
+    char c = randLetter();
+    letter.setString(c);
 
     letter.setOrigin({letter.getGlobalBounds().getSize().x / 2.f + letter.getLocalBounds().getPosition().x,0}); // recenters the letter
 }
@@ -68,11 +69,13 @@ const char GameLetter::randLetter() {
     static const int min = 0;
     static const int max = std::accumulate(std::begin(Config::generator_weights), std::end(Config::generator_weights), 0);
 
+    // Generates a random number between min and max
     static int r;
     r = ((double) rand() / (RAND_MAX + 1)) * (max - min + 1) + min;
 
     static int letter, sum;
 
+    // Finds the letter that corresponds to the random number
     for(letter = 0, sum=0; r > sum; letter++)
         sum += Config::generator_weights[letter];
 

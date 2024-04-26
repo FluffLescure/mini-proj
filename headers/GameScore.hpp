@@ -48,6 +48,10 @@ public:
     */
     ~GameScore();
 
+    /**
+     * @brief Retrieves the current score
+     * @return the current score
+    */
     const int getScore() const;
 
     /**

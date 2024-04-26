@@ -77,7 +77,7 @@ public:
 
 
     /**
-     * @brief Determines if the gam is running based on the state of the window
+     * @brief Determines if the game is running based on the state of the window
     */
     const bool isRunning();
 
@@ -104,7 +104,7 @@ public:
 
     /**
      * @brief Displays a game over message and offers a restart.
-     * 
+     * @param input The input to restart the game
     */
     void GameOver(const Direction& input);
 

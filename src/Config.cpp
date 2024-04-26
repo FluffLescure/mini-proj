@@ -5,8 +5,7 @@
 #include "../headers/Config.hpp"
 
 
-// First instance of Config is populated before Config::getInstance()
-// is called in runtime
+// First instance of Config is populated before Config::getInstance() is called
 Config* Config::instance = new Config();
 
 
