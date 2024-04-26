@@ -48,7 +48,7 @@ void GameLogs::initPoints() {
         points[i].setString("");
         points[i].setCharacterSize(18);
         points[i].setFillColor(sf::Color::White);
-        points[i].setFont*Config::getInstance()->font;
+        points[i].setFont(*Config::getInstance()->font);
     }
 }
 
