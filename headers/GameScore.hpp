@@ -31,24 +31,24 @@ public:
     /**
      * @brief Initialises the frame of the object
     */
-    constexpr void initFrame();
+    void initFrame();
 
     /**
      * @brief Initialises the score text
     */
-    constexpr void initText();
+    void initText();
 
     /**
      * @brief Initialises the score value text
     */
-    constexpr void initScore();
+    void initScore();
 
     /**
      * @brief Saves the score in a file 
     */
     ~GameScore();
 
-    const int getScore() const;
+    int getScore() const;
 
     /**
      * @brief Adds points to the score based on the length of the word given

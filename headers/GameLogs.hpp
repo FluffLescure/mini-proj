@@ -49,22 +49,22 @@ public:
     /**
      * @brief Draws the frame of the object
     */
-    constexpr void initFrame();
+    void initFrame();
 
     /**
      * @brief Initiliases the title text
     */
-    constexpr void initTitle();
+    void initTitle();
 
     /**
      * @brief Initialises the logs column of the display
     */
-    constexpr void initLogs();
+    void initLogs();
 
     /**
      * @brief Initialises the points column of the display
     */
-    constexpr void initPoints();
+    void initPoints();
 
 
     /**
@@ -77,20 +77,20 @@ public:
      * @brief Places the word to the top of the logs
      * @param word the word to be logged
     */
-    constexpr void emplaceLog(std::string word);
+    void emplaceLog(std::string word);
 
     /**
      * @brief Places the word score to the top of the logs
      * @param word the word to be logged
     */
-    constexpr void emplacePoints(std::string word);
+    void emplacePoints(std::string word);
 
 
     /**
      * @brief Renders the log's bounding frame and text components
      * @param *target the rendered shared by other classes
     */
-    void render(sf::RenderTarget *target) const;
+    void render(sf::RenderTarget *target);
 
 };
 

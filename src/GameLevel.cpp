@@ -2,7 +2,6 @@
 #include<sstream>
 #include<fstream>
 #include<iostream>
-#include<stdint.h>
 
 #include "../headers/GameLevel.hpp"
 #include "../headers/Config.hpp"
@@ -15,27 +14,22 @@ GameLevel::GameLevel() {
     initText();
 }
 
-constexpr void GameLevel::initColorschemes() {
+void GameLevel::initColorschemes() {
     std::ifstream file(Config::getInstance()->colorscheme_file);
     std::string theme, type, color_str;
-    sf::Color color;
-    uint8_t theme_val;
 
 
     while(file >> theme >> type >> color_str){
-        // Convert hex string to an integer value before creating a color object
-        color = sf::Color(std::stoul(color_str, nullptr, 16));
-
-        // Necessary convertion to index the colorScheme array and avoid exception error
-        theme_val = theme.back() - '0';
-
+        sf::Color color = sf::Color(std::stoul(color_str + "FF", nullptr, 16));
+        std::cout << color.toInteger() << std::endl;
+        int theme_val = theme.back() - '0';
         colorScheme[theme_val].emplace(type, color);
     }
 
     Config::getInstance()->colorScheme = colorScheme[0];
 }
 
-constexpr void GameLevel::initFrames() {
+void GameLevel::initFrames() {
     stageFrame = sf::RectangleShape({160, 54});
     stageFrame.setPosition({106.6, 54});
     stageFrame.setOutlineColor({125, 125, 125});
@@ -49,28 +43,28 @@ constexpr void GameLevel::initFrames() {
     levelFrame.setFillColor({0, 0, 0, 0}); 
 }
 
-constexpr void GameLevel::initText() {
+void GameLevel::initText() {
     stageText.setString("STAGE       1");
     stageText.setCharacterSize(24);
     stageText.setFillColor(sf::Color::White);
-    stageText.setFont(*Config::getInstance()->font);
+    stageText.setFont(*(Config::getInstance()->font));
     stageText.setOrigin({0, stageText.getGlobalBounds().height / 2.f + stageText.getLocalBounds().getPosition().y}); // right center alignment
     stageText.setPosition({123.3, 81});
 
     levelText.setString("LEVEL            1");
     levelText.setCharacterSize(24);
     levelText.setFillColor(sf::Color::White);
-    levelText.setFont(*Config::getInstance()->font);
+    levelText.setFont(*(Config::getInstance()->font));
     levelText.setOrigin({0, levelText.getGlobalBounds().height / 2.f + levelText.getLocalBounds().getPosition().y}); // right center alignment
     levelText.setPosition({710, 405});
 }
 
 
 void GameLevel::levelUp() {
-    static uint8_t lvl = 0;
-    uint8_t scheme = Config::levelSpeed[9-lvl] - 2;
-    speed -= Config::levelSpeed[lvl];
-    
+    static int lvl = 0;
+    speed -= levelSpeed[lvl];
+    int scheme = levelSpeed[9-lvl] - 2;
+
     Config::getInstance()->colorScheme = colorScheme[scheme];
 
     lvl++;
@@ -79,7 +73,7 @@ void GameLevel::levelUp() {
 }
 
 
-void GameLevel::render(sf::RenderTarget *target) const {
+void GameLevel::render(sf::RenderTarget *target) {
     target->draw(stageFrame);
     target->draw(levelFrame);
 

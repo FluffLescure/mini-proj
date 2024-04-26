@@ -41,9 +41,8 @@
  * // Config's shared member are acccessed using the instance pointer 
  * printf("Title: %s \nFramerate: %d",config->window_title, config->window_framerate);
  * 
- * // Uses for single calls without requiring a pointer to store the instance
+ * // Used for single calls without requiring a pointer to store the instance
  * Vector2i Size = Config::getInstance()->window_size; 
- * uint8_t frameRate = Config::window_framerate;
  * @endcode
  *  
 */
@@ -61,29 +60,29 @@ private:
      * @brief Constructor which loads each resource. 
      * @remark Is defined as a private method to avoid creating multiple instances. 
     */
-    constexpr Config();
+    Config();
 
      /**
      * @brief Loads the font for sf::Text components used to display in-game text
     */
-    constexpr void loadFonts();
+    void loadFonts();
 
     /**
      * @brief Loads textures for the layoutTex member using the texture_file.
      * This is then used to add a texture to the layout. 
     */
-    constexpr void loadTextures();
+    void loadTextures();
 
     /**
      * @brief Loads the layout for the layoutPoints member using the layout_file.
      * This is then used to render the layout in GameDisplay. 
     */
-    constexpr void loadLayout();
+    void loadLayout();
 
     /**
      * @brief Loads the wordlist which will be used to identify words contained in the grid.
     */
-    constexpr void loadWordlist();
+    void loadWordlist();
 
 
     // Resources file path 
@@ -100,24 +99,23 @@ public:
      * the class.
      * @returns A Config pointer to access config parameters
     */
-    static Config* getInstance();
+    static constexpr Config* getInstance() {return instance;}
 
     // Deletion of copy constructors according to singleton properties.
     Config(const Config&) = delete;
     Config& operator=(const Config&) = delete;
 
     // Frees font and layout texture from memory.
-    constexpr ~Config();
+    ~Config();
 
     // Global configs of the game
     const sf::Vector2i window_size = {960, 540};
-    static constexpr const int8_t window_framerate = 60;
+    static constexpr int8_t window_framerate = 60;
     const sf::Vector2f block_size = {33.6, 32.4};
     static constexpr const char *window_title = "Lettris";
-    static constexpr const uint8_t gamegrid_rows = 15;
-    static constexpr const uint8_t gamegrid_cols = 10;
-    static constexpr const uint16_t generator_weights[26] = {711, 114, 318, 367, 1210, 111, 123, 111, 659, 34, 29, 496, 262, 639, 502, 249, 65, 607, 651, 592, 449, 111, 17, 38, 46, 15};
-    static constexpr const uint8_t levelSpeed[10] = {5, 4, 4, 3, 3, 3, 2, 2, 2, 2};
+    static constexpr uint8_t gamegrid_rows = 15;
+    static constexpr uint8_t gamegrid_cols = 10;
+    static constexpr uint16_t generator_weights[26] = {711, 114, 318, 367, 1210, 111, 123, 111, 659, 34, 29, 496, 262, 639, 502, 249, 65, 607, 651, 592, 449, 111, 17, 38, 46, 15};
 
     // Auxiliairy resources files
     static constexpr const char *scores_file = "resources/Scores.txt";

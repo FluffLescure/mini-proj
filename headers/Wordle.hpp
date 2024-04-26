@@ -29,14 +29,14 @@ public:
     /**
      * @brief Initialises the map using config wordlist
     */
-    constexpr void initMap();
+    void initMap();
 
     /**
      * @brief Finds words that are matched by the map inside a combination of characters
      * @param str the combination of characters 
      * @returns a map of the words with their position and span inside the combination
     */
-    const std::map<std::string, sf::Vector2u> findWord(std::string str);
+    std::map<std::string, sf::Vector2u> findWord(std::string str);
 
 };
 

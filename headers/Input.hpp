@@ -34,14 +34,14 @@ public:
      * @param keepTicking determines if the counter should keep ticking
      * @returns The value of the counter;
     */
-    constexpr const int inputTick(bool keepTicking = true);
+    int inputTick(bool keepTicking = true);
 
 
     /**
     * @brief Returns the stored direction from input
     * @returns The direction of the input  
     */
-    constexpr const Direction getInput() { return input; }
+    Direction getInput() { return input; }
 };
 
 #endif

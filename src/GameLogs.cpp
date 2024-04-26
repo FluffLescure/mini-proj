@@ -17,7 +17,7 @@ GameLogs::GameLogs(){
     initPoints();
 }
 
-constexpr void GameLogs::initFrame() {
+void GameLogs::initFrame() {
     logsFrame = sf::RectangleShape({213, 324});
     logsFrame.setPosition({53, 162});
     logsFrame.setOutlineColor({125, 125, 125});
@@ -25,7 +25,7 @@ constexpr void GameLogs::initFrame() {
     logsFrame.setFillColor({0, 0, 0, 0}); 
 }
 
-constexpr void GameLogs::initTitle() {
+void GameLogs::initTitle() {
     title.setString("STATS");
     title.setCharacterSize(30);
     title.setFillColor(sf::Color::White);
@@ -34,7 +34,7 @@ constexpr void GameLogs::initTitle() {
     title.setPosition({158, 162});
 }
 
-constexpr void GameLogs::initLogs() {
+void GameLogs::initLogs() {
     for (uint8_t i = 0; i < 10; i++){
         logs[i].setString("");
         logs[i].setCharacterSize(18);
@@ -43,7 +43,7 @@ constexpr void GameLogs::initLogs() {
     }
 }
 
-constexpr void GameLogs::initPoints() {
+void GameLogs::initPoints() {
     for (uint8_t i = 0; i < 10; i++){
         points[i].setString("");
         points[i].setCharacterSize(18);
@@ -59,7 +59,7 @@ void GameLogs::emplace(std::string word){
     emplacePoints(word);
 }
 
-constexpr void GameLogs::emplaceLog(std::string word) {
+void GameLogs::emplaceLog(std::string word) {
     for(uint8_t i = 9; i > 0; i--) {
         logs[i].setString(logs[i - 1].getString().toAnsiString());
         logs[i].setPosition({70, 220 + i * (logs[i].getGlobalBounds().height + 11)});
@@ -69,7 +69,7 @@ constexpr void GameLogs::emplaceLog(std::string word) {
     logs[0].setPosition({70, 220});
 }
 
-constexpr void GameLogs::emplacePoints(std::string word) {
+void GameLogs::emplacePoints(std::string word) {
     std::string point = std::to_string((int)std::pow(word.size(), 3));
 
     for(uint8_t i = 9; i > 0; i--) {
@@ -85,7 +85,7 @@ constexpr void GameLogs::emplacePoints(std::string word) {
 
 
 
-void GameLogs::render(sf::RenderTarget *target) const{
+void GameLogs::render(sf::RenderTarget *target){
     target->draw(logsFrame); // renders the frame
     target->draw(title);
 

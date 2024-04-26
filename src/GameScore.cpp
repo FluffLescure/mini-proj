@@ -14,7 +14,7 @@ GameScore::GameScore() {
     initText();
 }
 
-constexpr void GameScore::initFrame() {
+void GameScore::initFrame() {
     scoreFrame = sf::RectangleShape({213, 108});
     scoreFrame.setPosition({693.3, 81});
     scoreFrame.setOutlineColor({125, 125, 125});
@@ -23,7 +23,7 @@ constexpr void GameScore::initFrame() {
 }
 
 
-constexpr void GameScore::initText() {
+void GameScore::initText() {
     scoreText.setString("SCORE");
     scoreText.setCharacterSize(24);
     scoreText.setFillColor(sf::Color::White);
@@ -40,7 +40,7 @@ constexpr void GameScore::initText() {
 }
 
 
-constexpr void GameScore::initScore() {
+void GameScore::initScore() {
     std::ifstream scoreFile(Config::getInstance()->scores_file);
     unsigned int score, topscore = 0;
 
@@ -87,7 +87,7 @@ GameScore::~GameScore() {
 }
 
 
-const int GameScore::getScore() const {
+int GameScore::getScore() const {
     return atoi(scoreVal.getString().toAnsiString().c_str());
 }
 
