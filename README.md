@@ -22,7 +22,7 @@ Alternatively, you can extract the contents of mingw64 to another location and c
 ## Documentation
 
 The documentation of the front-end design is available in the [doc](https://github.com/FluffLescure/mini-proj/blob/main/doc) folder.
-The game logic is not documented but has been heavily inspired by the online lettris game available [here](https://https://langue-francaise.tv5monde.com/jouer/jeux/lettris).
+The game logic is not documented but has been heavily inspired by the online lettris game available [here](https://https://langue-francaise.tv5monde.com/jouer/jeux/lettris) ,and the project constraints given here [constraints.pdf](https://github.com/FluffLescure/mini-proj/blob/main/doc/constraints.pdf)
 
 
 
