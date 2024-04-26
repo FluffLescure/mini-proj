@@ -1,35 +1,35 @@
+
+#include<fstream>
+#include<iostream>
+
 #include "../headers/Config.hpp"
 
-#include <fstream>
-#include <iostream>
 
-// First instance of Config is set null before getInstance() is called
-Config* Config::instance = nullptr;
+// First instance of Config is populated before Config::getInstance() is called
+Config* Config::instance = new Config();
+
 
 
 Config::Config() {
     loadFonts();
     loadTextures();
     loadLayout();
+    loadWordlist();
 }
 
-Config::~Config() {
-    delete font;
-    delete layoutTex;
-}
+void Config::loadFonts() {
+    font = new sf::Font();
 
-
-Config* Config::getInstance() {
-    // if there isn't yet any instance, create one, else return the current instance
-    if (instance == nullptr)
-        instance = new Config();
-    return instance;
+    if(!font->loadFromFile(font_file)) {
+        std::cout << "ERROR: Failed to load fonts : " << font_file << std::endl;
+        abort();
+    }
 }
 
 void Config::loadTextures() {
     layoutTex = new sf::Texture();
     if(!layoutTex->loadFromFile(texture_file)) {
-        std::cout << "ERROR: Failed to load " << texture_file << std::endl;
+        std::cout << "ERROR: Failed to load texture file : " << texture_file << std::endl;
         abort();
     }
 }
@@ -38,21 +38,45 @@ void Config::loadLayout() {
     float x,y;
     std::ifstream file(layout_file);
 
-    // Loads x and y coords to a map
+    // Loads x and y coords of the layout
     while (file >> x >> y) {
-        layoutPoints.push_back(sf::Vector2f(x, y));
+        layoutPoints.push_back({x, y});
     }
 
     file.close();
 }
 
-void Config::loadFonts() {
-    font = new sf::Font();
+void Config::loadWordlist() {
+    std::string word;
+    std::ifstream file(wordlist_file);
 
-    if(!font->loadFromFile(font_file)) {
-        std::cout << "ERROR: Failed to load " << font_file << std::endl;
-        abort();
+    while(file >> word) {
+        // Capitalises every word in the list
+        for(char &c : word)
+            c = std::toupper(c);
+
+        wordlist.push_back(word);
     }
+
+    file.close();
 }
+
+
+
+
+Config::~Config() {
+    delete font;
+    delete layoutTex;
+}
+
+
+
+
+
+
+
+
+
+
 
 

@@ -27,6 +27,11 @@
             "label": "C/C++: g++ build Win",
             "command": "C:/MinGW/bin/g++",
             "args": [
+                "-fdiagnostics-color=always",
+                "-Wpedantic",
+                "-Werror",
+                "-Wall",
+                "-std=c++2b",
                 "main.cpp",
                 "src/*.cpp",
                 "-o",

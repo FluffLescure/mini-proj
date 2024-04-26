@@ -1,68 +1,203 @@
 #ifndef GAME_GRID_HPP
 #define GAME_GRID_HPP
 
-#include "LetterBlock.hpp"
-#include "Input.hpp"
-#include "GameWordle.hpp"
-#include <SFML/Graphics.hpp>
-#include <SFML/System/NonCopyable.hpp>
-#include <vector>
+#include<stdint.h>
+#include<vector>
 
-// Macro of a 2D grid of LetterBlock used for legibility reasons
-typedef std::vector<std::vector<LetterBlock>> Blockgrid;
+
+#include <SFML/System/NonCopyable.hpp>
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+
+#include "Config.hpp"
+#include "Input.hpp"
+#include "GameLogs.hpp"
+#include "GameScore.hpp"
+#include "GameLetter.hpp"
+#include "LetterBlock.hpp"
+#include "Wordle.hpp"
+
+
+// Macro of a 2D grid of LetterBlock used to improve legibility
+using Grid = std::vector<std::vector<LetterBlock>>;
+
+
+struct WordBlock {
+    std::string string;
+    sf::Vector2u pos = {0, 0};
+    sf::Vector2u span = {0, 0};
+};
 
 
 /**
  * @class GameGrid
- * @brief 2D Grid built upon LetterBlocks that shape the playing field for the game
+ * 
+ * @brief 2D grid built upon LetterBlocks that shape the playing field
+ *  for the game. 
+ * 
+ * @remark This is where most of the game is controlled by processing game data
+ *  with its related classes
+ * 
+ * The dimensions of the grid are pulled from Config. 
+ * 
+ * Agregation with Input and GameWordle are used to retrieve user input and 
+ * determine which block - that form a valid word - must be drestroyed. Other
+ * aggregation are used as related components that communicate with the GameGrid
+ * to output the correct game values.
+ * 
  */
 class GameGrid : sf::NonCopyable {
 private:
-    uint8_t cols;
-    uint8_t rows;
 
+    // dimensions of the grid;
+    static constexpr uint8_t cols = Config::gamegrid_cols;
+    static constexpr uint8_t rows = Config::gamegrid_rows;
+
+    // Border used to draw the grid frame
     sf::RectangleShape gridBorder;
 
-    Input *input;
-    GameWordle *wordle;
-
-    Blockgrid grid;
-
-    uint8_t tick = 0;
+    // Agregated classes
+    Wordle *wordle;
+    
+    // The 2D grid where the game takes place
+    Grid grid;
 
 public:
+
+    /**
+     * @brief Constructor which calls the initialisation of components and
+     *  agregated classes
+    */
     GameGrid();
 
     /**
-     * @brief Updates the grid to make corresponding LetterBlocks fall 1 block lower, when possible
-     */
-    void gridTick();
-
-    void blockTick();
-
-    /**
-     * @brief Destroys LetterBlocks that form a word
-     * @param span Coordinates and spanning of the word staged for destruction
-     */
-    void blockDestroy(sf::Vector2u posInit, sf::Vector2u span);
+     * @brief Builds the 2D grid using dimensions pulled from Config
+     *  as well as the grid's bounding frame
+    */
+    void initGrid();
 
     /**
-     * @brief Updates the visibility respective LetterBlock from grid
-     * @param coord The coordinates of the block to be hidden
+     * @brief Draws the frame for the game grid
+    */
+    void initFrame();
+
+    /**
+     * @brief Initialises links with other required classes when required
+    */
+    void initWordle();
+
+
+    /**
+     * @brief Frees the wordle link
+     * @remark The wordle link is the only one which freed as the other
+     * links are destroyed in MainGame
+    */
+    ~GameGrid();
+
+
+    /**
+     * @brief Renders the grid's bounding frame and the 2D game grid
+     * @param *target the rendered shared by other classes
+    */
+    void render(sf::RenderTarget *target);
+
+
+    /**
+     * @brief Destroys all block that form a word from the wordlist
+     * @returns a vecotr of WordBlock that were destroyed
+    */
+    const std::vector<WordBlock> wordDestroy();
+
+    /**
+     * @brief A tick counter which is used to time the destruction
+     * of staged words.
+     * @remark Allows the possibility to read the counter value without
+     *  incrementing the counter.
+     * @param keepTicking keeps ticking the counter or not
+     * @return The value of the destroy counter
+    */
+    const int destroyTick(const bool &keepTicking = true) const;
+
+    /**
+     * @brief Retrieves a list of staged words identified from the grid which
+     *  includes their position([0] and [1]) and span([2] and [3]).
+     * @return Staged words that need to be destroyed
+    */
+    const std::vector<WordBlock> stageWords();
+
+    /**
+     * @brief Retreives all the letters from a row and crunches them together
+     *  in a string.
+     * @param row the row that will be crunched
+     * @returns a string of all the letters in the row
+    */
+    const std::string crunchRow(const int8_t &row);
+
+    /**
+     * @brief Retreives all the letters from a column and crunches them together
+     *  in a string.
+     * @param col the column that will be crunched
+     * @returns a string of all the letters in the column
+    */
+    const std::string crunchCol(const int8_t &col);
+
+    /**
+     * @brief Changes the color of the span of blocks given as parameter.
+     * @param col the column of the first letter of the block
+     * @param row the row of the first letter of the block
+     * @param colSpan span of blocks in the column 
+     * @param rowSpan span of blocks in the row
+    */
+    void setColor(const uint8_t& col, const uint8_t& row, const uint8_t& colSpan, const uint8_t& rowSpan, const uint32_t& color);
+
+    /**
+     * @brief Destroys LetterBlocks that are inside the specified span
+     * @param col the column of the first letter of the block
+     * @param row the row of the first letter of the block
+     * @param colSpan span of blocks in the column 
+     * @param rowSpan span of blocks in the row
      */
-    void blockDisplay(sf::Vector2u coord, bool visible);
+    void blockDestroy(const uint8_t& col, const uint8_t& row, const uint8_t& colSpan, const uint8_t& rowSpan);
+
+
+    /**
+     * @brief Updates the falling blocks based on user input and grounds them
+     *  when needed.
+     * @param input the direction of the block
+    */
+    void blockMove(const Direction &input);
+
+    /**
+     * @brief Checks if a block should be grounded based on game rules and grounds
+     *  them if needed.
+     * @param i the column of the block
+     * @param j the row of the block
+    */
+    void groundBlock(const uint8_t& i, const uint8_t& j);
+
+
+    /**
+     * @brief Updates the grid to make necessary LetterBlocks fall 1 block down and 
+     *  adds a new block when no blocks can fall.
+     * @returns true if a block moved down, false otherwise
+     */
+    const bool gridTick();
+
+    /**
+     * @brief Adds a new block to the grid
+     * @param letter the letter of the new block
+     * @returns true if a block was added, false otherwise
+    */
+    const bool newBlock(const char &letter = ' ');
 
     /**
      * @brief Updates the visibility a zone of blocks delimited by the span entered
-     * @param span The span of blocks to be hidden
+     * @param posInit the starting position of the span
+     * @param span span of blocks to be updated
+     * @param visible sets the the visibility of the block
      */
-    void blockDisplay(sf::Vector2u posInit, sf::Vector2u span, bool visible);
-
-    void initGrid();
-
-    void render(sf::RenderTarget *target);
-
-    void update();
+    void blockDisplay(const sf::Vector2u& posInit, const sf::Vector2u& span, const bool& visible);
 
 };
 

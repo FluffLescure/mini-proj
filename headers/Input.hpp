@@ -6,7 +6,7 @@
 * @brief Possible movement directions used to move the falling block in GameGrid
 */
 enum Direction {
-    Unchanged, Down, Left, Right
+    Unchanged, Down, Left, Right, Space
 };
 
 
@@ -15,12 +15,12 @@ enum Direction {
 * @brief Retrieval of user input to memory 
 * @remark This class polls events that happen on window with the method pollEvent()
 * and stores the input to member direction. The direction of the input can then be
-* retrieved using method getDirection()
+* retrieved using the getInput() method
 */
 class Input {
 private:
     // input direction
-    Direction direction;
+    Direction input = Direction::Unchanged;
 
 public:
     /**
@@ -30,10 +30,18 @@ public:
 
 
     /**
+     * @brief Keeps the value of the input for a duration of 5 ticks
+     * @param keepTicking determines if the counter should keep ticking
+     * @returns The value of the counter;
+    */
+    const int inputTick(const bool& keepTicking = true);
+
+
+    /**
     * @brief Returns the stored direction from input
     * @returns The direction of the input  
     */
-    Direction getDirection() { return direction; }
+    const Direction& getInput() const { return input; }
 };
 
 #endif
