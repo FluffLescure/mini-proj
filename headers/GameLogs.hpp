@@ -13,6 +13,8 @@
 
 
 /**
+ * @author Tom Paillet
+ * 
  * @class GameLogs
  * 
  * @brief Logs showing the previously made words and their attributed scores

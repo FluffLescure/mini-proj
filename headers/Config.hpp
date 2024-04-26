@@ -14,7 +14,10 @@
 
 
 /**
+ * @author Lucas Lescure
+ * 
  * @class Config
+ * 
  * @brief A singleton that stores global configurations of the game in manner that
  *  allows it to share these configurations with other classes externally without
  *  requiring an explicit relationship.

@@ -31,6 +31,7 @@ struct WordBlock {
 
 
 /**
+ * @author Tom Paillet
  * @class GameGrid
  * 
  * @brief 2D grid built upon LetterBlocks that shape the playing field
@@ -47,7 +48,7 @@ struct WordBlock {
  * to output the correct game values.
  * 
  */
-class GameGrid : sf::NonCopyable {
+class GameGrid {
 private:
 
     // dimensions of the grid;

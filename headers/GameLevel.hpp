@@ -10,8 +10,11 @@
 #include <SFML/Graphics/Text.hpp>
 
 /**
+ * @author Lucas Lescure
  * @class GameLevel
+ * 
  * @brief A class that manages the level and stage of the game
+ * 
  * @remark It will also change the color scheme based on the stage
  * 
  * @code

@@ -26,6 +26,8 @@ enum State {
 
 
 /**
+ * @author Lucas Lescure
+ * 
  * \class LetterBlock
  *
  * \brief Blocks containing letters which will be used by the grid to create
