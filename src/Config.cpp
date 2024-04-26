@@ -9,6 +9,8 @@
 // is called in runtime
 Config* Config::instance = new Config();
 
+
+
 Config::Config() {
     loadFonts();
     loadTextures();

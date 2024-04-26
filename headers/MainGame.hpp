@@ -32,6 +32,9 @@ private:
     // map that stores the game layout built in sf::Quads
     sf::VertexArray layout;
 
+    // Game over message
+    sf::Text over;
+
     // Agregated classes
     Input *input;
     GameGrid *game;
@@ -61,6 +64,11 @@ public:
     */
     void initComponents();
 
+    /**
+     * @brief Initialises the game over message
+    */
+    void initOver();
+
 
     /**
     * @brief Frees GameGrid from memory 
@@ -71,7 +79,7 @@ public:
     /**
      * @brief Determines if the gam is running based on the state of the window
     */
-    bool isRunning();
+    const bool isRunning();
 
 
     /**
@@ -93,6 +101,12 @@ public:
      * @brief Retrieves events related to the game window
     */
     void pollEvent();
+
+    /**
+     * @brief Displays a game over message and offers a restart.
+     * 
+    */
+    void GameOver(const Direction& input);
 
 
     

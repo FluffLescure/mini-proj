@@ -65,14 +65,14 @@ public:
      * @brief Renders the object's bounding frame and its text
      * @param *target the rendered shared by other classes
     */
-    void render(sf::RenderTarget *target);
+    void render(sf::RenderTarget *target) const;
 
 
     /**
      * @brief A simple getter function
      * @return The letter displayed
     */
-    char getLetter();
+    const char getLetter();
 
 
     /**
@@ -84,7 +84,7 @@ public:
      * @brief The weighed randomiser which creates the new letter to be displayed
      * @return A randomised character between A and Z
     */
-    char randLetter();
+    const char randLetter();
 
     
 

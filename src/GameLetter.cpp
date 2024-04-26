@@ -1,6 +1,8 @@
 
 
 #include<iostream>
+#include<numeric>
+
 
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Color.hpp>
@@ -42,14 +44,14 @@ void GameLetter::initLetter() {
 
 
 
-void GameLetter::render(sf::RenderTarget *target){
+void GameLetter::render(sf::RenderTarget *target) const {
     target->draw(letterFrame);
     target->draw(title);
     target->draw(letter);
 }
 
 
-char GameLetter::getLetter() {
+const char GameLetter::getLetter() {
     return letter.getString().toAnsiString().c_str()[0];
 }
 
@@ -62,16 +64,17 @@ void GameLetter::changeLetter() {
     letter.setOrigin({letter.getGlobalBounds().getSize().x / 2.f + letter.getLocalBounds().getPosition().x,0}); // recenters the letter
 }
 
-char GameLetter::randLetter() {
-    int max = 0, min = 0;
-    for (uint8_t i = 0; i < 26; i++)
-        max += Config::getInstance()->generator_weights[i];
+const char GameLetter::randLetter() {
+    static const int min = 0;
+    static const int max = std::accumulate(std::begin(Config::generator_weights), std::end(Config::generator_weights), 0);
 
-    int r = ((double) rand() / (RAND_MAX + 1)) * (max - min + 1) + min;
-    int letter, sum = 0;
+    static int r;
+    r = ((double) rand() / (RAND_MAX + 1)) * (max - min + 1) + min;
 
-    for(letter = 0; r > sum; letter++)
-        sum += Config::getInstance()->generator_weights[letter];
+    static int letter, sum;
+
+    for(letter = 0, sum=0; r > sum; letter++)
+        sum += Config::generator_weights[letter];
 
     return (char) 'A' +  --letter;
 }

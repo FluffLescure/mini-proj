@@ -66,15 +66,6 @@ void GameScore::initScore() {
 
 
 
-void GameScore::render(sf::RenderTarget *target){
-    target->draw(scoreFrame);
-    target->draw(scoreText);
-    target->draw(scoreVal);
-    target->draw(topScoreText);
-    target->draw(topScoreVal);
-}
-
-
 GameScore::~GameScore() {
     //In debugging the writting can be slow
     std::ofstream scoreFile(Config::getInstance()->scores_file, std::ios::app); 
@@ -87,12 +78,12 @@ GameScore::~GameScore() {
 }
 
 
-int GameScore::getScore() const {
+const int GameScore::getScore() const {
     return atoi(scoreVal.getString().toAnsiString().c_str());
 }
 
 
-void GameScore::addPoints(std::string word) {
+void GameScore::addPoints(const std::string& word) {
     int points = (int)std::pow(word.size(), 3);
     int current_points = atoi(scoreVal.getString().toAnsiString().c_str()); 
 
@@ -101,3 +92,11 @@ void GameScore::addPoints(std::string word) {
 }
 
 
+
+void GameScore::render(sf::RenderTarget *target) const {
+    target->draw(scoreFrame);
+    target->draw(scoreText);
+    target->draw(scoreVal);
+    target->draw(topScoreText);
+    target->draw(topScoreVal);
+}

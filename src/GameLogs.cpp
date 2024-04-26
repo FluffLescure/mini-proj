@@ -54,12 +54,12 @@ void GameLogs::initPoints() {
 
 
 
-void GameLogs::emplace(std::string word){
+void GameLogs::emplace(const std::string& word){
     emplaceLog(word);
     emplacePoints(word);
 }
 
-void GameLogs::emplaceLog(std::string word) {
+void GameLogs::emplaceLog(const std::string& word) {
     for(uint8_t i = 9; i > 0; i--) {
         logs[i].setString(logs[i - 1].getString().toAnsiString());
         logs[i].setPosition({70, 220 + i * (logs[i].getGlobalBounds().height + 11)});
@@ -69,7 +69,7 @@ void GameLogs::emplaceLog(std::string word) {
     logs[0].setPosition({70, 220});
 }
 
-void GameLogs::emplacePoints(std::string word) {
+void GameLogs::emplacePoints(const std::string& word) {
     std::string point = std::to_string((int)std::pow(word.size(), 3));
 
     for(uint8_t i = 9; i > 0; i--) {
@@ -85,7 +85,7 @@ void GameLogs::emplacePoints(std::string word) {
 
 
 
-void GameLogs::render(sf::RenderTarget *target){
+void GameLogs::render(sf::RenderTarget *target) const {
     target->draw(logsFrame); // renders the frame
     target->draw(title);
 

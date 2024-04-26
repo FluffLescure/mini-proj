@@ -6,7 +6,7 @@
 * @brief Possible movement directions used to move the falling block in GameGrid
 */
 enum Direction {
-    Unchanged, Down, Left, Right
+    Unchanged, Down, Left, Right, Space
 };
 
 
@@ -34,14 +34,14 @@ public:
      * @param keepTicking determines if the counter should keep ticking
      * @returns The value of the counter;
     */
-    int inputTick(bool keepTicking = true);
+    const int& inputTick(const bool& keepTicking = true);
 
 
     /**
     * @brief Returns the stored direction from input
     * @returns The direction of the input  
     */
-    Direction getInput() { return input; }
+    const Direction& getInput() const { return input; }
 };
 
 #endif

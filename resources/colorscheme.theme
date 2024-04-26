@@ -1,16 +1,16 @@
 
-theme0  bg0 90C0DE
-theme0  bg1 B5E3FF
-theme0  bg2 8992BA
+theme0  bg0 90C0DEFF
+theme0  bg1 B5E3FFFF
+theme0  bg2 8992BAFF
 
-theme1  bg0 C9B8A5
-theme1  bg1 EBDDC9
-theme1  bg2 A1AD95
+theme1  bg0 C9B8A5FF
+theme1  bg1 EBDDC9FF
+theme1  bg2 A1AD95FF
 
-theme2  bg0 C17A6F
-theme2  bg1 D59E95
-theme2  bg2 FFBFB1
+theme2  bg0 C17A6FFF
+theme2  bg1 D59E95FF
+theme2  bg2 FFBFB1FF
 
-theme3  bg0 B45637
-theme3  bg1 CB6C4C
-theme3  bg2 F3845B
+theme3  bg0 B45637FF
+theme3  bg1 CB6C4CFF
+theme3  bg2 F3845BFF

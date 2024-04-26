@@ -84,7 +84,7 @@ const std::vector<WordBlock> GameGrid::wordDestroy() {
     return stagedwords;
 }
 
-constexpr int GameGrid::destroyTick(const bool &keepTicking) const{
+const int GameGrid::destroyTick(const bool &keepTicking) const{
     static uint8_t destroy_tick = 0;
 
     if(!keepTicking)
@@ -95,11 +95,10 @@ constexpr int GameGrid::destroyTick(const bool &keepTicking) const{
         return destroy_tick;     
     }
 
-    destroy_tick = 0;
-    return 0;
+    return destroy_tick = 0;
 }
 
-std::vector<WordBlock> GameGrid::stageWords() {
+const std::vector<WordBlock> GameGrid::stageWords() {
     std::string crunched;
     std::vector<WordBlock> stagedwords;
     std::map<std::string, sf::Vector2u> foundWords;
@@ -141,14 +140,13 @@ const std::string GameGrid::crunchCol(const int8_t &col) {
     return crunched_col;
 }
 
-void GameGrid::setColor(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSpan){
+void GameGrid::setColor(const uint8_t& col, const uint8_t& row, const uint8_t& colSpan, const uint8_t& rowSpan){
     for (uint8_t j = row; j < row + rowSpan; j++)
         for (uint8_t i = col; i < col + colSpan; i++) 
             grid[i][j].setColor(sf::Color(0xABFFFF));
-            //grid[i][j].setColor({122, 220, 220});
 }
 
-void GameGrid::blockDestroy(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSpan) {
+void GameGrid::blockDestroy(const uint8_t& col, const uint8_t& row, const uint8_t& colSpan, const uint8_t& rowSpan) {
     for (uint8_t j = row; j < row + rowSpan; j++) {
         for (uint8_t i = col; i < col + colSpan; i++) {
             grid[i][j].display(false);
@@ -175,7 +173,7 @@ void GameGrid::blockMove(const Direction &input) {
     }
 }
 
-void GameGrid::groundBlock(uint8_t i, uint8_t j) {
+void GameGrid::groundBlock(const uint8_t& i, const uint8_t& j) {
     // if the block isn't falling exit
     if(!grid[i][j].isState(Falling))
         return; 
@@ -204,7 +202,11 @@ const bool GameGrid::gridTick() {
     return true;
 }
 
-void GameGrid::newBlock(const char &letter){
+const bool GameGrid::newBlock(const char &letter){
+    // If a block already exists on (5,0) then exit
+    if(!grid[5][0].isHidden())
+        return false;
+
     std::string color_type = "bg" + std::to_string(letter % 3);
     sf::Color color = Config::getInstance()->colorScheme.find(color_type)->second;
 
@@ -213,9 +215,10 @@ void GameGrid::newBlock(const char &letter){
     grid[5][0].setLetter(letter);
     grid[5][0].setColor(color);
     grid[5][0].centerLetter();
+    return true;
 }
 
-void GameGrid::blockDisplay(sf::Vector2u posInit, sf::Vector2u span, bool visible) {
+void GameGrid::blockDisplay(const sf::Vector2u& posInit, const sf::Vector2u& span, const bool& visible) {
     for (uint8_t j = posInit.y; j < posInit.y + span.y; j++)
         for (uint8_t i = posInit.x; i < posInit.x + span.x; i++) 
             grid[i][j].display(visible);

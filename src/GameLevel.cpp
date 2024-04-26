@@ -20,8 +20,10 @@ void GameLevel::initColorschemes() {
 
 
     while(file >> theme >> type >> color_str){
-        sf::Color color = sf::Color(std::stoul(color_str + "FF", nullptr, 16));
-        std::cout << color.toInteger() << std::endl;
+        // Convert hex string to an integer value before creating a color object
+        sf::Color color = sf::Color(std::stoul(color_str, nullptr, 16));
+
+        // Necessary convertion to index the colorScheme array and avoid exception error
         int theme_val = theme.back() - '0';
         colorScheme[theme_val].emplace(type, color);
     }
@@ -62,8 +64,8 @@ void GameLevel::initText() {
 
 void GameLevel::levelUp() {
     static int lvl = 0;
-    speed -= levelSpeed[lvl];
-    int scheme = levelSpeed[9-lvl] - 2;
+    const int scheme = Config::levelSpeed[9-lvl] - 2;
+    speed -= Config::levelSpeed[lvl];
 
     Config::getInstance()->colorScheme = colorScheme[scheme];
 
@@ -73,7 +75,7 @@ void GameLevel::levelUp() {
 }
 
 
-void GameLevel::render(sf::RenderTarget *target) {
+void GameLevel::render(sf::RenderTarget *target) const {
     target->draw(stageFrame);
     target->draw(levelFrame);
 

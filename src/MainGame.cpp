@@ -14,6 +14,7 @@ MainGame::MainGame() {
     initLayout();
     initWindow();
     initComponents();
+    initOver();
 }
 
 void MainGame::initLayout() {
@@ -48,6 +49,17 @@ void MainGame::initComponents() {
     game = new GameGrid;
 }
 
+void MainGame::initOver(){
+    Config* config = Config::getInstance();
+    over.setFont(*config->font);
+    over.setString("Game Over\nPress 'Space' to restart");
+    over.setCharacterSize(24);
+    over.setFillColor({0, 0, 0, 0});
+    over.setOutlineColor({0, 0, 0, 0});
+    over.setOutlineThickness(2);
+    over.setPosition(350, 250);
+}
+
 
 MainGame::~MainGame() {
     delete game;
@@ -61,7 +73,7 @@ MainGame::~MainGame() {
 
 
 
-bool MainGame::isRunning() {
+const bool MainGame::isRunning() {
     if(window == nullptr)
         return false;
     return window->isOpen();
@@ -89,6 +101,8 @@ void MainGame::render() {
     score->render(window);
     next->render(window);
     level->render(window);
+    
+    window->draw(over); // renders game over message
 
     window->display(); // Displays the new frame to window
 }  
@@ -102,8 +116,10 @@ void MainGame::update() {
     pollEvent();
     input->pollEvent(); 
 
-    // Pauses the game while the word is being destroyed
+
     words = game->wordDestroy();
+
+    // Pauses the game while the word is being destroyed
     if(!words.empty()){
         for (WordBlock &word : words){
             logs->emplace(word.string);
@@ -115,11 +131,15 @@ void MainGame::update() {
     if(!(tick % 5))
         game->blockMove(input->getInput());
 
-    if(!(tick % level->getSpeed())) 
-        if(!game->gridTick()) {
-            game->newBlock(next->getLetter());
-            next->changeLetter();
+    if(!(tick % level->getSpeed()) && !game->gridTick() ) {
+        if(!game->newBlock(next->getLetter())) {
+            std::cout << "Game Over" << std::endl;
+            GameOver(input->getInput());
         }
+        else
+            next->changeLetter();
+        
+    }
 
     if(score->getScore() > 100 * std::pow(2, lvl)){
         lvl++;
@@ -140,4 +160,20 @@ void MainGame::pollEvent() {
     while(window->pollEvent(event))
         if(event.type == sf::Event::Closed)
             window->close();
+}
+
+void MainGame::GameOver(const Direction &input) {
+
+    over.setFillColor(sf::Color::Black);
+    over.setOutlineColor(sf::Color::Red);
+
+    if(input == Direction::Space){
+        delete game;
+        delete score;
+        delete next;
+        delete level;
+        delete logs;
+
+        initComponents();
+    }
 }

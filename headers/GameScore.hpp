@@ -48,19 +48,19 @@ public:
     */
     ~GameScore();
 
-    int getScore() const;
+    const int getScore() const;
 
     /**
      * @brief Adds points to the score based on the length of the word given
      * @param word the word that needs to be scored
     */
-    void addPoints(std::string word);
+    void addPoints(const std::string& word);
 
     /**
      * @brief Renders the score's bounding frame and text components
      * @param *target the rendered shared by other classes
     */
-    void render(sf::RenderTarget *target);
+    void render(sf::RenderTarget *target) const;
 
 };
 

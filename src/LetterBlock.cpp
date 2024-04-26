@@ -7,7 +7,7 @@
 #include "../headers/Config.hpp"
 
 
-LetterBlock::LetterBlock(char str) {
+LetterBlock::LetterBlock(const char& str) {
     initBlock();
     initLetter(str);
 }
@@ -20,7 +20,7 @@ void LetterBlock::initBlock() {
     state = State::Fixed;
 }
 
-void LetterBlock::initLetter(char str) {
+void LetterBlock::initLetter(const char& str) {
     letter.setString(str);
     letter.setCharacterSize(24);
     letter.setFillColor(sf::Color::Black);
@@ -29,7 +29,7 @@ void LetterBlock::initLetter(char str) {
 
 
 
-void LetterBlock::operator=(LetterBlock& block) {
+void LetterBlock::operator=(const LetterBlock& block) {
     // Block colors, letter and state are transfered
     this->block.setFillColor(block.getBlock().getFillColor());
     this->block.setOutlineColor(block.getBlock().getOutlineColor());
@@ -46,14 +46,14 @@ void LetterBlock::centerLetter() {
 
 
 
-void LetterBlock::setPosition(sf::Vector2f pos) {
+void LetterBlock::setPosition(const sf::Vector2f& pos) {
     block.setPosition(pos);
     centerLetter();
 }  
 
 
 
-sf::Vector2u LetterBlock::getPosition(const Blockgrid& grid) const {
+const sf::Vector2u LetterBlock::getPosition(const Blockgrid& grid) const {
     // Runs throught the entire the grid comparing the memory address of each block 
     // with the current one to find its coordinates
     for (uint8_t i = 0; i < grid.size(); i++) {
@@ -68,7 +68,7 @@ sf::Vector2u LetterBlock::getPosition(const Blockgrid& grid) const {
 
 
 
-bool LetterBlock::isState(State state) {
+const bool LetterBlock::isState(const State& state) const {
     if(this->state == state)
         return true;
     return false;
@@ -76,7 +76,7 @@ bool LetterBlock::isState(State state) {
 
 
 
-bool LetterBlock::isHidden() {
+const bool LetterBlock::isHidden() {
     sf::Color col = block.getFillColor();
     if (col.a == 50)
         return true;
@@ -86,7 +86,7 @@ bool LetterBlock::isHidden() {
 
 
 
-bool LetterBlock::move(Blockgrid &grid, Direction direction){
+const bool LetterBlock::move(Blockgrid &grid, const Direction& direction) const{
     sf::Vector2u pos = getPosition(grid);
     uint8_t rows = Config::getInstance()->gamegrid_rows;
     uint8_t cols = Config::getInstance()->gamegrid_cols;
@@ -134,7 +134,7 @@ bool LetterBlock::move(Blockgrid &grid, Direction direction){
 
 
 
-void LetterBlock::display(bool visible) {
+void LetterBlock::display(const bool& visible) {
     //retrieves the current block colors
     sf::Color block_color = block.getFillColor();
     sf::Color letter_color = letter.getFillColor();    
@@ -155,7 +155,7 @@ void LetterBlock::display(bool visible) {
 
 
 
-void LetterBlock::render(sf::RenderTarget *target) {
+void LetterBlock::render(sf::RenderTarget *target) const {
     target->draw(block);
     target->draw(letter);
 }

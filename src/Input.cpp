@@ -9,12 +9,13 @@ void Input::pollEvent() {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) input = Down;
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) input = Left;
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) input = Right;
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) input = Space;
 
     if(input != Direction::Unchanged)
         inputTick();
 }
 
-int Input::inputTick(bool keepTicking) {
+const int& Input::inputTick(const bool& keepTicking) {
     static int inputTick = 0;
 
     if(!keepTicking)
@@ -26,6 +27,5 @@ int Input::inputTick(bool keepTicking) {
     }
 
     input = Direction::Unchanged;
-    inputTick = 0;
-    return 0;
+    return inputTick = 0;
 }

@@ -116,14 +116,14 @@ public:
      * @param keepTicking keeps ticking the counter or not
      * @return The value of the destroy counter
     */
-    constexpr int destroyTick(const bool &keepTicking) const;
+    const int destroyTick(const bool &keepTicking = true) const;
 
     /**
      * @brief Retrieves a list of staged words identified from the grid which
      *  includes their position([0] and [1]) and span([2] and [3]).
      * @return Staged words that need to be destroyed
     */
-    std::vector<WordBlock> stageWords();
+    const std::vector<WordBlock> stageWords();
 
     /**
      * @brief Retreives all the letters from a row and crunches them together
@@ -148,7 +148,7 @@ public:
      * @param colSpan span of blocks in the column 
      * @param rowSpan span of blocks in the row
     */
-    void setColor(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSpan);
+    void setColor(const uint8_t& col, const uint8_t& row, const uint8_t& colSpan, const uint8_t& rowSpan);
 
     /**
      * @brief Destroys LetterBlocks that are inside the specified span
@@ -157,7 +157,7 @@ public:
      * @param colSpan span of blocks in the column 
      * @param rowSpan span of blocks in the row
      */
-    void blockDestroy(uint8_t col, uint8_t row, uint8_t colSpan, uint8_t rowSpan);
+    void blockDestroy(const uint8_t& col, const uint8_t& row, const uint8_t& colSpan, const uint8_t& rowSpan);
 
 
     /**
@@ -172,7 +172,7 @@ public:
      * @param i the column of the block
      * @param j the row of the block
     */
-    void groundBlock(uint8_t i, uint8_t j);
+    void groundBlock(const uint8_t& i, const uint8_t& j);
 
 
     /**
@@ -181,7 +181,12 @@ public:
      */
     const bool gridTick();
 
-    void newBlock(const char &letter = ' ');
+    /**
+     * @brief Adds a new block to the grid
+     * @param letter the letter of the new block
+     * @returns true if a block was added, false otherwise
+    */
+    const bool newBlock(const char &letter = ' ');
 
     /**
      * @brief Updates the visibility a zone of blocks delimited by the span entered
@@ -189,27 +194,7 @@ public:
      * @param span span of blocks to be updated
      * @param visible sets the the visibility of the block
      */
-    void blockDisplay(sf::Vector2u posInit, sf::Vector2u span, bool visible);
-
-    
-   
-
-    
-
-    
-
-    
-
-   
-
-    
-
-   
-
-   
-
-
-
+    void blockDisplay(const sf::Vector2u& posInit, const sf::Vector2u& span, const bool& visible);
 
 };
 

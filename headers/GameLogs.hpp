@@ -71,26 +71,26 @@ public:
      * @brief Places the word and its score to the top of the logs
      * @param word the word to be logged
     */
-    void emplace(std::string word);
+    void emplace(const std::string& word);
 
     /**
      * @brief Places the word to the top of the logs
      * @param word the word to be logged
     */
-    void emplaceLog(std::string word);
+    void emplaceLog(const std::string& word);
 
     /**
      * @brief Places the word score to the top of the logs
      * @param word the word to be logged
     */
-    void emplacePoints(std::string word);
+    void emplacePoints(const std::string& word);
 
 
     /**
      * @brief Renders the log's bounding frame and text components
      * @param *target the rendered shared by other classes
     */
-    void render(sf::RenderTarget *target);
+    void render(sf::RenderTarget *target) const;
 
 };
 
