@@ -107,7 +107,7 @@ const std::vector<WordBlock> GameGrid::stageWords() {
     //Check for words in the columns
     for (int8_t col = cols - 1; col >= 0; col--) {
         // Finds words in the column after being crunched to a string
-        crunched = crunchRow(col);
+        crunched = crunchCol(col);
         foundWords = wordle->findWord(crunched);
         for (std::pair word : foundWords)
             stagedwords.push_back({word.first, {(unsigned)col, word.second.x}, {1, word.second.y}});
