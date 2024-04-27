@@ -42,7 +42,7 @@ private:
     sf::Text points_[10];
     
     // Count of words found
-    unsigned char count_ = 0;
+    int count_ = 0;
 public:
 
     /**

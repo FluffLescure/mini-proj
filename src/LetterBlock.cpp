@@ -76,7 +76,7 @@ const bool LetterBlock::isState(const State& state) const {
 
 
 
-const bool LetterBlock::isHidden() {
+const bool LetterBlock::isHidden() const {
     sf::Color col = block_.getFillColor();
     if (col.a == 50)
         return true;
