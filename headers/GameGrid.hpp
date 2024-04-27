@@ -12,9 +12,6 @@
 
 #include "Config.hpp"
 #include "Input.hpp"
-#include "GameLogs.hpp"
-#include "GameScore.hpp"
-#include "GameLetter.hpp"
 #include "LetterBlock.hpp"
 #include "Wordle.hpp"
 
