@@ -52,8 +52,8 @@ class GameGrid {
 private:
 
     // dimensions of the grid;
-    static constexpr uint8_t cols_ = Config::gamegrid_cols_;
-    static constexpr uint8_t rows_ = Config::gamegrid_rows_;
+    static constexpr const uint8_t cols_ = Config::gamegrid_cols_;
+    static constexpr const uint8_t rows_ = Config::gamegrid_rows_;
 
     // Border used to draw the grid frame
     sf::RectangleShape gridBorder_;
