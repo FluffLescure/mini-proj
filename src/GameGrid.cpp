@@ -75,9 +75,11 @@ const std::vector<WordBlock> GameGrid::wordDestroy() {
     if(destroyTick(true))
         return std::vector<WordBlock>();
     
+
     // Destroy the staged words
     for(WordBlock word : stagedwords)
         blockDestroy({word.pos.x, word.pos.y}, {word.span.x, word.span.y});
+
 
     // Return the staged words
     return stagedwords;
@@ -153,14 +155,14 @@ const std::string GameGrid::crunchCol(const int8_t &col) {
 }
 
 void GameGrid::setColor(const sf::Vector2u &pos, const sf::Vector2u &span, const uint32_t& color) {
-    for (uint8_t j = pos.x; j < pos.x + span.x; j++)
-        for (uint8_t i = pos.y; i < pos.y + span.y; i++) 
+    for (uint8_t j = pos.y; j < pos.y + span.y; j++)
+        for (uint8_t i = pos.x; i < pos.x + span.x; i++) 
             grid_[i][j].setColor(sf::Color(color));
 }
 
 void GameGrid::blockDestroy(const sf::Vector2u &pos, const sf::Vector2u &span) {
-    for (uint8_t j = pos.x; j < pos.x + span.x; j++) {
-        for (uint8_t i = pos.y; i < pos.y + span.y; i++) {
+    for (uint8_t j = pos.y; j < pos.y + span.y; j++) {
+        for (uint8_t i = pos.x; i < pos.x + span.x; i++) {
             grid_[i][j].display(false);
             grid_[i][j].setLetter(' ');
             grid_[i][j].setState(State::Fixed);
