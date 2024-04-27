@@ -111,6 +111,7 @@ void MainGame::render() {
 void MainGame::update() {
     static uint8_t tick = 0;
     static uint8_t lvl = 0;
+    static bool pause = false;
     static std::vector<WordBlock> words;
     static std::ofstream file = std::ofstream("resources/foundWords.txt");
 
@@ -121,17 +122,26 @@ void MainGame::update() {
     // Destroys the words in the grid if they exists
     words = game_->wordDestroy();
 
-    // Pauses the game while the word is being destroyed
-    if(!words.empty()){
+
+    // Logs the word found and sets a pause
+    if(!words.empty() && !pause){
         for (WordBlock &word : words){
             logs_->emplace(word.string);
             score_->addPoints(word.string);
+            std::cout << word.string << std::endl;
 
             // Writes the word to a file
             file << word.string << std::endl; 
         }
+        pause = true;
+        tick = 0; // resets the tick to wait 30 ticks before gridTick
         return;
     }
+
+    //Pauses the game while words are being destroyed
+    if(!words.empty())
+        return;
+
 
     // Moves the block every 5 ticks if input is detected
     if(!(tick % 5))
@@ -158,6 +168,7 @@ void MainGame::update() {
         tick = 0;
 
     tick++;
+    pause = false;
 }
 
 

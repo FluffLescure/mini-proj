@@ -73,7 +73,7 @@ const std::vector<WordBlock> GameGrid::wordDestroy() {
     
     // Keep ticking the destroy tick and return an empty vector until its finished 
     if(destroyTick(true))
-        return std::vector<WordBlock>();
+        return stagedwords;
     
 
     // Destroy the staged words
@@ -93,7 +93,7 @@ const int GameGrid::destroyTick(const bool &keepTicking) const{
         return destroy_tick;
     
     // If the destroy tick is not at 30 then keep incrementing it
-    if(destroy_tick != 30){
+    if(destroy_tick != 60){
         destroy_tick++;
         return destroy_tick;
     }
