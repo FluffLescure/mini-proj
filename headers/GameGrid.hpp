@@ -31,6 +31,7 @@ struct WordBlock {
 
 
 /**
+ * @author Tom Paillet
  * @class GameGrid
  * 
  * @brief 2D grid built upon LetterBlocks that shape the playing field
@@ -47,12 +48,12 @@ struct WordBlock {
  * to output the correct game values.
  * 
  */
-class GameGrid : sf::NonCopyable {
+class GameGrid {
 private:
 
     // dimensions of the grid;
-    static constexpr uint8_t cols_ = Config::gamegrid_cols_;
-    static constexpr uint8_t rows_ = Config::gamegrid_rows_;
+    static constexpr const uint8_t cols_ = Config::gamegrid_cols_;
+    static constexpr const uint8_t rows_ = Config::gamegrid_rows_;
 
     // Border used to draw the grid frame
     sf::RectangleShape gridBorder_;
@@ -144,21 +145,17 @@ public:
 
     /**
      * @brief Changes the color of the span of blocks given as parameter.
-     * @param col the column of the first letter of the block
-     * @param row the row of the first letter of the block
-     * @param colSpan span of blocks in the column 
-     * @param rowSpan span of blocks in the row
+     * @param pos the position of the first letter of the block
+     * @param span the span of the blocks
     */
-    void setColor(const uint8_t& col, const uint8_t& row, const uint8_t& colSpan, const uint8_t& rowSpan, const uint32_t& color);
+    void setColor(const sf::Vector2u &pos, const sf::Vector2u &span, const uint32_t& color);
 
     /**
      * @brief Destroys LetterBlocks that are inside the specified span
-     * @param col the column of the first letter of the block
-     * @param row the row of the first letter of the block
-     * @param colSpan span of blocks in the column 
-     * @param rowSpan span of blocks in the row
+     * @param pos the position of the first letter of the block
+     * @param span the span of the blocks
      */
-    void blockDestroy(const uint8_t& col, const uint8_t& row, const uint8_t& colSpan, const uint8_t& rowSpan);
+    void blockDestroy(const sf::Vector2u &pos, const sf::Vector2u &span);
 
 
     /**

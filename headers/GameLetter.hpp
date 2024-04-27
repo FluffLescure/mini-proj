@@ -10,6 +10,8 @@
 
 
 /**
+ * @author Tom Paillet
+ * 
  * @class GameLetter
  * 
  * @brief Randomises the next falling letter and displays it on the game layout.

@@ -8,7 +8,13 @@
 #include <SFML/Graphics/Text.hpp>
 
 
-
+/**
+ * @author Lucas Lescure
+ * 
+ * @class GameScore
+ * 
+ * @brief A class that manages the score of the game
+*/
 class GameScore {
 private:
 

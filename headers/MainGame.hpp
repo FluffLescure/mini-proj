@@ -16,14 +16,15 @@
 #include "GameLevel.hpp"
 
 /**
-* @class MainGame
-* @brief Used to display the different blokc of the game layout
-*
-* @remark The class' main function is to display and update each 
-* layout block with an aggregation link and through methods render() 
-* and update().
-* The update() method is used for back-end changes while render() will
-* exclusively be used to render drawables to window.
+ * @author Lucas Lescure
+ * @class MainGame
+ * @brief Used to display the different blokc of the game layout
+ *
+ * @remark The class' main function is to display and update each 
+ * layout block with an aggregation link and through methods render() 
+ * and update().
+ * The update() method is used for back-end changes while render() will
+ * exclusively be used to render drawables to window.
 */
 class MainGame: sf::NonCopyable {
 private:

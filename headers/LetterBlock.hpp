@@ -26,6 +26,8 @@ enum State {
 
 
 /**
+ * @author Lucas Lescure
+ * 
  * \class LetterBlock
  *
  * \brief Blocks containing letters which will be used by the grid to create
@@ -182,7 +184,7 @@ public:
      * @brief Checks if the LetterBlock is hidden (transparent) or not
      * @returns true if the block is hidden, false otherwise
     */
-    const bool isHidden();
+    const bool isHidden() const;
 
 
     /**

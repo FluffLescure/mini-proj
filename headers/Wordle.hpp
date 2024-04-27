@@ -8,10 +8,13 @@
 
 
 /**
+ * @author Tom Paillet
+ * 
  * @class Woordle
+ * 
  * @brief Provides word detection of a combination of characters
  * based on a word map created from a wordlist.
- */
+*/
 class Wordle {
 
 private:

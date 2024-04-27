@@ -13,6 +13,8 @@
 
 
 /**
+ * @author Tom Paillet
+ * 
  * @class GameLogs
  * 
  * @brief Logs showing the previously made words and their attributed scores
@@ -40,7 +42,7 @@ private:
     sf::Text points_[10];
     
     // Count of words found
-    unsigned char count_ = 0;
+    int count_ = 0;
 public:
 
     /**

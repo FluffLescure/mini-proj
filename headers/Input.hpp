@@ -11,11 +11,15 @@ enum Direction {
 
 
 /**
-* @class Input
-* @brief Retrieval of user input to memory 
-* @remark This class polls events that happen on window with the method pollEvent()
-* and stores the input to member direction. The direction of the input can then be
-* retrieved using the getInput() method
+ * @author Tom Paillet
+ *
+ * @class Input
+ *
+ * @brief Retrieval of user input to memory 
+ *
+ * @remark This class polls events that happen on window with the method pollEvent()
+ * and stores the input to member direction. The direction of the input can then be
+ * retrieved using the getInput() method
 */
 class Input {
 private:
