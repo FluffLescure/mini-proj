@@ -105,8 +105,8 @@ public:
 
 
     /**
-     * @brief Destroys all block that form a word from the wordlist
-     * @returns a vecotr of WordBlock that were destroyed
+     * @brief Destroys all blocks that form a word from the wordlist
+     * @returns a vector of WordBlock that were destroyed
     */
     const std::vector<WordBlock> wordDestroy();
 

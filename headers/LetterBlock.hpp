@@ -33,9 +33,9 @@ enum State {
  * \brief Blocks containing letters which will be used by the grid to create
  * chunks
  *
- * \note The default set size is 33.2x32.6px as specified in Config.
+ * \note The default set size is 33.6x32.4px as specified in Config.
  *
- * \remark AlLows for simple display operations such as hiding the block or changing
+ * \remark Allows for simple display operations such as hiding the block or changing
  * it's fill color.
  * \code
  * LetterBlock block();            // defaults to a 33.6x32.4px block whith a ' '

@@ -35,7 +35,7 @@ private:
     // Border used to draw the frame
     sf::RectangleShape letterFrame_;
 
-    //Tittle and letter text attributes
+    //Title and letter text attributes
     sf::Text title_;
     sf::Text letter_;
 

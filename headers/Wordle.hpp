@@ -10,7 +10,7 @@
 /**
  * @author Tom Paillet
  * 
- * @class Woordle
+ * @class Wordle
  * 
  * @brief Provides word detection of a combination of characters
  * based on a word map created from a wordlist.
